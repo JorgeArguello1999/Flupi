@@ -6,5 +6,6 @@ create table points(
     id int primary key AUTO_INCREMENT,
     avengers int,
     quimbolitos int,
-    fecha date not null
+    usuario varchar(100) not null,
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

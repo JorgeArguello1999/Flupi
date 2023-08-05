@@ -12,13 +12,19 @@ class connect:
             passwd = db_passwd
         )
 
-    def listar(self):
+    def list(self):
+        cursor = self.conn.cursor()
+        query = "select sum(avengers) as Avengers, sum(quimbolitos) as Quimbolitos from points;"
+        cursor.execute(query)
+        return cursor.fetchone()
+
+    def list_all(self):
         cursor = self.conn.cursor()
         query = "select * from points"
         cursor.execute(query)
         return cursor.fetchall()
 
-    def insertar(self, datos):
+    def insert(self, datos):
         """
         Insertar datos por medio de array
         donde se especifique la siguiente estructura
@@ -34,7 +40,11 @@ class connect:
         | Puntos Semana 2 | 200      | 180         | 2023-07-01 |
         """
         cursor = self.conn.cursor()
-        query = f"insert into points (avengers, quimbolitos, fecha) values({datos[0]}, {datos[1]}, {datos[2]})"
+        query = f"""
+        insert into points (avengers, quimbolitos, usuario) values(
+            {datos[0]}, {datos[1]}, '{datos[2]}'
+        );
+        """
         try:
             cursor.execute(query)
             self.conn.commit()
@@ -43,7 +53,20 @@ class connect:
             print(e)
             return False 
 
+    def remove(self, id):
+        cursor = self.conn.cursor()
+        query = f'delete from points where id={id}'
+        print(query)
+        try:
+            cursor.execute(query)
+            self.conn.commit()
+            return True
+        except pymysql.DatabaseError as e:
+            print(e)
+            return False 
+        
+
 if __name__ == "__main__":
     con = connect()
-    print(con.listar())
+    print(con.list())
 
