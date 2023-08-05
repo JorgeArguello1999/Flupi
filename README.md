@@ -26,7 +26,7 @@ docker run --name flupi_db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql
 
 ## Database and Tables SQL code
 
-´´´sql
+\```sql
 
 create database flupi_db;
 
@@ -40,7 +40,7 @@ create table points(
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-´´´
+\```
 
 
 
