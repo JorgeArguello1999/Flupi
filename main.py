@@ -16,7 +16,7 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Saludo desde Flupi")
 
     # Envío de una imagen
-    image_url = "./logo.jpeg"
+    image_url = "https://github.com/JorgeArguello1999/Flupi/blob/main/logo.jpeg?raw=true"
     context.bot.send_photo(chat_id=update.effective_chat.id, photo=image_url)
 
     #Debug
