@@ -15,7 +15,7 @@ date = str(datetime.datetime.now())
 def start(update, context):
     """Saluda a Flupi"""
     context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Holaaa soy Flupi!!!")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Holis, soy Flupi (☆▽☆)")
 
     # Envío de una imagen
     image_url = [
