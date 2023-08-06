@@ -5,7 +5,7 @@ from telegram import update, ChatAction
 # Database and token 
 from connect import db
 conn = db.connect()
-import os
+import os, random 
 
 # Date
 import datetime
@@ -18,8 +18,16 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Holaaa soy Flupi!!!")
 
     # Envío de una imagen
-    image_url = "https://github.com/JorgeArguello1999/Flupi/blob/main/logo.jpeg?raw=true"
-    context.bot.send_photo(chat_id=update.effective_chat.id, photo=image_url)
+    image_url = [
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/1.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/2.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/3.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/4.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/5.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/6.jpeg?raw=true",
+        "https://github.com/JorgeArguello1999/Flupi/blob/main/Yo/7.jpeg?raw=true",
+    ]
+    context.bot.send_photo(chat_id=update.effective_chat.id, photo=image_url[random.randint(0, 6)])
 
     #Debug
     print('Comando ejecutado: start')
