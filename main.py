@@ -15,7 +15,7 @@ date = str(datetime.datetime.now())
 def start(update, context):
     """Saluda a Flupi"""
     context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Saludo desde Flupi")
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Holaaa soy Flupi!!!")
 
     # Envío de una imagen
     image_url = "https://github.com/JorgeArguello1999/Flupi/blob/main/logo.jpeg?raw=true"
@@ -71,9 +71,11 @@ def insert(update, context):
     """Insertando datos"""
     context.bot.send_chat_action(chat_id=update.effective_chat.id, action=ChatAction.TYPING)
 
+    # Usename
     user = update.effective_user
     user_name = user.username if user.username else user.full_name
-    
+
+    # Insert to database
     insert = (" ".join(context.args)).split(",")
     answer = [
         int(insert[0]), # Avengers
