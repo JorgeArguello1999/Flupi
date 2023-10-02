@@ -1,4 +1,5 @@
-venv
+venv/
 ./pycache
 .pycache
 .tokens.sh
+.venv/
