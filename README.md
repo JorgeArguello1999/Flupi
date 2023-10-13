@@ -1,6 +1,6 @@
 # Flupi
 
-![Flupi icon](logo.jpeg)
+![Flupi icon](Yo/logo.jpeg)
 
 A software for manage a point in quality up class
 
@@ -40,6 +40,15 @@ create table points(
     fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+```
+
+Tener en cuenta las siguientes depeendencias: `PyAudio`
+para instalarlo en Linux (Ubuntu)
+
+```bash
+sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
+sudo apt-get install ffmpeg libav-tools
+sudo pip install pyaudio
 ```
 
 
