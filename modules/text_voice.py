@@ -3,7 +3,7 @@ import os
 
 def speaker(texto:str):
     # Crear un objeto gTTS
-    tts = gTTS(text=texto, lang='es', slow=True)
+    tts = gTTS(text=texto, lang='es')
 
     nombre_archivo = "texto_a_voz.mp3"
     tts.save(nombre_archivo)

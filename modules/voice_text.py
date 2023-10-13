@@ -4,15 +4,14 @@ r = sr.Recognizer()
 
 def microphone():
     with sr.Microphone() as source:
-        print("Di algo...")
         audio = r.listen(source)
 
         try:
             text = r.recognize_google(audio, language='es-EC')
-            print("Esto entendi: {}".format(text))
 
-        except KeyboardInterrupt as e:
-            print(text)
+        except Exception as e:
+            text = ""
+            print(f"Error: {e}")
 
     return text
 
