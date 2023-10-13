@@ -2,57 +2,17 @@
 
 ![Flupi icon](Yo/logo.jpeg)
 
-A software for manage a point in quality up class
+## Holaaaa
 
+Este es Flupi es un asistente virtual para la Empresa CompuMax, este es el código fuente para poder implementarlo
 
+## Requisitos
 
-> This is a example for my class
+Debes tener instalado `mpg123` en nuestro sistema (Solo para linux) y tambien instalar las dependencias de Python para el proyecto.
 
-| ID   | Vengadores | Quimbolitos | Usuario   | Fecha               |
-| ---- | ---------- | ----------- | --------- | ------------------- |
-| 1    | 20         | 13          | Al3x_Argu | 2023-08-05 05:54:33 |
+``` bash
+sudo apt install mpg123
+pip3 install -r requeriments.txt
+|```
 
-
-
-I use docker for database use this command for create docker image
-
-```bash
-
-docker run --name flupi_db -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 -d mysql
-
-```
-
-
-
-## Database and Tables SQL code
-
-```sql
-
-create database flupi_db;
-
-use flupi_db;
-
-create table points(
-    id int primary key AUTO_INCREMENT,
-    avengers int,
-    quimbolitos int,
-    usuario varchar(100) not null,
-    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-```
-
-Tener en cuenta las siguientes depeendencias: `PyAudio`
-para instalarlo en Linux (Ubuntu)
-
-```bash
-sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp0
-sudo apt-get install ffmpeg libav-tools
-sudo pip install pyaudio
-```
-
-
-
-## This project isn't complete
-
-A simple project, something idea please tell me.
+> En caso de usar Windows se usara el programa por defecto que tenga instalado para la reproducción de audio
