@@ -31,7 +31,8 @@ while True:
     comando = functions(voz)
     print(voz)
 
-    if comando != None:
-        text_voice.speaker(comando)
-    else:
-        text_voice.speaker(chatgpt.answer(token=token, context=voz))
+    if nombre in voz:
+        if comando != None:
+            text_voice.speaker(comando)
+        else:
+            text_voice.speaker(chatgpt.answer(token=token, context=voz))

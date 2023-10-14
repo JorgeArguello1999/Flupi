@@ -1,4 +1,5 @@
 import openai
+from colorama import Fore
 
 def answer(token:str, context:str):
     """
@@ -14,7 +15,7 @@ def answer(token:str, context:str):
     ).choices[0].text
 
     # Imprimir la respuesta generada por el modelo
-    print(f"Respuesta: {response}")
+    print(Fore.CYAN + f"Respuesta: {response}")
     return response
     
 if __name__ == '__main__':
