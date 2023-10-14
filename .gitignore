@@ -1,5 +1,5 @@
 venv/
-./pycache
-.pycache
+./__pycache__
+.__pycache__
 .tokens.sh
 .venv/
