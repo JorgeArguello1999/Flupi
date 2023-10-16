@@ -11,11 +11,10 @@ def answer(token:str, context:str):
     response = openai.Completion.create(
         engine='text-davinci-003',
         prompt=context,
-        max_tokens=100
+        max_tokens=90
     ).choices[0].text
 
-    # Imprimir la respuesta generada por el modelo
-    print(Fore.CYAN + f"Respuesta: {response}")
+    print(f"Salida: {response}")
     return response
     
 if __name__ == '__main__':
