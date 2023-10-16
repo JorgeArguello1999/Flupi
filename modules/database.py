@@ -10,14 +10,20 @@ class connect:
             passwd = "root" 
         )
 
-    def search(self, id_producto:int) -> str:
+    def search(self, id_producto:int) -> list:
         """
         :id_producto -> Colocar el id del producto
         """
         cursor = self.conn.cursor()
         query = f"SELECT * FROM items WHERE id = {id_producto}"
         cursor.execute(query)
-        return cursor.fetchone()
+        salida = cursor.fetchall()
+
+        # Recorremos la salida
+        respuestas = []
+        for data in salida:
+            respuestas.append(data)
+        return list(data)
 
 if __name__ == "__main__":
     database = connect()

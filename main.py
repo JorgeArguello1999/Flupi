@@ -23,12 +23,15 @@ while True:
         if f"{nombre} cuánto cuesta" in audio or f"{nombre} Cuánto cuesta" in audio:
             # Filtramos la entrada de voz
             id_product = ''.join(re.findall(r'\d', audio))
-            respuesta = database.search(int(id_product))
+            # Respondemos la pregunta
+            salida = database.search(int(id_product))
+            salida = f"El {salida[0]} cuesta {salida[2]}"
+            text_voice.speaker(salida)
 
         # Ejecutamos cualquier consulta en base al contexto
         else:
             # Preparamos la pregunta con nuestro context
-            contexto = context.clean(nombre=nombre, question=audio)
+            contexto = context.context(nombre=nombre, question=audio)
             respuesta = chatgpt.answer(token=token, context=contexto)
             text_voice.speaker(respuesta)
 

@@ -1,7 +1,7 @@
 import re
 
 # Esto es el prompt que se envia a ChatGPT
-def clean(nombre:str, question:str="None")-> str:
+def context(nombre:str, question:str="None")-> str:
     """ 
     :nombre -> Nombre del bot
     :question -> Pregunta realizada por el usuario
@@ -83,5 +83,5 @@ Responde la siguiente pregunta, usando espacios, tildes y signos de puntación, 
     return limpiando 
 
 if __name__ == "__main__":
-    salida = clean("Maxi", question="Que es CompuMax?")
+    salida = context("Maxi", question="Que es CompuMax?")
     print(salida)
