@@ -75,14 +75,12 @@ Visión
 
 Ser una empresa de servicios informáticos integrales que cubra las necesidades tecnológicas de software y hardware de nuestros clientes.
 
-IMPORTANTE RESPUES(TAS CORTAS MAXIMO 120 PALABRAS Y MINIMO 80 PALABRAS
+IMPORTANTE RESPUESTAS CORTAS MAXIMO 120 PALABRAS 
 
 Responde la siguiente pregunta, usando espacios, tildes y signos de puntación, es una orden: {question} 
     """
     limpiando = re.sub(r"[.,:;()|-]", "", texto)
     return limpiando 
-
-
 
 if __name__ == "__main__":
     salida = clean("Maxi", question="Que es CompuMax?")
