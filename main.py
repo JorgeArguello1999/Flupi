@@ -20,13 +20,23 @@ while True:
             text_voice.speaker(comando)
 
         # Verificamos si pregunto algún precio
-        if f"{nombre} cuánto cuesta" in audio or f"{nombre} Cuánto cuesta" in audio:
+        if "cuánto cuesta" in audio or "Cuánto cuesta" in audio:
             # Filtramos la entrada de voz
             id_product = ''.join(re.findall(r'\d', audio))
             # Respondemos la pregunta
             salida = database.search(int(id_product))
             salida = f"El {salida[0]} cuesta {salida[2]}"
             text_voice.speaker(salida)
+        
+        # Ofrecemos una descripción sobre el producto
+        if "descripción" in audio:
+            id_product = ''.join(re.findall(r'\d', audio))
+            salida = database.search(int(id_product))
+            prompt = f"""Voy a pasar datos de un producto, tu crea un pequeño parrafo que 
+            lo describa, utiliza explicitamente solo la información del texto, nada más: {salida}"""
+            contexto = context.context(nombre=nombre, question=prompt)
+            respuesta = chatgpt.answer(token=token, context=contexto)
+            text_voice.speaker(respuesta)
 
         # Ejecutamos cualquier consulta en base al contexto
         else:
