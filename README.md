@@ -29,3 +29,29 @@ echo $GPT
 ```
 
 - En caso de querer usar el reconocimiento facial debes entrenar al modelo, usando las funciones existentes en el módulo `camera.py`, este posee funciones para capturar los rostros, entrenar el modelo y detectar rostros, y aparte una función encargada de detectar cualquier tipo de rostro humano.
+
+### Tener en cuenta de cambiar las IP
+
+Estas IP's se encuentran para la base de datos y para crear el servidor de escucha
+
+En este código esta la conexión a la base de datos `./modules/database.py`
+
+``` python
+class connect:
+    def __init__(self):
+        self.conn = pymysql.connect(
+            host = "127.0.0.1", # IP de la base de datos
+            db = "articulos", # Nombre de la base de datos
+            port = 3306, 
+            user = "root", # Usuario
+            passwd = "root" # Contraseña
+        )
+```
+
+Este código muestra el servidor para la llamada al técnico `./modules/llamadas.py`
+
+``` python
+# IP del equipo
+host = '127.0.0.1'
+port = 8080 
+```
