@@ -125,10 +125,12 @@ def recognite():
                 nombre = imagePaths[result[0]]
                 cv2.putText(frame,nombre,(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
+                return nombre
             else:
                 nombre = "Desconocido"
                 cv2.putText(frame,nombre,(x,y-20),2,0.8,(0,0,255),1,cv2.LINE_AA)
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
+                return nombre
            
             print(f"Hola: {nombre}")
 
