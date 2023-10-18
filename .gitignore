@@ -4,3 +4,4 @@ venv/
 .tokens.sh
 .venv/
 __pycache__/
+facesData/*

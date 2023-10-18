@@ -44,4 +44,3 @@ while True:
             contexto = context.context(nombre=nombre, question=audio)
             respuesta = chatgpt.answer(token=token, context=contexto)
             text_voice.speaker(respuesta)
-
