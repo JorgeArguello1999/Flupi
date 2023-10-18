@@ -1,4 +1,4 @@
-import cv2, os, imutils
+import cv2, os, imutils, time
 import numpy as np
 
 dataPath = "./facesData"
@@ -132,8 +132,6 @@ def recognite():
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
                 return nombre
            
-            print(f"Hola: {nombre}")
-
         cv2.imshow('frame',frame)
         k = cv2.waitKey(1)
         if k == 27:

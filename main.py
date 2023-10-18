@@ -1,4 +1,4 @@
-from modules import voice, chatgpt, comandos, database
+from modules import voice, chatgpt, comandos, database, camera
 from context import conf as context
 import os, re 
 

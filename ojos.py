@@ -1,15 +1,15 @@
 from modules import camera, voice
-import time
 
-count = 0
-while True:
+# Saluda a personas que conoce
+def saludar():
     salida = camera.recognite()
-    if salida != "Desconocido":
-        if count != 0: 
-            time.sleep(5)
-            voice.speaker(f"Hola {salida}")
-        else: 
-            voice.speaker(f"Hola {salida}")
+    while True:
+        if salida != "Desconocido":
+            voice.speaker(f"¡Hola {salida}! Bienvenido a CompuMax ")
+            break
+        else:
+            voice.speaker(f"¡Hola!, Bienvenido a Compumax")
+            continue
 
-        count = count + 1
-
+if __name__ == "__main__":
+    saludar()
