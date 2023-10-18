@@ -1,6 +1,6 @@
 # Flupi
 
-![Flupi icon](Yo/logo.jpeg)
+![Flupi icon](me/logo.jpeg)
 
 ## Holaaaa
 
@@ -17,15 +17,15 @@ pip3 install -r requeriments.txt
 
 > En caso de usar Windows se usara el programa por defecto que tenga instalado para la reproducción de audio
 
-Aparte tener en cuenta que se debe descargar el fichero [haarcascade_frontalface_default.xml](https://github.com/opencv/opencv/blob/master/data/haarcascades/haarcascade_frontalface_default.xml), este fichero es una configuración para que OpenCV sea capaz de detectar rostros
-
 ## Uso
 
 Para usar el bot tienes que realizar los siguientes pasos:
 
-1. Crear una variable de entorno llamada `GPT`
+- Crear una variable de entorno llamada `GPT`
 
 ``` bash
 export GPT="Tu token de GPT"
 echo $GPT
 ```
+
+- En caso de querer usar el reconocimiento facial debes entrenar al modelo, usando las funciones existentes en el módulo `camera.py`, este posee funciones para capturar los rostros, entrenar el modelo y detectar rostros, y aparte una función encargada de detectar cualquier tipo de rostro humano.
