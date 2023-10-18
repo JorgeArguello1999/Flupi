@@ -90,34 +90,51 @@ def fit():
 
 def recognite():
     """
-    Preparamos el modelo para reconocer rostros
+    Usamos el modelo para reconocer rostros
     """
-    pass
-    
+    imagePaths = os.listdir(dataPath)
+    print('imagePaths=',imagePaths)
 
-def find():
-    """
-    Activamos el modulo de la camara en vivo, se detiene cuando 
-    detecta un rostro y devuelve true
-    """
+    face_recognizer = cv2.face.FisherFaceRecognizer_create()
+
+    # Leyendo el modelo
+    face_recognizer.read('./modeloFisherFace.xml')
+
+    # Capturamos video en vivo
     cap = cv2.VideoCapture(0)
-    faceClassif = cv2.CascadeClassifier(fileFacesXML)
+
+    faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
 
     while True:
         ret,frame = cap.read()
+        if ret == False: break
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        auxFrame = gray.copy()
 
-        faces = faceClassif.detectMultiScale(gray, 1.3, 5)
-        # En caso de encontrar un rostro devuelve True y se cierra la ejecución
-        if type(faces) != tuple:
-            return True
+        faces = faceClassif.detectMultiScale(gray,1.3,5)
 
         for (x,y,w,h) in faces:
-            cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
+            rostro = auxFrame[y:y+h,x:x+w]
+            rostro = cv2.resize(rostro,(150,150),interpolation= cv2.INTER_CUBIC)
+            result = face_recognizer.predict(rostro)
+
+            cv2.putText(frame,'{}'.format(result),(x,y-5),1,1.3,(255,255,0),1,cv2.LINE_AA)
+           
+            # FisherFace
+            if result[1] < 500:
+                nombre = imagePaths[result[0]]
+                cv2.putText(frame,nombre,(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
+                cv2.rectangle(frame, (x,y),(x+w,y+h),(0,255,0),2)
+            else:
+                nombre = "Desconocido"
+                cv2.putText(frame,nombre,(x,y-20),2,0.8,(0,0,255),1,cv2.LINE_AA)
+                cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
+           
+            print(f"Hola: {nombre}")
 
         cv2.imshow('frame',frame)
-        
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+        k = cv2.waitKey(1)
+        if k == 27:
             break
 
     cap.release()
@@ -125,4 +142,5 @@ def find():
 
 if __name__ == "__main__":
     # capture("Cris")
-    fit()
+    # fit()
+    recognite()
