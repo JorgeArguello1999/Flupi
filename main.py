@@ -1,4 +1,4 @@
-from modules import voice_text, text_voice, chatgpt, comandos, database
+from modules import voice, chatgpt, comandos, database
 from context import conf as context
 import os, re 
 
@@ -8,7 +8,7 @@ database = database.connect()
 
 while True:
     # Abrimos el microfono a la escucha
-    audio = voice_text.microphone()
+    audio = voice.microphone()
     print(audio)
     # Buscamos dentro de lo detectado si activo un comando
     comando = comandos.functions(audio)
@@ -17,7 +17,7 @@ while True:
     if nombre in audio:
         # Comprobamos si ejecutamos algún comando
         if comando != None:
-            text_voice.speaker(comando)
+            voice.speaker(comando)
 
         # Verificamos si pregunto algún precio
         if "cuánto cuesta" in audio or "Cuánto cuesta" in audio:
@@ -26,7 +26,7 @@ while True:
             # Respondemos la pregunta
             salida = database.search(int(id_product))
             salida = f"El {salida[0]} cuesta {salida[2]}"
-            text_voice.speaker(salida)
+            voice.speaker(salida)
         
         # Ofrecemos una descripción sobre el producto
         if "descripción" in audio:
@@ -36,11 +36,11 @@ while True:
             lo describa, utiliza explicitamente solo la información del texto, nada más: {salida}"""
             contexto = context.context(nombre=nombre, question=prompt)
             respuesta = chatgpt.answer(token=token, context=contexto)
-            text_voice.speaker(respuesta)
+            voice.speaker(respuesta)
 
         # Ejecutamos cualquier consulta en base al contexto
         else:
             # Preparamos la pregunta con nuestro context
             contexto = context.context(nombre=nombre, question=audio)
             respuesta = chatgpt.answer(token=token, context=contexto)
-            text_voice.speaker(respuesta)
+            voice.speaker(respuesta)
