@@ -48,10 +48,10 @@ class connect:
         )
 ```
 
-Este código muestra el servidor para la llamada al técnico `./modules/llamadas.py`
+Este código muestra el servidor para la llamada al técnico `./modules/server.py`
 
 ``` python
-# IP del equipo
-host = '127.0.0.1'
-port = 8080 
+# Configuración de dirección del servidor
+host = "192.168.11.12"
+port = 8080
 ```
