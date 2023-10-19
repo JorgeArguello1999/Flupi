@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot</title>
+</head>
+<body>
+
+    <div class="change">
+        <p id="status">No ha cambiado</p>
+    </div>
+    <div class="boton-1">
+        <form action="http://{{ host }}:{{ port }}/chatbot/0" method="GET">
+            <button>Ya Salgo</button>
+        </form>
+    </div>
+
+    <script>
+    // URL de la API que deseas observar
+    const apiUrl = 'http://{{ host }}:{{ port }}/chatbot';
+
+    // Variable para almacenar la respuesta anterior
+    let lastApiResponse = null;
+    let mensaje = document.getElementById("status")
+
+    // Función para realizar la solicitud a la API y verificar cambios
+    async function checkForChanges() {
+        try {
+            const response = await fetch(apiUrl);
+            if (response.status === 200) {
+                const data = await response.json();
+
+                if (JSON.stringify(data) !== JSON.stringify(lastApiResponse)) {
+                    // La API ha cambiado
+                    console.log('La API ha cambiado');
+                    mensaje.innerHTML = data.status
+                    lastApiResponse = data;
+                } else {
+                    console.log('La API no ha cambiado');
+                    mensaje.innerHTML = data.status
+                }
+            } else {
+            console.error('Error al obtener datos de la API');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud a la API', error);
+        }
+    }
+    // Realizar la verificación cada cierto tiempo (por ejemplo, cada 5 segundos)
+    setInterval(checkForChanges, 5000); // 5000 ms = 5 segundos
+
+    </script>
+    
+</body>
+</html>

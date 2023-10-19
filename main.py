@@ -47,7 +47,7 @@ def microfono():
             
             # Llamamos al técnico
             if "llama al técnico" in audio:
-                send_message(text="Cliente afuera!!!", username=nombre)
+                ""
                 voice.speaker("Espera un momento, puedes tomar asiento")
                 continue
 
@@ -57,30 +57,6 @@ def microfono():
                 contexto = context.context(nombre=nombre, question=audio)
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
-
-
-def send_message(username:str, text:str)-> bool:
-    """
-    :username -> Nombre de usuario
-    :text -> Texto a enviar
-    Return True or False
-    """
-    # Variables cliente
-    host = server.host
-    port = server.port
-    print(host, port)
-
-    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    client.connect((host, port))
-
-    try:
-        message = f"{username}: {text}"
-        client.send(message.encode('utf-8'))
-        print("Mensaje enviado")
-        return True
-    except Exception as error:
-        print(f"Error: {error}")
-        return False
 
 # Abrimos hilos
 microfono_thread = threading.Thread(target=microfono)

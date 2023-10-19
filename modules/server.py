@@ -1,79 +1,39 @@
-import socket   
-import threading
+from flask import Flask, jsonify, render_template
+from flask_cors import CORS
 
-# IP del equipo
-host = '127.0.0.1'
-port = 8080 
+app = Flask(__name__)
+CORS(app)
 
-clients = []
-usernames = []
+# Variable para ver el estado del trabajo
+work = {
+    "status": 0
+}
 
-def broadcast(message, _client):
-    for client in clients:
-        if client != _client:
-            client.send(message)
+# Configuración de dirección del servidor
+host = "192.168.11.12"
+port = 8080
 
-def handle_messages(client):
-    while True:
-        try:
-            message = client.recv(1024)
-            broadcast(message, client)
-        except:
-            index = clients.index(client)
-            username = usernames[index]
-            broadcast(f"ChatBot: {username} disconnected".encode('utf-8'), client)
-            clients.remove(client)
-            usernames.remove(username)
-            client.close()
-            break
+@app.route("/")
+def home():
+    return render_template('index.html', host=host, port=port)
 
-def create_server():
-    # Variables servidor
-    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    server.bind((host, port))
-    server.listen()
-    print(f"Server running on {host}:{port}")
+@app.route("/chatbot", methods=["GET"])
+def chatbot_message():
+    return jsonify({
+        "status": work["status"]
+    })
 
-    """
-    while True:
-        client, address = server.accept()
+@app.route("/chatbot/<int:statuswork>", methods=["GET"])
+def chatbot_message_give(statuswork):
+    status = False
+    if statuswork == 1:
+        status = True
 
-        client.send("@username".encode("utf-8"))
-        username = client.recv(1024).decode('utf-8')
-
-        clients.append(client)
-        usernames.append(username)
-
-        print(f"{username} is connected with {str(address)}")
-
-        message = f"ChatBot: {username} joined the chat!".encode("utf-8")
-        broadcast(message, client)
-        client.send("Connected to server".encode("utf-8"))
-
-        thread = threading.Thread(target=handle_messages, args=(client,))
-        thread.start()
-    """
-    while True:
-        client, address = server.accept()
-
-        client.send("@username".encode("utf-8"))
-        username = client.recv(1024).decode('utf-8')
-
-        clients.append(client)
-        usernames.append(username)
-
-        print(f"{username} is connected with {str(address)}")
-
-        # Enviar mensaje de bienvenida al cliente
-        client.send("Connected to server".encode("utf-8"))
-
-        message = f"ChatBot: {username} joined the chat!".encode("utf-8")
-        broadcast(message, client)
-
-        thread = threading.Thread(target=handle_messages, args=(client,))
-        thread.start()
-
-
+    work["status"] = status
+    
+    return jsonify({
+        "status": "changed"
+    })
 
 if __name__ == "__main__":
-    create_server()
+    app.run(host=host, port=port, debug=True)
