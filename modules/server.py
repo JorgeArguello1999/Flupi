@@ -6,7 +6,7 @@ CORS(app)
 
 # Variable para ver el estado del trabajo
 work = {
-    "status": 0
+    "status": False
 }
 
 # Configuración de dirección del servidor
