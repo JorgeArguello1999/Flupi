@@ -7,7 +7,7 @@
 </head>
 <body>
 
-    <div class="change">
+    <div class="box" id="box">
         <p id="status">No ha cambiado</p>
     </div>
     <div class="boton-1">
@@ -16,40 +16,54 @@
         </form>
     </div>
 
+    <style>
+        .box, .boton-1, button{
+            text-align: center;
+            margin: 0 auto;
+            width: 50%;
+            padding: 1em;
+            border-radius: 2em;
+            font-size: large;
+            border-style: dashed;
+        }
+        .boton-1{
+            color: black;
+        }
+        .box{
+            color: white;
+        }
+    </style>
+
     <script>
     // URL de la API que deseas observar
     const apiUrl = 'http://{{ host }}:{{ port }}/chatbot';
 
-    // Variable para almacenar la respuesta anterior
-    let lastApiResponse = null;
-    let mensaje = document.getElementById("status")
+    // Obtenemos el parrafo que va a servir como identificador
+    let mensaje = document.getElementById("status");
+    let caja = document.getElementById("box");
 
     // Función para realizar la solicitud a la API y verificar cambios
     async function checkForChanges() {
         try {
             const response = await fetch(apiUrl);
             if (response.status === 200) {
+                // Obtenemos el json de la API
                 const data = await response.json();
-
-                if (JSON.stringify(data) !== JSON.stringify(lastApiResponse)) {
-                    // La API ha cambiado
-                    console.log('La API ha cambiado');
-                    mensaje.innerHTML = data.status
-                    lastApiResponse = data;
+                if (data.status != false) {
+                    mensaje.innerHTML = "Cliente Afuera!!!";
+                    caja.style.backgroundColor = "#94351b"
                 } else {
-                    console.log('La API no ha cambiado');
-                    mensaje.innerHTML = data.status
+                    mensaje.innerHTML = "No hay clientes";
+                    caja.style.backgroundColor = "#80dbff"
                 }
-            } else {
-            console.error('Error al obtener datos de la API');
-            }
+
+            }else{alert("Error en la obtener datos de la API");}
         } catch (error) {
-            console.error('Error en la solicitud a la API', error);
+            alert('Error en la solicitud a la API', error);
         }
     }
     // Realizar la verificación cada cierto tiempo (por ejemplo, cada 5 segundos)
-    setInterval(checkForChanges, 5000); // 5000 ms = 5 segundos
-
+    setInterval(checkForChanges, 5000); 
     </script>
     
 </body>

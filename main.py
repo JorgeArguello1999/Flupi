@@ -1,7 +1,8 @@
 from modules import voice, chatgpt, comandos, database
 from modules import server
 from context import conf as context
-import os, re, threading, socket
+import os, re, subprocess, signal
+import requests
 
 token = os.environ.get("GPT")
 nombre = comandos.nombre
@@ -49,6 +50,7 @@ def microfono():
             if "llama al técnico" in audio:
                 ""
                 voice.speaker("Espera un momento, puedes tomar asiento")
+                requests.get()
                 continue
 
             # Ejecutamos cualquier consulta en base al contexto
@@ -58,14 +60,13 @@ def microfono():
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
 
-# Abrimos hilos
-microfono_thread = threading.Thread(target=microfono)
-servidor_thread = threading.Thread(target=server.create_server)
+try:
+    # Iniciar el proceso del servidor Flask
+    server_process = subprocess.Popen("python3 modules/server.py", shell=True)
 
-# Iniciamos los hilos
-microfono_thread.start()
-servidor_thread.start()
-
-# Terminamos los hilos
-microfono_thread.join()
-servidor_thread.join()
+    # Hilo principal
+    microfono()
+except KeyboardInterrupt:
+    # Para terminar el proceso del servidor Flask
+    server_process.send_signal(signal.SIGTERM)
+    server_process.wait()

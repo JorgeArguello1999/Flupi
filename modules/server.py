@@ -35,5 +35,8 @@ def chatbot_message_give(statuswork):
         "status": "changed"
     })
 
-if __name__ == "__main__":
+def start():
     app.run(host=host, port=port, debug=True)
+
+if __name__ == "__main__":
+    start()
