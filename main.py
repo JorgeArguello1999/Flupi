@@ -1,5 +1,5 @@
 from modules import voice, chatgpt, comandos, database
-from modules import server
+from server import server
 from context import conf as context
 import os, re, subprocess, signal
 import requests
