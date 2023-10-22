@@ -1,13 +1,20 @@
 import pymysql
 
 class connect:
-    def __init__(self):
+    def __init__(self, host:str, port:int, db:str, user:str, passwd:str):
+        """
+        :host -> IP de la base de datos
+        :port -> Puerto de la base de datos
+        :db -> Base de datos a usar
+        :user -> Usuario de la base de datos
+        :passwd -> Contraseñan para la base de datos
+        """
         self.conn = pymysql.connect(
-            host = "127.0.0.1",
-            db = "articulos",
-            port = 3306,
-            user = "root",
-            passwd = "root" 
+            host = host,
+            db = db,
+            port = port,
+            user = user,
+            passwd = passwd 
         )
 
     def search(self, id_producto:int) -> list:
@@ -32,6 +39,12 @@ class connect:
 
 
 if __name__ == "__main__":
-    database = connect()
+    database = connect(
+        host="127.0.0.1",
+        db="articulos",
+        port=3306,
+        user="root",
+        passwd="root"
+    )
     salida = database.search(7092)
     print(salida)

@@ -6,7 +6,14 @@ import requests
 
 token = os.environ.get("GPT")
 nombre = comandos.nombre
-database = database.connect()
+# Conexión a la base de articulos
+articulos = database.connect(
+    host="127.0.0.1",
+    port=3306,
+    user="root",
+    passwd="root",
+    db="articulos"
+)
 
 # Función de Escucha
 def microfono():
@@ -29,7 +36,7 @@ def microfono():
                 # Filtramos la entrada de voz
                 id_product = ''.join(re.findall(r'\d', audio))
                 # Respondemos la pregunta
-                salida = database.search(int(id_product))
+                salida = articulos.search(int(id_product))
                 salida = f"El {salida[0]} cuesta {salida[2]}"
                 voice.speaker(salida)
                 continue
@@ -37,7 +44,7 @@ def microfono():
             # Ofrecemos una descripción sobre el producto
             if "descripción" in audio:
                 id_product = ''.join(re.findall(r'\d', audio))
-                salida = database.search(int(id_product))
+                salida = articulos.search(int(id_product))
                 prompt = f"""Voy a pasar datos de un producto, tu crea un pequeño 
                 parrafo que lo describa, utiliza explicitamente solo la información 
                 del texto, nada más: {salida}"""
