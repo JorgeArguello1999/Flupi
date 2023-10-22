@@ -1,11 +1,11 @@
 from modules import voice, chatgpt, comandos, database
-from server import server
 from context import conf as context
 import os, re, subprocess, signal
 import requests
 
 token = os.environ.get("GPT")
 nombre = comandos.nombre
+
 # Conexión a la base de articulos
 articulos = database.connect(
     host="127.0.0.1",
@@ -14,6 +14,10 @@ articulos = database.connect(
     passwd="root",
     db="articulos"
 )
+# Creación del servidor web
+server_host = "127.0.0.1"
+server_port = 8080
+server_command = f"""python3 -c "from server import main; app = main.Servidor(host='{server_host}', port={server_port}); app.start()" """
 
 # Función de Escucha
 def microfono():
@@ -56,8 +60,16 @@ def microfono():
             # Llamamos al técnico
             if "llama al técnico" in audio:
                 ""
-                voice.speaker("Espera un momento, puedes tomar asiento")
-                requests.get()
+                try:
+                    salida = requests.get(
+                        url=f"http://{server_host}:{server_port}/chatbot/1"
+                    )
+                    print(f"url: {salida}")
+                    voice.speaker("Espera un momento, puedes tomar asiento")
+                except Exception as error:
+                    voice.speaker("Ocurrió un error, Acercate al personal para solicitar la ayuda")
+                    print(f"Error al llamar al técnico: {error}")
+
                 continue
 
             # Ejecutamos cualquier consulta en base al contexto
@@ -69,7 +81,7 @@ def microfono():
 
 try:
     # Iniciar el proceso del servidor Flask
-    server_process = subprocess.Popen("python3 modules/server.py", shell=True)
+    server_process = subprocess.Popen(f"{server_command}", shell=True)
 
     # Hilo principal
     microfono()

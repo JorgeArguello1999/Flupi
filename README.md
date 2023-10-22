@@ -34,24 +34,26 @@ echo $GPT
 
 Estas IP's se encuentran para la base de datos y para crear el servidor de escucha
 
-En este código esta la conexión a la base de datos `./modules/database.py`
+En este código esta la conexión a la base de datos `./main.py`
 
 ``` python
-class connect:
-    def __init__(self):
-        self.conn = pymysql.connect(
-            host = "127.0.0.1", # IP de la base de datos
-            db = "articulos", # Nombre de la base de datos
-            port = 3306, 
-            user = "root", # Usuario
-            passwd = "root" # Contraseña
-        )
+# Conexión a la base de articulos
+articulos = database.connect(
+    host="127.0.0.1",
+    port=3306,
+    user="root",
+    passwd="root",
+    db="articulos"
+)
 ```
 
-Este código muestra el servidor para la llamada al técnico `./modules/server.py`
+Este código muestra el servidor para la llamada al técnico `./main.py`
 
 ``` python
-# Configuración de dirección del servidor
-host = "192.168.11.12"
-port = 8080
+# Creación del servidor web
+server_host = "127.0.0.1"
+server_port = 8080
+server_command = f"""python3 -c "from server import main; app = main.Servidor(host='{server_host}', port={server_port}); app.start()" """
 ```
+
+Esto se realiza debido a que utilizamos `subprocess` para ejecutar la API en segundo plano
