@@ -1,61 +1,28 @@
-import pygame
-import os
+import flet as ft
 
-# Inicializar Pygame
-pygame.init()
+def main(page: ft.Page):
+    page.title = "Flet counter example"
+    page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
-# Configuración de la ventana
-window_size = (800, 600)
-screen = pygame.display.set_mode(window_size)
-pygame.display.set_caption("Carrousel de Imágenes")
+    txt_number = ft.TextField(value="0", text_align=ft.TextAlign.RIGHT, width=100)
 
-# Directorio con las imágenes
-image_directory = "./me/"
+    def minus_click(e):
+        txt_number.value = str(int(txt_number.value) - 1)
+        page.update()
 
-# Obtener una lista de las imágenes en el directorio
-image_files = [f for f in os.listdir(image_directory) if f.endswith(".jpeg")]
-image_index = 0  
-print(image_files)
+    def plus_click(e):
+        txt_number.value = str(int(txt_number.value) + 1)
+        page.update()
 
-# Cargar imágenes
-images = [pygame.image.load(os.path.join(image_directory, file)) for file in image_files]
+    page.add(
+        ft.Row(
+            [
+                ft.IconButton(ft.icons.REMOVE, on_click=minus_click),
+                txt_number,
+                ft.IconButton(ft.icons.ADD, on_click=plus_click),
+            ],
+            alignment=ft.MainAxisAlignment.CENTER,
+        )
+    )
 
-# Colores
-yellow = (255, 255, 0)
-black = (000, 000, 000)
-
-# Fuente para los botones
-font = pygame.font.Font(None, 36)
-
-# Función para dibujar botones redondos
-def draw_round_button(x, y, radius, text, color):
-    pygame.draw.circle(screen, yellow, (x, y), radius)
-    text_surface = font.render(text, True, black)
-    text_rect = text_surface.get_rect(center=(x, y))
-    screen.blit(text_surface, text_rect)
-
-# Bucle principal del juego
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_LEFT:
-                image_index = (image_index - 1) % len(images)
-            elif event.key == pygame.K_RIGHT:
-                image_index = (image_index + 1) % len(images)
-
-    # Dibujar elementos en la pantalla
-    screen.fill(yellow)  # Fondo amarillo
-    current_image = images[image_index]
-    screen.blit(current_image, (0, 0))
-
-    # Dibujar botones redondos
-    draw_round_button(50, 300, 30, "<", black)
-    draw_round_button(750, 300, 30, ">", black)
-
-    pygame.display.flip()
-
-# Finalizar Pygame
-pygame.quit()
+ft.app(target=main)
