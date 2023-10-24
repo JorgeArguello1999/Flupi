@@ -1,63 +1,61 @@
 import pygame
 import os
 
-# Inicializa Pygame
+# Inicializar Pygame
 pygame.init()
 
-# Configuración de la pantalla
-screen_width, screen_height = 800, 600
-screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption("Visor de Galería")
+# Configuración de la ventana
+window_size = (800, 600)
+screen = pygame.display.set_mode(window_size)
+pygame.display.set_caption("Carrousel de Imágenes")
 
 # Directorio con las imágenes
-image_directory = "./me"
-image_files = os.listdir(image_directory)
-current_image = 0
+image_directory = "./me/"
 
-# Cargamos la primera imagen
-current_image_surface = pygame.image.load(os.path.join(image_directory, image_files[current_image]))
-current_image_rect = current_image_surface.get_rect()
-current_image_rect.center = (screen_width // 2, screen_height // 2)
+# Obtener una lista de las imágenes en el directorio
+image_files = [f for f in os.listdir(image_directory) if f.endswith(".jpeg")]
+image_index = 0  
+print(image_files)
+
+# Cargar imágenes
+images = [pygame.image.load(os.path.join(image_directory, file)) for file in image_files]
 
 # Colores
-white = (255, 255, 255)
+yellow = (255, 255, 0)
+black = (000, 000, 000)
+
+# Fuente para los botones
 font = pygame.font.Font(None, 36)
 
-# Función para cargar la siguiente imagen
-def load_next_image():
-    global current_image
-    current_image = (current_image + 1) % len(image_files)
-    return pygame.image.load(os.path.join(image_directory, image_files[current_image]))
+# Función para dibujar botones redondos
+def draw_round_button(x, y, radius, text, color):
+    pygame.draw.circle(screen, yellow, (x, y), radius)
+    text_surface = font.render(text, True, black)
+    text_rect = text_surface.get_rect(center=(x, y))
+    screen.blit(text_surface, text_rect)
 
-# Función para cargar la imagen anterior
-def load_previous_image():
-    global current_image
-    current_image = (current_image - 1) % len(image_files)
-    return pygame.image.load(os.path.join(image_directory, image_files[current_image]))
-
+# Bucle principal del juego
 running = True
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                current_image_surface = load_previous_image()
+                image_index = (image_index - 1) % len(images)
             elif event.key == pygame.K_RIGHT:
-                current_image_surface = load_next_image()
+                image_index = (image_index + 1) % len(images)
 
-    # Dibuja la imagen actual
-    screen.fill(white)
-    screen.blit(current_image_surface, current_image_rect)
+    # Dibujar elementos en la pantalla
+    screen.fill(yellow)  # Fondo amarillo
+    current_image = images[image_index]
+    screen.blit(current_image, (0, 0))
 
-    # Dibuja botones
-    left_button = font.render("<", True, (0, 0, 0))
-    right_button = font.render(">", True, (0, 0, 0))
-    screen.blit(left_button, (50, screen_height // 2 - 20))
-    screen.blit(right_button, (screen_width - 80, screen_height // 2 - 20))
+    # Dibujar botones redondos
+    draw_round_button(50, 300, 30, "<", black)
+    draw_round_button(750, 300, 30, ">", black)
 
     pygame.display.flip()
 
-# Finaliza Pygame
+# Finalizar Pygame
 pygame.quit()
