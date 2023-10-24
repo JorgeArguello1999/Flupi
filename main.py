@@ -1,4 +1,4 @@
-from modules import voice, chatgpt, comandos, database
+from modules import voice, chatgpt, comandos, database, camera
 from context import conf as context
 import os, re, subprocess, signal
 import requests
@@ -79,13 +79,27 @@ def microfono():
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
 
-try:
-    # Iniciar el proceso del servidor Flask
-    server_process = subprocess.Popen(f"{server_command}", shell=True)
+# Saluda a personas que conoce
+def saludar():
+    """
+    Devuelve un True cuando reconoce a alguien, y un False cuando no reconoce a nadie
+    """
+    salida = camera.recognite()
+    if salida != "Desconocido":
+        voice.speaker(f"¡Hola {salida}! Bienvenido a CompuMax ")
+        return True
+    else:
+        voice.speaker(f"¡Hola!, Bienvenido a Compumax")
+        return False
 
-    # Hilo principal
-    microfono()
-except KeyboardInterrupt:
-    # Para terminar el proceso del servidor Flask
-    server_process.send_signal(signal.SIGTERM)
-    server_process.wait()
+if __name__ == "__main__":
+    try:
+        # Iniciar el proceso del servidor Flask
+        server_process = subprocess.Popen(f"{server_command}", shell=True)
+
+        # Hilo principal
+        microfono()
+    except KeyboardInterrupt:
+        # Para terminar el proceso del servidor Flask
+        server_process.send_signal(signal.SIGTERM)
+        server_process.wait()
