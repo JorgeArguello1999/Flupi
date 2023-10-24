@@ -95,7 +95,12 @@ def saludar():
 if __name__ == "__main__":
     try:
         # Iniciar el proceso del servidor Flask
-        server_process = subprocess.Popen(f"{server_command}", shell=True)
+        server_process = subprocess.Popen(
+            server_command, 
+            shell=True, 
+            stdout=subprocess.DEVNULL, # Eliminamos la salida en pantalla 
+            stderr=subprocess.DEVNULL
+        )
 
         # Hilo principal
         microfono()

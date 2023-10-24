@@ -140,40 +140,52 @@ def recognite():
 
 # Experimental
 # Función para reconocer rostros
-def recognize_with_interface(frame):
+def recognize_with_interface():
+    """
+    Usamos el modelo para reconocer rostros
+    """
     imagePaths = os.listdir(dataPath)
     print('imagePaths=', imagePaths)
 
-    face_recognizer = cv2.face.FisherFaceRecognizer_create()
+    face_recognizer = cv2.face_FisherFaceRecognizer.create()
 
     # Leyendo el modelo
     face_recognizer.read('./modeloFisherFace.xml')
 
-    faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades+'haarcascade_frontalface_default.xml')
+    # Capturamos video en vivo
+    cap = cv2.VideoCapture(0)
 
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    auxFrame = gray.copy()
+    faceClassif = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-    faces = faceClassif.detectMultiScale(gray, 1.3, 5)
+    while True:
+        ret, frame = cap.read()
+        if not ret:
+            break
 
-    for (x, y, w, h) in faces:
-        rostro = auxFrame[y:y+h, x:x+w]
-        rostro = cv2.resize(rostro, (150, 150), interpolation=cv2.INTER_CUBIC)
-        result = face_recognizer.predict(rostro)
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        auxFrame = gray.copy()
 
-        cv2.putText(frame, '{}'.format(result), (x, y-5), 1, 1.3, (255, 255, 0), 1, cv2.LINE_AA)
+        faces = faceClassif.detectMultiScale(gray, 1.3, 5)
 
-        # FisherFace
-        if result[1] < 500:
-            nombre = imagePaths[result[0]]
-            cv2.putText(frame, nombre, (x, y-25), 2, 1.1, (0, 255, 0), 1, cv2.LINE_AA)
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
-        else:
-            nombre = "Desconocido"
-            cv2.putText(frame, nombre, (x, y-20), 2, 0.8, (0, 0, 255), 1, cv2.LINE_AA)
-            cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 2)
+        for (x, y, w, h) in faces:
+            rostro = auxFrame[y:y + h, x:x + w]
+            rostro = cv2.resize(rostro, (150, 150), interpolation=cv2.INTER_CUBIC)
+            result = face_recognizer.predict(rostro)
 
-    return frame
+            cv2.putText(frame, '{}'.format(result), (x, y - 5), 1, 1.3, (255, 255, 0), 1, cv2.LINE_AA)
+
+            # FisherFace
+            if result[1] < 500:
+                nombre = imagePaths[result[0]]
+                cv2.putText(frame, nombre, (x, y - 25), 2, 1.1, (0, 255, 0), 1, cv2.LINE_AA)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
+            else:
+                nombre = "Desconocido"
+                cv2.putText(frame, nombre, (x, y - 20), 2, 0.8, (0, 0, 255), 1, cv2.LINE_AA)
+                cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 2)
+
+        return frame
+    cap.release()
 
 if __name__ == "__main__":
     # capture("Cris")

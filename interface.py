@@ -1,45 +1,38 @@
-import flet as ft
-from flet import *
-import threading
+import cv2
+import tkinter as tk
+from tkinter import PhotoImage
+from PIL import Image, ImageTk
+from modules import camera
 
-# Modulo de utilidades netas
-def start_utilities():
-    import main
+class CameraApp:
+    def __init__(self, window, window_title):
+        self.window = window
+        self.window.title(window_title)
 
-utilites = threading.Thread(target=start_utilities)
-utilites.start()
+        self.vid = cv2.VideoCapture(0)  # Abre la cámara (0 es la cámara predeterminada)
 
-def main(page: ft.Page):
-    page.title = "Images Example"
-    page.theme_mode = ft.ThemeMode.DARK
-    page.padding = 50
+        self.canvas = tk.Canvas(window, width=self.vid.get(3), height=self.vid.get(4))
+        self.canvas.pack()
 
-    img = ft.Image(
-        src=f"./me/1.jpeg",
-        width=100,
-        height=100,
-        fit=ft.ImageFit.CONTAIN,
-    )
-    images = ft.Row(expand=1, wrap=True, scroll="always")
+        self.update()
+        
+        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
 
-    page.add(img, images)
+    def update(self):
+        ret, frame = self.vid.read()
+        if ret:
+            #self.photo = ImageTk.PhotoImage(image=Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)))
+            self.photo = ImageTk.PhotoImage(image=Image.fromarray(camera.recognize_with_interface()))
+            print(self.photo)
+            self.canvas.create_image(0, 0, image=self.photo, anchor=tk.NW)
+        self.window.after(10, self.update)
 
-    for i in range(0, 30):
-        images.controls.append(
-            ft.Image(
-                src=f"./me/{i}.jpeg",
-                width=200,
-                height=200,
-                fit=ft.ImageFit.NONE,
-                border_radius=ft.border_radius.all(10),
-            )
-        )
-    page.update()
+    def on_closing(self):
+        if self.vid.isOpened():
+            self.vid.release()
+        self.window.destroy()
 
-utilites.join()
-
-if __name__ == "__main__":
-    # Lanzamos la APP para escritorio
-    ft.app(target=main)
-    # Lanzamos la APP para web 
-    # ft.app(target=main, view=ft.AppView.WEB_BROWSER)
+if __name__ == '__main__':
+    root = tk.Tk()
+    app = CameraApp(root, "Camera App")
+    root.mainloop()
