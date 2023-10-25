@@ -92,7 +92,8 @@ def saludar():
         voice.speaker(f"¡Hola!, Bienvenido a Compumax")
         return False
 
-if __name__ == "__main__":
+# Ejecutamos nuestro proyecto  
+def start():
     try:
         # Iniciar el proceso del servidor Flask
         server_process = subprocess.Popen(
@@ -108,3 +109,6 @@ if __name__ == "__main__":
         # Para terminar el proceso del servidor Flask
         server_process.send_signal(signal.SIGTERM)
         server_process.wait()
+
+if __name__ == "__main__":
+    start()
