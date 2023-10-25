@@ -1,60 +1,58 @@
-import flet as flt
-import subprocess
-import os 
+from kivy.lang import Builder
+from kivymd.app import MDApp
+from kivy.uix.videoplayer import VideoPlayer
+from kivy.uix.video import Video
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.label import Label
+from kivy.uix.button import Button
+from kivy.uix.popup import Popup
+from kivy.uix.gridlayout import GridLayout
+from kivy.app import App
 
-modulo = "main.py"
-# command = f"python3 {modulo}"
-# Eliminaras hijito
-command = f"python3 --version"
+class MainApp(MDApp):
+    title = "Hola Maxi"
+    def build(self):
+        # Configuraciones principales
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "BlueGray"
 
-def main(page: flt.Page):
-    page.title = "Hola maxi"
-    page.theme_mode = flt.ThemeMode.DARK
-    page.fonts = {
-        "junegull": "./me/junegull.ttf"
-    }
-    page.theme = flt.Theme(font_family="junegull")
+        # Mensaje
+        layout = BoxLayout(orientation='vertical', spacing=10)
 
-    # txt Bienvenida
-    txt_bienvenida = flt.Text(
-        value="¡Hola, soy Maxi!",
-    )
+        # Texto de bienvenida
+        welcome_label = Label(text="Hola, bienvenido, soy Maxi", font_size='30sp', halign='center', valign='middle')
+        
+        # Reproductor de video
+        player = Video(source="./me/video.mp4")
+        player.state = "play"
+        player.options = {"eos": "loop"}
+        player.allow_fullscreen = True
 
-    # JPG Maxi
-    jpg_imagen = flt.Image(
-        src="./me/2.jpeg"
-    )
+        # Texto para saludar
+        greet_label = Label(text="Di, hola Maxi", font_size='30sp', halign='center', valign='middle')
 
-    stack_central = flt.Stack([
-        flt.Container(width=50, height=50, bgcolor=flt.colors.YELLOW),
-        flt.Container(width=25, height=25, bgcolor=flt.colors.BLACK),
-        jpg_imagen
-    ])
+        # Botones
+        buttons_layout = GridLayout(cols=2, spacing=10, size_hint=(1, None), height=50)
+        exit_button = Button(text="Salir", on_release=self.exit_app)
+        command_button = Button(text="Mostrar Comandos", on_release=self.show_commands)
 
-    # Añadimos los componentes
-    page.add(
-        flt.Row(
-            controls=[txt_bienvenida]
-        ),
-        flt.Row(
-            controls=[
-                jpg_imagen
-            ]
-        ),
-        stack_central
-    )
+        # Agregar elementos al diseño
+        layout.add_widget(welcome_label)
+        layout.add_widget(player)
+        layout.add_widget(greet_label)
+        layout.add_widget(buttons_layout)
+        buttons_layout.add_widget(exit_button)
+        buttons_layout.add_widget(command_button)
 
-    # Añadimos los cambios
-    page.update()
+        return layout
+
+    def exit_app(self, instance):
+        App.get_running_app().stop()
+
+    def show_commands(self, instance):
+        content = Label(text="Comandos:\n1. Decir 'Hola Maxi' para saludar\n2. Botón 'Salir' para cerrar la aplicación", font_size='20sp')
+        popup = Popup(title="Comandos", content=content, size_hint=(None, None), size=(400, 200))
+        popup.open()
 
 if __name__ == "__main__":
-    # Hilo a la escucha 
-    maxi_process = subprocess.Popen(
-        command,
-        shell=True,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL
-    )
-
-    # Hilo principal
-    flt.app(target=main)
+    MainApp().run()
