@@ -17,7 +17,7 @@ articulos = database.connect(
 # Creación del servidor web
 server_host = "192.168.11.12"
 server_port = 8080
-server_command = f"""python3 -c "from server import main; app = main.Servidor(host='{server_host}', port={server_port}); app.start()" """
+server_command = f"python server/main.py {server_host} {server_port}"
 
 # Función de Escucha
 def microfono():

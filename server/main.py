@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, render_template
 from flask import redirect, url_for
 from flask_cors import CORS
+import sys
 
 class Servidor:
     def __init__(self, host:str, port:int):
@@ -53,8 +54,11 @@ class Servidor:
         self.app.run(host=self.host, port=self.port, debug=True)
 
 if __name__ == "__main__":
+    # Obtenemos los parametros para ejecutar el modulo
+    host = sys.argv[1]
+    port = sys.argv[2]
     app = Servidor(
-        host="127.0.0.1",
-        port=8080
+        host=host,
+        port=port
     )
     app.start()
