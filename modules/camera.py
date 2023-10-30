@@ -3,7 +3,6 @@ import numpy as np
 
 dataPath = "./facesData"
 fileFacesXML = "./haarcascade_frontalface_default.xml"
-print(fileFacesXML)
 
 # Capturamos los rostros de las personas
 def capture(name:str):
