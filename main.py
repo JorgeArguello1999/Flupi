@@ -1,6 +1,6 @@
 from modules import voice, chatgpt, comandos, database, camera
 from context import conf as context
-import os, re, subprocess, signal
+import os, re, subprocess, multiprocessing
 import requests
 
 # Variables de entorno
@@ -103,16 +103,19 @@ def start_server():
         stdout=subprocess.DEVNULL, 
         stderr=subprocess.DEVNULL
     )
+    server_process.wait()
 
 def start_interface():
     # Iniciar el proceso del servidor Flask
-    server_process = subprocess.Popen(
+    interface_process = subprocess.Popen(
         "python3 modules/interface.py",
         shell=True, 
         stdout=subprocess.DEVNULL, 
         stderr=subprocess.DEVNULL
     )
+    interface_process.wait()
 
+"""
 # Ejecutamos nuestro proyecto  
 def start():
     # Hilo principal
@@ -121,12 +124,26 @@ def start():
     # Hilo para el servidor Flask
     start_server()
 
-    # Hilo para la ejecución de la camara
-    # start_camera()
-
     # Hilo para la interfaz gráfica
     start_interface()
 
-
+    # Hilo para la ejecución de la camara
+    # start_camera()
+"""
 if __name__ == "__main__":
-    start()
+    server_process = multiprocessing.Process(target=start_server)
+    # camera_process = multiprocessing.Process(target=start_camera)
+    interface_process = multiprocessing.Process(target=start_interface)
+    chatbot_process = multiprocessing.Process(target=chatbot)
+
+    server_process.start()
+    # camera_process.start()
+    interface_process.start()
+    chatbot_process.start()
+
+    server_process.join()
+    # camera_process.join()
+    interface_process.join()
+    chatbot_process.join()
+
+

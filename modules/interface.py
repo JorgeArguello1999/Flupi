@@ -77,13 +77,4 @@ class MainApp(MDApp):
         popup.open()
 
 if __name__ == "__main__":
-
-    try:
-        bot_command = subprocess.Popen(
-            "python3 main.py",
-            shell=True
-        )
-        MainApp().run()
-    except KeyboardInterrupt:
-        bot_command.send_signal(signal.SIGTERM)
-        bot_command.wait()
+    MainApp().run()

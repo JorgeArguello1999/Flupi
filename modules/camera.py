@@ -87,7 +87,7 @@ def fit():
     print("Modelo almacenado...")
     return True
 
-def recognite():
+def recognite(frame_camera=False):
     """
     Usamos el modelo para reconocer rostros
     """
@@ -129,7 +129,7 @@ def recognite():
                 cv2.putText(frame,nombre,(x,y-20),2,0.8,(0,0,255),1,cv2.LINE_AA)
                 cv2.rectangle(frame, (x,y),(x+w,y+h),(0,0,255),2)
            
-        cv2.imshow('frame',frame)
+        if frame_camera == True: cv2.imshow('frame',frame) 
         k = cv2.waitKey(1)
         if k == 27:
             break
@@ -189,4 +189,4 @@ def recognize_with_interface():
 if __name__ == "__main__":
     # capture("Cris")
     # fit()
-    recognite()
+    recognite(True)
