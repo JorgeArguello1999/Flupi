@@ -11,9 +11,6 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.app import App
 from kivy.core.window import Window
 
-# Modulos del sistema
-import subprocess, signal
-
 class MainApp(MDApp):
     title = "Hola Maxi"
     fonts = {

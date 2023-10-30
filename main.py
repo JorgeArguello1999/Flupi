@@ -36,7 +36,7 @@ def chatbot():
             if comando != None:
                 voice.speaker(comando)
                 continue
-
+            
             # Verificamos si pregunto algún precio
             if "cuánto cuesta" in audio or "Cuánto cuesta" in audio:
                 # Filtramos la entrada de voz
@@ -46,7 +46,7 @@ def chatbot():
                 salida = f"El {salida[0]} cuesta {salida[2]}"
                 voice.speaker(salida)
                 continue
-            
+           
             # Ofrecemos una descripción sobre el producto
             if "descripción" in audio:
                 id_product = ''.join(re.findall(r'\d', audio))
@@ -119,14 +119,13 @@ if __name__ == "__main__":
     server_process = multiprocessing.Process(target=start_server)
     # camera_process = multiprocessing.Process(target=start_camera)
     interface_process = multiprocessing.Process(target=start_interface)
-    chatbot_process = multiprocessing.Process(target=chatbot)
 
     server_process.start()
     # camera_process.start()
     interface_process.start()
-    chatbot_process.start()
+
+    chatbot()
 
     server_process.join()
     # camera_process.join()
     interface_process.join()
-    chatbot_process.join()
