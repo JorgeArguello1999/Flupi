@@ -20,8 +20,8 @@ server_host = "192.168.11.12"
 server_port = 8080
 server_command = f"python server/main.py {server_host} {server_port}"
 
-# Función de Escucha
-def microfono():
+# Función de Escucha principal
+def chatbot():
     while True:
         # Abrimos el microfono a la escucha
         audio = voice.microphone()
@@ -81,8 +81,8 @@ def microfono():
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
                 
-# Saluda a personas que conoce
-def saludar():
+# Saluda a personas que conoce (Camara)
+def start_camera():
     """
     Devuelve un True cuando reconoce a alguien, y un False cuando no reconoce a nadie
     """
@@ -94,24 +94,39 @@ def saludar():
         voice.speaker(f"¡Hola!, Bienvenido a Compumax")
         return False
 
+# Iniciamos el servidor
+def start_server():
+    # Iniciar el proceso del servidor Flask
+    server_process = subprocess.Popen(
+        server_command, 
+        shell=True, 
+        stdout=subprocess.DEVNULL, 
+        stderr=subprocess.DEVNULL
+    )
+
+def start_interface():
+    # Iniciar el proceso del servidor Flask
+    server_process = subprocess.Popen(
+        "python3 modules/interface.py",
+        shell=True, 
+        stdout=subprocess.DEVNULL, 
+        stderr=subprocess.DEVNULL
+    )
+
 # Ejecutamos nuestro proyecto  
 def start():
-    try:
-        # Iniciar el proceso del servidor Flask
-        server_process = subprocess.Popen(
-            server_command, 
-            shell=True, 
-            stdout=subprocess.DEVNULL, 
-            stderr=subprocess.DEVNULL
-        )
+    # Hilo principal
+    chatbot()
 
-        # Hilo principal
-        microfono()
+    # Hilo para el servidor Flask
+    start_server()
 
-    except KeyboardInterrupt:
-        # Para terminar el proceso del servidor Flask
-        server_process.send_signal(signal.SIGTERM)
-        server_process.wait()
+    # Hilo para la ejecución de la camara
+    # start_camera()
+
+    # Hilo para la interfaz gráfica
+    start_interface()
+
 
 if __name__ == "__main__":
     start()

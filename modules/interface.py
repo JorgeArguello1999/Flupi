@@ -11,6 +11,9 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.app import App
 from kivy.core.window import Window
 
+# Modulos del sistema
+import subprocess, signal
+
 class MainApp(MDApp):
     title = "Hola Maxi"
     fonts = {
@@ -74,4 +77,13 @@ class MainApp(MDApp):
         popup.open()
 
 if __name__ == "__main__":
-    MainApp().run()
+
+    try:
+        bot_command = subprocess.Popen(
+            "python3 main.py",
+            shell=True
+        )
+        MainApp().run()
+    except KeyboardInterrupt:
+        bot_command.send_signal(signal.SIGTERM)
+        bot_command.wait()
