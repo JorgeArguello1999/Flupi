@@ -119,7 +119,9 @@ def recognite(frame_camera=False):
 
             cv2.putText(frame,'{}'.format(result),(x,y-5),1,1.3,(255,255,0),1,cv2.LINE_AA)
            
+            
             # FisherFace
+            name = "Desconocido"
             if result[1] < 500:
                 nombre = imagePaths[result[0]]
                 cv2.putText(frame,nombre,(x,y-25),2,1.1,(0,255,0),1,cv2.LINE_AA)
