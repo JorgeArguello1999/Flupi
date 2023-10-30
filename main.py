@@ -2,10 +2,6 @@ from modules import voice, chatgpt, comandos, database, camera
 from context import conf as context
 import os, re, subprocess, signal
 import requests
-import queue
-
-# Cola dondo colocamos nuestros mensajes
-comunicacion = queue.Queue()
 
 # Variables de entorno
 token = os.environ.get("GPT")
@@ -36,9 +32,6 @@ def microfono():
 
         # Comprobamos si dijo el nombre 
         if nombre in audio:
-            # Enviamos mensaje a la interfaz
-            comunicacion.put("True")
-
             # Comprobamos si ejecutamos algún comando
             if comando != None:
                 voice.speaker(comando)
@@ -87,10 +80,7 @@ def microfono():
                 contexto = context.context(nombre=nombre, question=audio)
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
-
-        else:
-            comunicacion.put("False")
-
+                
 # Saluda a personas que conoce
 def saludar():
     """
