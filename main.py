@@ -3,6 +3,7 @@ from context import conf as context
 import os, re, subprocess, signal
 import requests
 
+# Variables de entorno
 token = os.environ.get("GPT")
 nombre = comandos.nombre
 
@@ -105,6 +106,7 @@ def start():
 
         # Hilo principal
         microfono()
+
     except KeyboardInterrupt:
         # Para terminar el proceso del servidor Flask
         server_process.send_signal(signal.SIGTERM)

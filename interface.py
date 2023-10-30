@@ -9,20 +9,21 @@ from kivy.uix.popup import Popup
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.app import App
-from kivy.config import Config
+from kivy.core.window import Window
 
 class MainApp(MDApp):
     title = "Hola Maxi"
     fonts = {
         "junegull": "./me/junegull.ttf"
     }
+    Window.size = (1000, 750)
 
     def build(self):
         # Configuraciones principales
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "BlueGray"
 
-        # Widget raíz 
+        # Widget raíz
         root = FloatLayout()
 
         # Imagen de fondo
@@ -34,33 +35,17 @@ class MainApp(MDApp):
 
         # Mensaje
         layout = BoxLayout(
-            orientation='vertical', 
+            orientation='vertical',
             spacing=10,
         )
 
-        # Texto de bienvenida
-        welcome_label = Label(
-            text="Hola, bienvenido, soy Maxi", 
-            font_size='30sp', 
-            font_name=self.fonts["junegull"],
-            halign='center', 
-            valign='middle'
-        )
-
-        # Texto para saludar
-        greet_label = Label(
-            text="Di, hola Maxi", 
-            font_size='30sp', 
-            halign='center', 
-            valign='middle',
-            font_name=self.fonts["junegull"]
-        )
-        
         # Reproductor de video
-        player = Video(source="./me/video.mp4")
+        video_layout = BoxLayout(orientation='vertical', padding=95, spacing=10)
+        player = Video(source="./me/video.mp4", size_hint=(1, None), height=250)
         player.state = "play"
         player.options = {"eos": "loop"}
         player.allow_fullscreen = True
+        video_layout.add_widget(player)
 
         # Botones
         buttons_layout = GridLayout(cols=2, spacing=10, size_hint=(1, None), height=50)
@@ -68,9 +53,7 @@ class MainApp(MDApp):
         command_button = Button(text="Mostrar Comandos", on_release=self.show_commands)
 
         # Agregar elementos al diseño
-        layout.add_widget(welcome_label)
-        layout.add_widget(player)
-        layout.add_widget(greet_label)
+        layout.add_widget(video_layout)
         layout.add_widget(buttons_layout)
         buttons_layout.add_widget(exit_button)
         buttons_layout.add_widget(command_button)
