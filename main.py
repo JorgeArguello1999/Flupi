@@ -115,21 +115,6 @@ def start_interface():
     )
     interface_process.wait()
 
-"""
-# Ejecutamos nuestro proyecto  
-def start():
-    # Hilo principal
-    chatbot()
-
-    # Hilo para el servidor Flask
-    start_server()
-
-    # Hilo para la interfaz gráfica
-    start_interface()
-
-    # Hilo para la ejecución de la camara
-    # start_camera()
-"""
 if __name__ == "__main__":
     server_process = multiprocessing.Process(target=start_server)
     # camera_process = multiprocessing.Process(target=start_camera)
@@ -145,5 +130,3 @@ if __name__ == "__main__":
     # camera_process.join()
     interface_process.join()
     chatbot_process.join()
-
-
