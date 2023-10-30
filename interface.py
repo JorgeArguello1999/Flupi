@@ -11,6 +11,9 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.app import App
 from kivy.core.window import Window
 
+# Modulos del sistema
+import subprocess
+
 class MainApp(MDApp):
     title = "Hola Maxi"
     fonts = {
@@ -45,6 +48,7 @@ class MainApp(MDApp):
         player.state = "play"
         player.options = {"eos": "loop"}
         player.allow_fullscreen = True
+        player.volume = 0
         video_layout.add_widget(player)
 
         # Botones
@@ -73,4 +77,10 @@ class MainApp(MDApp):
         popup.open()
 
 if __name__ == "__main__":
+    bot_main = subprocess.Popen(
+        "python3 main.py",
+        shell= True,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    )
     MainApp().run()
