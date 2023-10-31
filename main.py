@@ -1,4 +1,4 @@
-from modules import voice, chatgpt, comandos, database, camera
+from modules import voice, chatgpt, comandos, database
 from context import conf as context
 import os, re, subprocess, multiprocessing
 import requests
@@ -80,19 +80,6 @@ def chatbot():
                 contexto = context.context(nombre=nombre, question=audio)
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
-                
-# Saluda a personas que conoce (Camara)
-def start_camera():
-    """
-    Devuelve un True cuando reconoce a alguien, y un False cuando no reconoce a nadie
-    """
-    salida = camera.recognite()
-    if salida != "Desconocido":
-        voice.speaker(f"¡Hola {salida}! Bienvenido a CompuMax ")
-        return True
-    else:
-        voice.speaker(f"¡Hola!, Bienvenido a Compumax")
-        return False
 
 # Iniciamos el servidor
 def start_server():
@@ -105,27 +92,11 @@ def start_server():
     )
     server_process.wait()
 
-def start_interface():
-    # Iniciar el proceso del servidor Flask
-    interface_process = subprocess.Popen(
-        "python3 modules/interface.py",
-        shell=True, 
-        stdout=subprocess.DEVNULL, 
-        stderr=subprocess.DEVNULL
-    )
-    interface_process.wait()
-
 if __name__ == "__main__":
     server_process = multiprocessing.Process(target=start_server)
-    # camera_process = multiprocessing.Process(target=start_camera)
-    interface_process = multiprocessing.Process(target=start_interface)
 
     server_process.start()
-    # camera_process.start()
-    interface_process.start()
 
     chatbot()
 
     server_process.join()
-    # camera_process.join()
-    interface_process.join()
