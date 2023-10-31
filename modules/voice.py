@@ -49,6 +49,6 @@ def microphone():
 
 
 if __name__ == "__main__":
-    microphone()
+    # microphone()
     salida = speaker("Hola como estas?")
     print(salida)
