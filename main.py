@@ -2,8 +2,9 @@ from flask import Flask, jsonify, request
 from flask import render_template
 from flask import redirect, url_for
 from flask_cors import CORS
-import markdown2
 
+import markdown2
+import chatbot
 import sys
 
 # Configuración inciial
@@ -34,6 +35,7 @@ def chatbot_get():
 @app.route('/chatbot/', methods=['POST'])
 def chatbot_post():
     data = request.get_json()
+    chatbot.chatbot(text="")
     return data
 
 

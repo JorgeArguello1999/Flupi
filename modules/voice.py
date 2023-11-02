@@ -20,7 +20,7 @@ def speaker(texto:str):
     except:
         os.system("start " + nombre_archivo)
     
-    return clean(nombre_archivo)
+    return True
 
 def clean(nombre_archivo:str):
     # Eliminamos el archivo de audio generado
