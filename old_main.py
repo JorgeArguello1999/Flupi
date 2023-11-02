@@ -64,7 +64,7 @@ def chatbot():
                 ""
                 try:
                     salida = requests.get(
-                        url=f"http://{server_host}:{server_port}/chatbot/1"
+                        url=f"http://{server_host}:{server_port}/notify/1"
                     )
                     print(f"url: {salida}")
                     voice.speaker("Espera un momento, puedes tomar asiento")
@@ -81,22 +81,6 @@ def chatbot():
                 respuesta = chatgpt.answer(token=token, context=contexto)
                 voice.speaker(respuesta)
 
-# Iniciamos el servidor
-def start_server():
-    # Iniciar el proceso del servidor Flask
-    server_process = subprocess.Popen(
-        server_command, 
-        shell=True, 
-        stdout=subprocess.DEVNULL, 
-        stderr=subprocess.DEVNULL
-    )
-    server_process.wait()
-
 if __name__ == "__main__":
-    server_process = multiprocessing.Process(target=start_server)
-
-    server_process.start()
-
     chatbot()
 
-    server_process.join()
