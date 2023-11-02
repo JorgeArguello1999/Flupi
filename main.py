@@ -37,42 +37,40 @@ def home():
     mark_html = markdown2.markdown(readme)
     return render_template('index.html', markdown_text=mark_html)
 
+
 # Chatbot Front
 @app.route('/chatbot/', methods=['GET'])
 def chatbot_get():
     return render_template('chatbot.html')
 
 # Chatbot Back
+@app.route('/chatbot/', methods=['POST'])
+def chatbot_post():
+    data = request.get_json()
+    return data
+
 
 # Notify Front
-@app.route('/notify_f')
+@app.route('/notify_f', methods=['GET'])
 def notify_frontend():
     return render_template('notify.html', host=host, port=port)
 
 # Notify Status
-@app.route("/notify")
+@app.route('/notify', methods=['GET'])
 def notify_status():
-    try:
-        return jsonify({
-            "status": work["status"]
-        })
-    except Exception as error:
-        print(error)
-        return jsonify({
-            "error": error
-        })
+    return jsonify({
+        "status": work["status"]
+    })
 
 # Notify Back
-@app.route("/notify/<int:statuswork>", methods=["GET", "POST"])
+@app.route("/notify/<int:statuswork>", methods=["GET"])
 def notify_backend(statuswork):
     status = False
     if statuswork == 1:
         status = True
-
     work["status"] = status
-    return redirect(
-        url_for('notify_frontend')
-    )
+
+    return redirect(url_for('notify_frontend'))
 
 if __name__ == "__main__":
     app.run(debug=True)
