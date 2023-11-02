@@ -35,8 +35,21 @@ def chatbot_get():
 @app.route('/chatbot/', methods=['POST'])
 def chatbot_post():
     data = request.get_json()
-    chatbot.chatbot(text="")
-    return data
+
+    # Respondiendo la pregunta
+    pregunta = data["ask"]
+    respuesta = chatbot.chatbot(pregunta)
+    print(respuesta)
+    return respuesta 
+
+    # En caso de ser para el bot, enviamos un Audio
+    """
+    if data["device"] == "bot":
+        respuesta
+
+    else:
+        respuesta 
+    """
 
 
 # Notify Front

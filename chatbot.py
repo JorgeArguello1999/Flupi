@@ -45,7 +45,7 @@ def chatbot(text:str, server_host="127.0.0.1", server_port=5000)->str:
 
     # Comprobamos si ejecutamos algún comando
     if comando != None:
-        voice.speaker(comando)
+        return comando
             
     # Verificamos si pregunto algún precio
     if "cuánto cuesta" in text or "Cuánto cuesta" in text:
@@ -83,5 +83,4 @@ def chatbot(text:str, server_host="127.0.0.1", server_port=5000)->str:
 
 if __name__ == "__main__":
     salida = chatbot("dame una descripción del 7092")
-    print(salida)
     voice.speaker(salida)
