@@ -52,6 +52,12 @@ Responde la siguiente pregunta, usando espacios, tildes y signos de puntación, 
     limpiando = re.sub(r"[:;()|-]", "", texto)
     return limpiando 
 
+def error_mensaje():
+    return "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"
+
+def caracteristicas_producto(caracteristicas:str)-> str:
+    return f"Voy a pasar datos de un producto, tu crea un pequeño parrafo que lo describa, utiliza explicitamente solo la información del texto, nada más: {caracteristicas}"
+
 if __name__ == "__main__":
     salida = context("Maxi", question="Que es CompuMax?")
     print(salida)

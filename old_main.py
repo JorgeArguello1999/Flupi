@@ -1,11 +1,10 @@
-from modules import voice, chatgpt, comandos, database
+from modules import voice, chatgpt, database
 from context import conf as context
-import os, re, subprocess, multiprocessing
+import os, re, datetime
 import requests
 
 # Variables de entorno
 token = os.environ.get("GPT")
-nombre = comandos.nombre
 
 # Conexión a la base de articulos
 articulos = database.connect(
@@ -15,72 +14,73 @@ articulos = database.connect(
     passwd="root",
     db="articulos"
 )
-# Creación del servidor web
-server_host = "192.168.11.12"
-server_port = 8080
-server_command = f"python server/main.py {server_host} {server_port}"
 
-# Función de Escucha principal
-def chatbot():
-    while True:
-        # Abrimos el microfono a la escucha
-        audio = voice.microphone()
-        # Buscamos dentro de lo detectado si activo un comando
-        comando = comandos.functions(audio)
-        # Vemos lo que dijo el usuario
-        print(audio)
+nombre = "Maxi"
+hora = datetime.datetime.now().strftime("%H:%M")
+fecha_actual = datetime.datetime.now()
+nombres_meses = {
+    1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio", 7: "Julio", 
+    8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"
+}
+fecha = f"{fecha_actual.day} de {nombres_meses[fecha_actual.month]} de {fecha_actual.year}"
+comandos = {
+    f"Hola {nombre}": "Hola, en que te puedo ayudar?",
+    f"{nombre} qué hora es": f"Hola, la hora es: {hora}",
+    f"{nombre} qué fecha es": f"La fecha es: {fecha}"
+}
 
-        # Comprobamos si dijo el nombre 
-        if nombre in audio:
-            # Comprobamos si ejecutamos algún comando
-            if comando != None:
-                voice.speaker(comando)
-                continue
+# Aqui van los comandos
+def functions(text:str):
+    for com in comandos:
+        if text in com:
+            return comandos[com]
+
+# Este es el modulo de ejecución principal
+def chatbot(text:str, server_host="127.0.0.1", server_port=5000)->str:
+    # Buscamos dentro de lo detectado si activo un comando
+    comando = functions(text)
+    # Vemos lo que dijo el usuario
+    print(text)
+
+    # Comprobamos si ejecutamos algún comando
+    if comando != None:
+        voice.speaker(comando)
             
-            # Verificamos si pregunto algún precio
-            if "cuánto cuesta" in audio or "Cuánto cuesta" in audio:
-                # Filtramos la entrada de voz
-                id_product = ''.join(re.findall(r'\d', audio))
-                # Respondemos la pregunta
-                salida = articulos.search(int(id_product))
-                salida = f"El {salida[0]} cuesta {salida[2]}"
-                voice.speaker(salida)
-                continue
+    # Verificamos si pregunto algún precio
+    if "cuánto cuesta" in text or "Cuánto cuesta" in text:
+        # Filtramos la entrada de voz
+        id_product = ''.join(re.findall(r'\d', text))
+        # Respondemos la pregunta
+        salida = articulos.search(int(id_product))
+        return f"El {salida[0]} cuesta {salida[2]}"
            
-            # Ofrecemos una descripción sobre el producto
-            if "descripción" in audio:
-                id_product = ''.join(re.findall(r'\d', audio))
-                salida = articulos.search(int(id_product))
-                prompt = f"""Voy a pasar datos de un producto, tu crea un pequeño 
-                parrafo que lo describa, utiliza explicitamente solo la información 
-                del texto, nada más: {salida}"""
-                contexto = context.context(nombre=nombre, question=prompt)
-                respuesta = chatgpt.answer(token=token, context=contexto)
-                voice.speaker(respuesta)
-                continue
+    # Ofrecemos una descripción sobre el producto
+    if "descripción" in text:
+        id_product = ''.join(re.findall(r'\d', text))
+        id_producto = articulos.search(int(id_product))
+        prompt = context.caracteristicas_producto(id_producto)
+        contexto = context.context(nombre=nombre, question=prompt)
+        return chatgpt.answer(token=token, context=contexto)
             
-            # Llamamos al técnico
-            if "llama al técnico" in audio:
-                ""
-                try:
-                    salida = requests.get(
-                        url=f"http://{server_host}:{server_port}/notify/1"
-                    )
-                    print(f"url: {salida}")
-                    voice.speaker("Espera un momento, puedes tomar asiento")
-                except Exception as error:
-                    voice.speaker("Ocurrió un error, Acercate al personal para solicitar la ayuda")
-                    print(f"Error al llamar al técnico: {error}")
+    # Llamamos al técnico
+    if "llama al técnico" in text:
+        try:
+            requests.get(
+                url=f"http://{server_host}:{server_port}/notify/1"
+            )
+            return "Espera un momento, puedes tomar asiento"
+        except Exception as error:
+            print(f"Error al llamar al técnico: {error}")
+            return context.error_mensaje() 
 
-                continue
-
-            # Ejecutamos cualquier consulta en base al contexto
-            else:
-                # Preparamos la pregunta con nuestro context
-                contexto = context.context(nombre=nombre, question=audio)
-                respuesta = chatgpt.answer(token=token, context=contexto)
-                voice.speaker(respuesta)
+    # Ejecutamos cualquier consulta en base al contexto
+    else:
+        # Preparamos la pregunta con nuestro context
+        contexto = context.context(nombre=nombre, question=text)
+        respuesta = chatgpt.answer(token=token, context=contexto)
+        return respuesta
 
 if __name__ == "__main__":
-    chatbot()
-
+    salida = chatbot("dame una descripción del 7092")
+    print(salida)
+    voice.speaker(salida)
