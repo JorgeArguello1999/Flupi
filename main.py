@@ -11,25 +11,12 @@ app = Flask(__name__)
 CORS(app)
 app.config['STATIC_URL'] = '/static'
 
-# Rutas del servidor
-host = sys.argv[1]
-port = sys.argv[2]
-
 # Abrimos el README para mostrarlo en la Home
 with open('README.md', 'r') as readme:
     readme = readme.read()
 
 # Declaramos el estado inicial del trabajador
 work = {'status': False}
-
-"""
-/ -> Home
-/chatbot/[GET] -> Pequeño chat interactivo con Maxi 
-/chatbot/[POST] -> A traves del metodo post se envian las preguntas
-/notify/[GET] -> Página para el técnico
-
-chatbot: Es como un pequeño sistema automatizado para realizar consultas
-"""
 
 # Home
 @app.route('/', methods=['GET'])
@@ -53,7 +40,7 @@ def chatbot_post():
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
 def notify_frontend():
-    return render_template('notify.html', host=host, port=port)
+    return render_template('notify.html', host='127.0.0.1', port=5000)
 
 # Notify Status
 @app.route('/notify', methods=['GET'])

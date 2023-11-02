@@ -15,6 +15,7 @@ articulos = database.connect(
     db="articulos"
 )
 
+# Aqui van los comandos
 nombre = "Maxi"
 hora = datetime.datetime.now().strftime("%H:%M")
 fecha_actual = datetime.datetime.now()
@@ -29,11 +30,11 @@ comandos = {
     f"{nombre} qué fecha es": f"La fecha es: {fecha}"
 }
 
-# Aqui van los comandos
 def functions(text:str):
     for com in comandos:
         if text in com:
             return comandos[com]
+
 
 # Este es el modulo de ejecución principal
 def chatbot(text:str, server_host="127.0.0.1", server_port=5000)->str:
