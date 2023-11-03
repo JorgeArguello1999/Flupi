@@ -1,6 +1,6 @@
 # Flupi
 
-![Flupi icon](me/logo.jpeg)
+![Flupi icon](static/logo.jpeg)
 
 ## Holaaaa
 
