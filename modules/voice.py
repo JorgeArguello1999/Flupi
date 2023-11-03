@@ -3,6 +3,7 @@ import speech_recognition as sr
 import os
 
 r = sr.Recognizer()
+dir = "./static/audio_chatbot/"
 
 def speaker(texto:str):
     """
@@ -13,14 +14,9 @@ def speaker(texto:str):
     tts = gTTS(text=texto, lang='es')
 
     nombre_archivo = "texto_a_voz.mp3"
-    tts.save(nombre_archivo)
+    tts.save(f"{dir}{nombre_archivo}")
 
-    try:
-        os.system("mpg123 " + nombre_archivo)
-    except:
-        os.system("start " + nombre_archivo)
-    
-    return True
+    return nombre_archivo
 
 def clean(nombre_archivo:str):
     # Eliminamos el archivo de audio generado

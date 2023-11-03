@@ -1,8 +1,10 @@
 from flask import Flask, jsonify, request
 from flask import render_template
 from flask import redirect, url_for
+from flask import send_from_directory
 from flask_cors import CORS
 
+from modules import voice
 import markdown2
 import chatbot
 import sys
@@ -42,8 +44,8 @@ def chatbot_post():
 
     # En caso de ser para el bot, enviamos un Audio
     if data["device"] == "bot":
-        return 0
-    
+        salida = voice.speaker(respuesta)
+        return send_from_directory('static/audio_chatbot', salida)
     return respuesta 
 
 
