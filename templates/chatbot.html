@@ -3,5 +3,51 @@
 {% block title %} Chat {% endblock %}
 
 {% block content %}
-<p>Contenido aqui</p>
+
+    <div id="chat-container">
+        <div id="chat-messages">
+            <!-- Aquí se mostrarán los mensajes de la conversación -->
+        </div>
+        <form id="chat-form">
+            <input type="text" id="message-input" placeholder="Escribe un mensaje...">
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Función para mostrar un mensaje en el chat
+            function showMessage(message, isUser) {
+                const sender = isUser ? 'Tú' : 'Chatbot';
+                const cssClass = isUser ? 'user' : 'bot';
+                const messageDiv = `<div class="${cssClass}"><strong>${sender}:</strong> ${message}</div>`;
+                $("#chat-messages").append(messageDiv);
+            }
+    
+            // Manejar el envío del formulario
+            $("#chat-form").submit(function(event) {
+                event.preventDefault();
+                const userMessage = $("#message-input").val();
+                showMessage(userMessage, true);
+    
+                // Enviar el mensaje al servidor y recibir una respuesta
+                $.ajax({
+                    type: "POST",
+                    url: "/chatbot/",
+                    data: JSON.stringify({ "ask": userMessage, "device": "computer" }),
+                    contentType: "application/json",
+                    dataType: "text", // Esperamos una respuesta de texto
+                    success: function(data) {
+                        showMessage(data, false);
+                        console.log(data);
+                    }
+                });
+    
+                $("#message-input").val(""); // Limpiar el campo de entrada
+            });
+        });
+    </script>
+
 {% endblock %}
