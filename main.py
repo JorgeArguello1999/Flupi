@@ -39,17 +39,12 @@ def chatbot_post():
     # Respondiendo la pregunta
     pregunta = data["ask"]
     respuesta = chatbot.chatbot(pregunta)
-    print(respuesta)
-    return respuesta 
 
     # En caso de ser para el bot, enviamos un Audio
-    """
     if data["device"] == "bot":
-        respuesta
-
-    else:
-        respuesta 
-    """
+        return 0
+    
+    return respuesta 
 
 
 # Notify Front
