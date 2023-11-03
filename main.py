@@ -7,7 +7,6 @@ from flask_cors import CORS
 from modules import voice
 import markdown2
 import chatbot
-import sys
 
 # Configuración inciial
 app = Flask(__name__)

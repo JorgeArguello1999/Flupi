@@ -32,9 +32,9 @@ echo $GPT
 
 ### Tener en cuenta de cambiar las IP
 
-Estas IP's se encuentran para la base de datos y para crear el servidor de escucha
+Esta IP se encuentra para la base de datos
 
-En este código esta la conexión a la base de datos `./main.py`
+En este código esta la conexión a la base de datos `./chatbot.py`
 
 ``` python
 # Conexión a la base de articulos
@@ -46,14 +46,3 @@ articulos = database.connect(
     db="articulos"
 )
 ```
-
-Este código muestra el servidor para la llamada al técnico `./main.py`
-
-``` python
-# Creación del servidor web
-server_host = "127.0.0.1"
-server_port = 8080
-server_command = f"""python3 -c "from server import main; app = main.Servidor(host='{server_host}', port={server_port}); app.start()" """
-```
-
-Esto se realiza debido a que utilizamos `subprocess` para ejecutar la API en segundo plano
