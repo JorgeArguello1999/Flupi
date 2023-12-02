@@ -26,7 +26,6 @@ def home():
     mark_html = markdown2.markdown(readme)
     return render_template('index.html', markdown_text=mark_html)
 
-
 # Chatbot Front
 @app.route('/chatbot/', methods=['GET'])
 def chatbot_get():
