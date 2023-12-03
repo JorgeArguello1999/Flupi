@@ -41,11 +41,10 @@ def chatbot_post():
     respuesta = chatbot.chatbot(pregunta)
 
     # En caso de ser para el bot, enviamos un Audio
-    """
-    if data["device"] == "bot":
+    if data["device"] != "computer":
         salida = voice.speaker(respuesta)
         return send_from_directory('static/audio_chatbot', salida)
-    """
+
     return respuesta 
 
 
