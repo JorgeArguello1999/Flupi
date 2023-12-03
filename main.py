@@ -47,7 +47,6 @@ def chatbot_post():
 
     return respuesta 
 
-
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
 def notify_frontend():
@@ -71,4 +70,8 @@ def notify_backend(statuswork):
     return redirect(url_for('notify_frontend'))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        host='0.0.0.0',
+        port=5000,
+        debug=True
+    )
