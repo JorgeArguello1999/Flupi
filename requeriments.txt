@@ -59,6 +59,7 @@ pygame==2.5.2
 Pygments==2.16.1
 PyMySQL==1.1.0
 pypng==0.20220715.0
+python-dotenv @ git+https://github.com/theskumar/python-dotenv.git@3ffcef60d10813b72ecf85d5941d51b0207cd40e
 python-engineio==4.8.0
 python-socketio==5.10.0
 PyYAML==6.0.1

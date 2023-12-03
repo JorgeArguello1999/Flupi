@@ -2,8 +2,10 @@ from modules import voice, chatgpt, database
 from context import conf as context
 import os, re, datetime
 import requests
+from dotenv import load_dotenv
 
 # Variables de entorno
+load_dotenv()
 token = os.environ.get("GPT")
 
 # Conexión a la base de articulos
