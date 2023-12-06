@@ -17,17 +17,19 @@
         .list_items{
             background-color: white;
         }
+
+        .carousel img{
+            border-radius: 80px;
+        }
     </style>
 
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-            <img src="{{ url_for('static', filename='compumax.jpeg') }}" width="30" height="30" class="d-inline-block align-top" alt="">
-            CompuMax | Chatbot
+            <img src="{{ url_for('static', filename='compumax.jpeg') }}" width="50" height="50" class="d-inline-block align-top" alt="">
+            CompuMax | {% block subtitle %} {% endblock %}
             <a class="carousel">
-                <img src="{{ url_for('static', filename='1.jpeg') }}" alt="Imagen" height="100px">
-                <img src="{{ url_for('static', filename='2.jpeg') }}" alt="Imagen" height="100px">
-                <img src="{{ url_for('static', filename='3.jpeg') }}" alt="Imagen" height="100px">
-                <img src="{{ url_for('static', filename='5.jpeg') }}" alt="Imagen" height="100px">
+                <img src="{{ url_for('static', filename='1.jpeg') }}" alt="Imagen" height="50px">
+                <img src="{{ url_for('static', filename='5.jpeg') }}" alt="Imagen" height="50px">
             </a>
         </a>
     </nav>
