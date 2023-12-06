@@ -27,24 +27,6 @@ def clean(nombre_archivo:str):
         print(f"Error: {error}")
         return False
 
-def microphone():
-    """
-    Obtenemos la entrada del microfono
-    """
-    with sr.Microphone() as source:
-        audio = r.listen(source)
-
-        try:
-            text = r.recognize_google(audio, language='es-EC')
-
-        except Exception as e:
-            text = ""
-            print(f"Error: {e}")
-
-    return text
-
-
 if __name__ == "__main__":
-    # microphone()
     salida = speaker("Hola como estas?")
     print(salida)

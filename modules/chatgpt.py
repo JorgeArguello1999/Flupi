@@ -1,11 +1,9 @@
 import openai
-from colorama import Fore
 
 def answer(token:str, context:str):
     """
     :param context is a query
     """
-
     # Enviar una solicitud al modelo para generar texto
     openai.api_key = token 
     response = openai.Completion.create(

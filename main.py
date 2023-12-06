@@ -4,9 +4,9 @@ from flask import redirect, url_for
 from flask import send_from_directory
 from flask_cors import CORS
 
-from modules import voice
+from modules import voice, chatbot
 import markdown2
-import chatbot
+
 
 # Configuración inciial
 app = Flask(__name__)
