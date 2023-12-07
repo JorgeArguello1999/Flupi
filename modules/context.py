@@ -56,7 +56,7 @@ def error_mensaje():
     return "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"
 
 def caracteristicas_producto(caracteristicas:str)-> str:
-    return f"Voy a pasar datos de un producto, tu crea un pequeño parrafo que lo describa, utiliza explicitamente solo la información del texto, nada más: {caracteristicas}"
+    return f"Voy a pasar datos de un producto, tu crea un pequeño parrafo que lo describa, utiliza explicitamente solo la información del texto, nada más: {caracteristicas} recuerda utilizar solo esa información el parrafo que daras, va a ser leido así que ten pausas, y vas a usar dolares"
 
 if __name__ == "__main__":
     salida = context("Maxi", question="Que es CompuMax?")
