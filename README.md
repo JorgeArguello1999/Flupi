@@ -31,4 +31,6 @@ DATABASE_DB=articulos
 # Nombre de la tabla donde se encuentran los items a consultar
 TABLE_DB=items
 
+DEBUG=True
+
 ```

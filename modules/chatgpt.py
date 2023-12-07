@@ -12,7 +12,6 @@ def answer(token:str, context:str):
         max_tokens=150
     ).choices[0].text
 
-    print(f"Salida: {response}")
     return response
     
 if __name__ == '__main__':

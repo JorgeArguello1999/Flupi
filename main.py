@@ -4,6 +4,7 @@ from flask import redirect, url_for
 from flask import send_from_directory
 from flask_cors import CORS
 from modules import voice, chatbot
+import os
 
 
 # Configuración inciial
@@ -129,8 +130,4 @@ def notify_backend(statuswork):
     return redirect(url_for('notify_frontend'))
 
 if __name__ == "__main__":
-    app.run(
-        host='0.0.0.0',
-        port=5000,
-        debug=True
-    )
+    app.run(debug=os.environ.get("DEBUG"))
