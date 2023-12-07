@@ -1,10 +1,7 @@
 from gtts import gTTS
-import speech_recognition as sr
 import os
 
-r = sr.Recognizer()
 dir = "./static/audio_chatbot/"
-
 def speaker(texto:str):
     """
     :texto -> Lo que va a decir
