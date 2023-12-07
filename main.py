@@ -14,6 +14,9 @@ app.config['STATIC_URL'] = '/static'
 # Estado inicial del técnico
 work = {'status': False}
 
+# Acciones 
+comandos = list(chatbot.actions.keys())
+
 """
 === HOME ===
 Pagina principal
@@ -44,7 +47,7 @@ def chatbot_get():
     Parámetros: Ninguno.
     Retorna: Página web para interactuar con el chatbot.
     """
-    return render_template('chatbot.html')
+    return render_template('chatbot.html', comandos=comandos)
 
 # Chatbot Back
 @app.route('/chatbot/', methods=['POST'])

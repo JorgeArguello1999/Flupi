@@ -70,11 +70,14 @@ actions = {
 }
 
 def chatbot(text:str)->str:
-    for command in actions:
-        if command in text:
-            return actions[command](text)
-    return execute_query(text)
-
+    try:
+        for command in actions:
+            if command in text:
+                return actions[command](text)
+        return execute_query(text)
+    
+    except Exception as e:
+        return f"Problema con la ejecución del comando: {text}"
 
 if __name__ == "__main__":
     print(chatbot("Hola Maxi"))

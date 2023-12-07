@@ -12,42 +12,56 @@
         text-align: right;
         margin-bottom: 10px;
 
-        background-color: #bcf0f7;
+        background-color: #cbe9ff;
         border-radius: 10px;
         border-style: solid;
         border: 3px;
         padding: 1em;
         margin-left: 20%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
     }
     .message-bot {
         color: #28a745;
         text-align: left;
         margin-bottom: 10px;
         
-        background-color: #bcf089;
+        background-color: #b3e6c8;
         border-radius: 10px;
         border-style: solid;
         border: 3px;
         padding: 1em;
         margin-right: 20%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .img_profile {
+        height: 30px;
+        border-radius: 10px;
+        margin-right: 10px;
     }
 </style>
 
-<div class="container py-5">
-    <div class="row">
-        <div class="col-md-8 mx-auto">
-            <div id="chat-container">
-                <div id="chat-messages" class="mb-4">
-                    <!-- Aquí se mostrarán los mensajes de la conversación -->
-                </div>
-                <form id="chat-form" class="fixed-bottom mb-4">
-                    <div class="input-group">
-                        <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
-                        <button type="submit" class="btn btn-outline-primary">✈️</button>
-                    </div>
-                </form>
-            </div>
+<div class="centered-content">
+    <div id="chat-container">
+        <div id="chat-messages" class="mb-4">
+            <!-- Aquí se mostrarán los mensajes de la conversación -->
         </div>
+        <form id="chat-form" class="custom-form fixed-bottom mb-4">
+            <div class="input-group mb-3">
+                <select class="form-select" id="select-command">
+                    <option value="" selected>Comandos</option>
+                    {% for comando in comandos %}
+                        <option value="{{ comando }}" class="command">{{ comando }}</option>
+                    {% endfor %}
+                </select>
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+                <button type="submit" class="btn btn-outline-primary">✈️</button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -55,11 +69,21 @@
 
 <script>
     $(document).ready(function() {
+        // Función para obtener la imagen de perfil según el remitente
+        function getProfileImage(isUser) {
+            if (isUser) {
+                return `<img src="{{ url_for('static', filename='7.jpeg') }}" alt="user_profile" class="img_profile">`;
+            } else {
+                return `<img src="{{ url_for('static', filename='compumax.jpeg') }}" alt="chatbot_profile" class="img_profile">`;
+            }
+        }
+
         // Función para mostrar un mensaje en el chat
         function showMessage(message, isUser) {
             const sender = isUser ? 'Tú' : 'Chatbot';
             const cssClass = isUser ? 'message-user' : 'message-bot';
-            const messageDiv = `<div class="${cssClass}">${message}</div>`;
+            const profileImg = getProfileImage(isUser);
+            const messageDiv = `<div class="${cssClass}">${profileImg}<p>${message}</p></div>`;
             $("#chat-messages").prepend(messageDiv); // Agregar mensaje al principio
 
             // Desplazar hacia abajo para ver el mensaje más reciente
@@ -95,6 +119,12 @@
             const delta = event.originalEvent.deltaY;
             $(this).scrollTop($(this).scrollTop() - delta);
             event.preventDefault();
+        });
+
+        // Copiar el comando seleccionado al campo de texto al hacer clic
+        $(".command").on("click", function(event) {
+            const selectedCommand = $(this).text();
+            $("#message-input").val(selectedCommand);
         });
     });
 </script>
