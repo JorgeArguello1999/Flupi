@@ -29,17 +29,10 @@ def get_date(trash):
     fecha = f"{fecha_actual.day} de {nombres_meses[fecha_actual.month]} de {fecha_actual.year}"
     return f"La fecha es: {fecha}"
 
-# Producto - Precio
-def get_product_price(text):
-    id_product = ''.join(re.findall(r'\d', text))
-    salida = database.search_product_by_id(int(id_product))
-    return f"El {salida[0]} cuesta {salida[2]}"
-
 # Producto - Descripción 
 def get_product_description(text):
     id_product = ''.join(re.findall(r'\d', text))
     id_producto = database.search_product_by_id(int(id_product))
-    print(id_producto)
     prompt = context.caracteristicas_producto(id_producto)
     contexto = context.context(nombre="Maxi", question=prompt)
     return chatgpt.answer(token=token, context=contexto)
@@ -70,8 +63,8 @@ actions = {
     "Hola Maxi": greet,
     "Maxi qué hora es": get_time,
     "Maxi qué fecha es": get_date,
-    "cuánto cuesta": get_product_price,
-    "Cuánto cuesta": get_product_price,
+    "cuánto cuesta": get_product_description,
+    "Cuánto cuesta": get_product_description,
     "descripción": get_product_description,
     "llama al técnico": call_technician
 }
