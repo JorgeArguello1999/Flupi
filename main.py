@@ -38,7 +38,12 @@ def chatbot_post():
 
     # Respondiendo la pregunta
     pregunta = data["ask"]
-    respuesta = chatbot.chatbot(pregunta)
+
+    if pregunta.isdigit() == True:
+        respuesta = chatbot.get_product_description(pregunta)
+    
+    else:
+        respuesta = chatbot.chatbot(pregunta)
 
     # En caso de ser para el bot, enviamos un Audio
     if data["device"] != "computer":

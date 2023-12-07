@@ -1,11 +1,9 @@
 import datetime, os, re, requests
-from modules import chatgpt, database, context
-from modules.database import connect
+from modules import chatgpt, context, database
 from dotenv import load_dotenv
 
 load_dotenv()
 token = os.environ.get("GPT")
-articulos = connect()
 
 """
 Aquí se realizan cada uno de los comandos como funciones, estas funciones
@@ -34,13 +32,14 @@ def get_date(trash):
 # Producto - Precio
 def get_product_price(text):
     id_product = ''.join(re.findall(r'\d', text))
-    salida = articulos.search(int(id_product))
+    salida = database.search_product_by_id(int(id_product))
     return f"El {salida[0]} cuesta {salida[2]}"
 
 # Producto - Descripción 
 def get_product_description(text):
     id_product = ''.join(re.findall(r'\d', text))
-    id_producto = articulos.search(int(id_product))
+    id_producto = database.search_product_by_id(int(id_product))
+    print(id_producto)
     prompt = context.caracteristicas_producto(id_producto)
     contexto = context.context(nombre="Maxi", question=prompt)
     return chatgpt.answer(token=token, context=contexto)

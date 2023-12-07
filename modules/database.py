@@ -1,35 +1,42 @@
-import pymysql, os
+import pymysql
+import os
 
-class connect:
-    def __init__(self):
-        self.conn = pymysql.connect(
-            host=os.environ.get("HOST_DB"), db=os.environ.get("DATABASE_DB"),
-            port=int(os.environ.get("PORT_DB")), user=os.environ.get("USER_DB"),
+def connect_database():
+    try:
+        conn = pymysql.connect(
+            host=os.environ.get("HOST_DB"),
+            db=os.environ.get("DATABASE_DB"),
+            port=int(os.environ.get("PORT_DB")),
+            user=os.environ.get("USER_DB"),
             passwd=os.environ.get("PASSWD_DB")
         )
+        return conn
+    except Exception as e:
+        print("Error al conectar con la base de datos:", e)
+        return None
 
-    def search(self, id_producto:int) -> list:
-        """
-        :id_producto -> Colocar el id del producto
-        """
+
+def search_product_by_id(id_producto: int):
+    conn = connect_database()
+    if conn:
         try:
-            cursor = self.conn.cursor()
+            cursor = conn.cursor()
             query = f"SELECT * FROM {os.environ.get('TABLE_DB')} WHERE id = {id_producto}"
             cursor.execute(query)
             salida = cursor.fetchall()
 
             # Recorremos la salida
-            respuestas = []
-            for data in salida:
-                respuestas.append(data)
-            return list(data)
-        
+            respuestas = [data for data in salida]
+            return respuestas if respuestas else [[id_producto, "", "No existe"]]
         except Exception as error:
-            print(error)
-            return [id_producto, "","No existe"]
+            print("Error al buscar el producto:", error)
+            return [[id_producto, "", "Error en la búsqueda"]]
+        finally:
+            conn.close()
+    else:
+        return [[id_producto, "", "Error en la conexión"]]
 
 
 if __name__ == "__main__":
-    database = connect()
-    salida = database.search(7092)
+    salida = search_product_by_id(7092)
     print(salida)
