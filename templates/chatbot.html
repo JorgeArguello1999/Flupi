@@ -52,6 +52,7 @@
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
     $(document).ready(function() {
         // Función para mostrar un mensaje en el chat
@@ -59,7 +60,10 @@
             const sender = isUser ? 'Tú' : 'Chatbot';
             const cssClass = isUser ? 'message-user' : 'message-bot';
             const messageDiv = `<div class="${cssClass}">${message}</div>`;
-            $("#chat-messages").append(messageDiv);
+            $("#chat-messages").prepend(messageDiv); // Agregar mensaje al principio
+
+            // Desplazar hacia abajo para ver el mensaje más reciente
+            $("#chat-container").scrollTop(0);
         }
 
         // Manejar el envío del formulario
@@ -74,13 +78,23 @@
                 url: "/chatbot/",
                 data: JSON.stringify({ "ask": userMessage, "device": "computer" }),
                 contentType: "application/json",
-                dataType: "text", // Esperamos una respuesta de texto
+                dataType: "text",
                 success: function(data) {
-                    showMessage(data, false); // Mostrar la respuesta del servidor
+                    showMessage(data, false);
                 }
             });
 
             $("#message-input").val(""); // Limpiar el campo de entrada
+        });
+
+        // Mantener el foco en el campo de texto
+        $("#message-input").focus();
+
+        // Permitir desplazarse por el chat usando la rueda del mouse
+        $("#chat-container").on("wheel", function(event) {
+            const delta = event.originalEvent.deltaY;
+            $(this).scrollTop($(this).scrollTop() - delta);
+            event.preventDefault();
         });
     });
 </script>
