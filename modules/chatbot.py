@@ -38,7 +38,7 @@ def get_product_description(text):
     return chatgpt.answer(token=token, context=contexto)
 
 # Llamar al técnico
-def call_technician(trash, server_host="127.0.0.1", server_port=5000):
+def call_technician(trash, server_host="0.0.0.0", server_port=5000):
     try:
         requests.get(
             url=f"http://{server_host}:{server_port}/notify/1"
