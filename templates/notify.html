@@ -35,7 +35,7 @@
 
     <script>
     // URL de la API que deseas observar
-    const apiUrl = 'http://{{ host }}:{{ port }}/notify';
+    const apiUrl = '/notify';
 
     // Obtenemos el parrafo que va a servir como identificador
     let mensaje = document.getElementById("status");
@@ -68,7 +68,7 @@
             toggleAudio(false);
             audioActivo = false;
         }
-        window.location.href = "http://{{ host }}:{{ port }}/notify/0";
+        window.location.href = "/notify/0";
     });
 
     // Función para realizar la solicitud a la API y verificar cambios

@@ -97,7 +97,7 @@ def notify_frontend():
     Parámetros: Ninguno.
     Retorna: Página web para notificar.
     """
-    return render_template('notify.html', host='127.0.0.1', port=5000)
+    return render_template('notify.html')
 
 # Notify Status
 @app.route('/notify', methods=['GET'])
@@ -130,4 +130,8 @@ def notify_backend(statuswork):
     return redirect(url_for('notify_frontend'))
 
 if __name__ == "__main__":
-    app.run(debug=os.environ.get("DEBUG"))
+    app.run(
+        debug=os.environ.get("DEBUG"),
+        host="0.0.0.0",
+        port=5000
+    )
