@@ -13,6 +13,17 @@ def notificacion(titulo:str, mensaje:str):
         timeout=10  
     )
 
+# Leemos el Archivo config.txt
+def obtener_url_desde_config():
+    try:
+        with open("config.txt", "r") as archivo_config:
+            url = archivo_config.read().strip()
+            return url
+
+    except FileNotFoundError:
+        print("El archivo de configuración no existe")
+        return None
+
 # Función para grabar audio desde el micrófono y realizar reconocimiento de voz
 def reconocer_voz():
     recognizer = sr.Recognizer()
@@ -84,4 +95,10 @@ def api_chatbot(texto: str, url: str) -> None:
 if __name__ == "__main__":
     while True:
         texto = reconocer_voz()
-        api_chatbot(texto, "http://127.0.0.1:5000/chatbot/")
+        # Obtener la URL desde el archivo de configuración
+        url = obtener_url_desde_config()
+        
+        if url:
+            api_chatbot(texto, url)
+        else:
+            print("No se pudo obtener la URL de la API desde el archivo de configuración.")

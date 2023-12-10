@@ -1,0 +1,5 @@
+plyer==2.1.0
+PyAudio==0.2.14
+pygame==2.5.2
+requests==2.31.0
+SpeechRecognition==3.10.0
