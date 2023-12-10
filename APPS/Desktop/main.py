@@ -1,8 +1,6 @@
 import speech_recognition as sr
-import requests
-import pygame
-import os
 from plyer import notification
+import requests, pygame, os, json
 
 # Notificar lo que detecto
 def notificacion(titulo:str, mensaje:str):
@@ -16,10 +14,17 @@ def notificacion(titulo:str, mensaje:str):
 # Leemos el Archivo config.txt
 def obtener_url_desde_config():
     try:
-        with open("config.txt", "r") as archivo_config:
-            url = archivo_config.read().strip()
-            return url
+        with open("config.json", "r") as archivo_config:
+            config_data = json.load(archivo_config)
+            if 'url' in config_data:
+                return {
+                    "url": config_data['url'], 
+                    "name": config_data['name']
+                }
 
+            else:
+                print("No se encontró la URL en el archivo de configuración.")
+                return None
     except FileNotFoundError:
         print("El archivo de configuración no existe")
         return None
@@ -64,8 +69,8 @@ def reproducir_audio(ruta_archivo):
     pygame.quit()
 
 # Función para interactuar con el chatbot a través de API
-def api_chatbot(texto: str, url: str) -> None:
-    if texto != False and "Maxi" in texto:
+def api_chatbot(texto: str, url: str, name:str) -> None:
+    if texto != False and name in texto:
         try:
             response = requests.post(url, json={"ask": texto, "device": "bot"})
 
@@ -93,12 +98,13 @@ def api_chatbot(texto: str, url: str) -> None:
                 os.remove(nombre_archivo)  
 
 if __name__ == "__main__":
+    config_set = obtener_url_desde_config()
     while True:
-        texto = reconocer_voz()
-        # Obtener la URL desde el archivo de configuración
-        url = obtener_url_desde_config()
-        
-        if url:
-            api_chatbot(texto, url)
-        else:
-            print("No se pudo obtener la URL de la API desde el archivo de configuración.")
+        try:
+            api_chatbot(
+                texto= reconocer_voz(), 
+                url= config_set["url"], 
+                name= config_set["name"]
+            )
+        except Exception as e:
+            break
