@@ -26,8 +26,7 @@ Pagina principal
 # Home
 @app.route('/', methods=['GET'])
 def home():
-    mark_html = "Hola"
-    return render_template('index.html', markdown_text=mark_html)
+    return render_template('index.html')
 
 """
 === CHATBOT ===
