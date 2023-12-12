@@ -1,8 +1,13 @@
 import requests
 
-def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
-    url = "http://local.compumax.ec:8750/webservices/precios/cargar_productos.php"
+# URL de la API donde esta la base de datos
+url = "http://local.compumax.ec:8750/webservices/precios/cargar_productos.php"
 
+def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
+    """
+    :param item el id o el nombre del item
+    :condicion "" por defecto -> "and items.saldo>0" 
+    """
     try:
         response = requests.post(
             url= url,
