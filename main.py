@@ -80,10 +80,10 @@ def api_get():
             "device": "Computer"
         },
         "Devueleve": {
+            "user": "Jorge",
             "ask": "Tienes teclados?",
-            "response": "func database teclados",
             "role": "assistant",
-            "user": "Jorge"
+            "response": "Datos",
         }
    })
 
@@ -111,7 +111,15 @@ def api_post():
     print(response["response"])
     response = chatbot.chatbot(response["response"])
 
-    return response
+    # Salida de la API
+    response = {
+        "user": user["user"],
+        "ask": user["ask"],
+        "role": response["role"],
+        "response": response["response"]
+    }
+
+    return jsonify(response)
 
 
 # Notify Front
