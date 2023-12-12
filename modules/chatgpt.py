@@ -9,7 +9,7 @@ def answer(token:str, context:str):
     response = openai.Completion.create(
         engine='text-davinci-003',
         prompt=context,
-        max_tokens=150
+        max_tokens=250
     ).choices[0].text
 
     return response

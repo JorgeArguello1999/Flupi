@@ -31,11 +31,10 @@ def get_date(trash):
 
 # Producto - Descripción 
 def get_product_description(text):
-    id_product = ''.join(re.findall(r'\d', text))
-    id_producto = database.search_product_by_id(int(id_product))
-    prompt = context.caracteristicas_producto(id_producto)
-    contexto = context.context(nombre="Maxi", question=prompt)
-    return chatgpt.answer(token=token, context=contexto)
+    response = database.search_product(text)
+    contexto = context.caracteristicas_producto(response)
+    response = chatgpt.answer(token=token, context=contexto)
+    return response
 
 # Llamar al técnico
 def call_technician(trash, server_host="0.0.0.0", server_port=5000):

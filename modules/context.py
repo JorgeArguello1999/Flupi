@@ -56,7 +56,17 @@ def error_mensaje():
     return "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"
 
 def caracteristicas_producto(caracteristicas:str)-> str:
-    return f"Voy a pasar datos de un producto, tu crea un pequeño parrafo que lo describa, utiliza explicitamente solo la información del texto, nada más: {caracteristicas} recuerda utilizar solo esa información el parrafo que daras, va a ser leido así que ten pausas, y vas a usar dolares"
+    return f"""
+    Por favor, genera una lista concisa con información sobre los productos disponibles en nuestra tienda en línea. 
+    Incluye detalles como el nombre del producto, su descripción breve, el precio y la disponibilidad actual. 
+    La lista debe ser organizada y presentar la información de manera clara y fácil de entender para nuestros clientes. 
+    Considera que los clientes desean conocer rápidamente qué productos ofrecemos, qué los hace especiales y cuánto cuestan. 
+    Utiliza un formato legible y ordenado para cada entrada de producto. 
+    Gracias por tu ayuda en la creación de esta lista detallada.
+    Esta es la lista: {caracteristicas} recuerda utilizar lenguaje humano y que eres un asistente de ventas.
+    Ajusta tu respuesta para que pueda estar entre las 200 y 250 palabras, en caso que la lista este vacia tienes que decir
+    que no dispones de Stock, o el item consultado no se encuentra en el sistema
+"""
 
 if __name__ == "__main__":
     salida = context("Maxi", question="Que es CompuMax?")
