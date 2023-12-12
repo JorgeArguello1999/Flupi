@@ -1,4 +1,4 @@
-import datetime, os, re, requests
+import datetime, requests
 from modules import chatgpt, context, database
 
 # Aqui añadir más funciones al sistema de ser necesario

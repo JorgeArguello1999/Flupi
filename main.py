@@ -23,6 +23,7 @@ comandos = list(chatbot.actions.keys())
 def home():
     return render_template('index.html')
 
+
 # Chatbot Front
 @app.route('/chatbot/', methods=['GET'])
 def chatbot_get():
@@ -54,15 +55,31 @@ def chatbot_post():
 
     return respuesta
 
-"""
-=== NOTIFY ===
 
-El notify es donde se avisa al técnico que hay un usuario afuera. Se manejan los siguientes endpoints:
+# API
+@app.route("/api", methods=['GET'])
+def api_get():
+    return jsonify({
+        "manual": "En el <body_form> muestro como se debe consultar",
+        "method": {
+            "GET": "Esta página",
+            "POST": "Interacción con la API"
+        },
+        "formato": "JSON",
+        "body_form": {
+            "user": "Nombre del Usuario",
+            "ask": "Pregunta del usuario",
+            "device": "Computer o Bot"
+        }
+   })
 
-- notify_f [GET]: Renderiza la página web como tal para notificar.
-- notify [GET]: Retorna el estado actual de la alarma.
-- notify/int [GET]: Si se pasa '1' como parámetro, se activa la llamada al técnico.
-"""
+@app.route("/api", methods=['POST'])
+def api_post():
+    data = request.get_json()
+    print(data)
+    return data
+
+
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
 def notify_frontend():
@@ -89,6 +106,7 @@ def notify_backend(statuswork):
     work["status"] = status
 
     return redirect(url_for('notify_frontend'))
+
 
 if __name__ == "__main__":
     app.run(
