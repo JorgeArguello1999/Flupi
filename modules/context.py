@@ -1,7 +1,9 @@
 import re
 
+nombre = "Maxi"
+
 # Esto es el prompt que se envia a ChatGPT
-def context(nombre:str, question:str="None")-> str:
+def context(nombre:str = nombre, question:str="None")-> str:
     """ 
     :nombre -> Nombre del bot
     :question -> Pregunta realizada por el usuario
@@ -52,9 +54,6 @@ Responde la siguiente pregunta, usando espacios, tildes y signos de puntación, 
     limpiando = re.sub(r"[:;()|-]", "", texto)
     return limpiando 
 
-def error_mensaje():
-    return "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"
-
 def caracteristicas_producto(caracteristicas:str)-> str:
     return f"""
     Por favor, genera una lista concisa con información sobre los productos disponibles en nuestra tienda en línea. 
@@ -67,6 +66,9 @@ def caracteristicas_producto(caracteristicas:str)-> str:
     Ajusta tu respuesta para que pueda estar entre las 200 y 250 palabras, en caso que la lista este vacia tienes que decir
     que no dispones de Stock, o el item consultado no se encuentra en el sistema
 """
+
+def error_mensaje():
+    return "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"
 
 if __name__ == "__main__":
     salida = context("Maxi", question="Que es CompuMax?")

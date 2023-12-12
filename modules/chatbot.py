@@ -1,15 +1,7 @@
 import datetime, os, re, requests
 from modules import chatgpt, context, database
-from dotenv import load_dotenv
 
-load_dotenv()
-token = os.environ.get("GPT")
-
-"""
-Aquí se realizan cada uno de los comandos como funciones, estas funciones
-deben devolver siempre un <<String>>, y aparte tienes que añadirlas a un 
-diccionario en la parte inferior para que funcionen
-"""
+# Aqui añadir más funciones al sistema de ser necesario
 
 # Saludo
 def greet(trash):
@@ -33,7 +25,7 @@ def get_date(trash):
 def get_product_description(text):
     response = database.search_product(text)
     contexto = context.caracteristicas_producto(response)
-    response = chatgpt.answer(token=token, context=contexto)
+    response = chatgpt.answer(context=contexto)
     return response
 
 # Llamar al técnico
@@ -49,23 +41,18 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
 
 # Ejecutar cualquier consulta fuera de los comandos
 def execute_query(text):
-    contexto = context.context(nombre="Maxi", question=text)
-    return chatgpt.answer(token=token, context=contexto)
+    contexto = context.context(question=text)
+    return chatgpt.answer(context=contexto)
 
-"""
-En esta parte de aquí podemos colocar las frases que activaran los comandos,
-esta es más importante para los comandos con voz, en la versión web, tienes un 
-desplegable donde solo seleccionas la opción y ya tienes una respuesta
-"""
-
+# Diferentes palabras que activan diferentes funciones
+# Estas palabras estan configuradas en el context
+# Revisar el context.py para más información
 actions = {
-    "Hola Maxi": greet,
-    "Maxi qué hora es": get_time,
-    "Maxi qué fecha es": get_date,
-    "cuánto cuesta": get_product_description,
-    "Cuánto cuesta": get_product_description,
-    "descripción": get_product_description,
-    "llama al técnico": call_technician
+    "func greet": greet,
+    "func time": get_time,
+    "func date": get_date,
+    "func database": get_product_description,
+    "func tecnico": call_technician
 }
 
 def chatbot(text:str)->str:
