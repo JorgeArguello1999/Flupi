@@ -66,4 +66,4 @@ def chatbot(text:str)->str:
         return f"Problema con la ejecución del comando: {text}"
 
 if __name__ == "__main__":
-    print(chatbot("Hola Maxi"))
+    print(chatbot("func database teclados"))

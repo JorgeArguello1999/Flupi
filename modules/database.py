@@ -16,6 +16,8 @@ def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
                 "condicion": condicion
             }
         )
+
+        data = response.content
         
         # Si la respuesta tiene contenido
         if len(response.text) > 3:

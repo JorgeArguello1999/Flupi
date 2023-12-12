@@ -6,6 +6,9 @@ from flask_cors import CORS
 from modules import voice, chatbot
 import os
 
+from modules import chatgpt
+from modules import context
+
 
 # Configuración inciial
 app = Flask(__name__)
@@ -70,14 +73,45 @@ def api_get():
             "user": "Nombre del Usuario",
             "ask": "Pregunta del usuario",
             "device": "Computer o Bot"
+        },
+        "ejemplo": {
+            "user": "Jorge",
+            "ask": "Tienes teclados?",
+            "device": "Computer"
+        },
+        "Devueleve": {
+            "ask": "Tienes teclados?",
+            "response": "func database teclados",
+            "role": "assistant",
+            "user": "Jorge"
         }
    })
 
 @app.route("/api", methods=['POST'])
 def api_post():
+    # Obtenemos el JSON
     data = request.get_json()
-    print(data)
-    return data
+
+    user = {
+        "user": data["user"],
+        "ask": data["ask"],
+        "device": data["device"]
+    }
+
+    # Cargamos el contexto para identificar que necesita el usuario
+    contexto = context.entender_consulta()
+
+    # Enviamos a ChatGPT para que nos devuelva que pide el usuario
+    response = chatgpt.answer(
+        user= user["user"],
+        ask= user["ask"],
+        context= contexto
+    )
+
+    print(response["response"])
+    response = chatbot.chatbot(response["response"])
+
+    return response
 
 
 # Notify Front
