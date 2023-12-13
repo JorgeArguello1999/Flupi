@@ -22,6 +22,7 @@ def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
         data = data.decode("utf-8")
         data = json.loads(data)
 
+        print(data)
         # Si la respuesta tiene contenido
         if data:
             return data

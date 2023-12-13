@@ -8,11 +8,15 @@ except:
 
 # Saludo
 def greet(trash):
-    return f"Hola, en que te puedo ayudar?"
+    return {
+        "response": "Hola, en que te puedo ayudar?"
+    }
 
 # Hora
 def get_time(trash):
-    return f"Hola, la hora es: {datetime.datetime.now().strftime('%H:%M')}"
+    return {
+        "response": "Hola, la hora es: {datetime.datetime.now().strftime('%H:%M')}"
+    }
 
 # Fecha
 def get_date(trash):
@@ -22,15 +26,17 @@ def get_date(trash):
         8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"
     }
     fecha = f"{fecha_actual.day} de {nombres_meses[fecha_actual.month]} de {fecha_actual.year}"
-    return f"La fecha es: {fecha}"
+    return {
+        "response": "La fecha es: {fecha}" 
+    } 
 
 # Producto - Descripción 
 def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
-    response = database.search_product(texto)
-    print(response)
-    return response
+    return {
+        "response": database.search_product(texto) 
+    }
 
 # Llamar al técnico
 def call_technician(trash, server_host="0.0.0.0", server_port=5000):
@@ -38,15 +44,25 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
         requests.get(
             url=f"http://{server_host}:{server_port}/notify/1"
         )
-        return "Espera un momento, puedes tomar asiento"
+        mensaje = "Espera un momento, puedes tomar asiento"
+
     except Exception as error:
         print(f"Error al llamar al técnico: {error}")
-        return context.error_mensaje() 
+        mensaje = context.error_mensaje
+    
+    return {
+        "response": mensaje
+    }
 
 # Ejecutar cualquier consulta fuera de los comandos
 def execute_query(text):
-    contexto = context.context(question=text)
-    return chatgpt.answer(context=contexto)
+    contexto = context.context
+    return {
+        "response": chatgpt.answer(
+            context=contexto, 
+            ask= text
+        ) 
+    } 
 
 # Diferentes palabras que activan diferentes funciones
 # Estas palabras estan configuradas en el context
