@@ -131,13 +131,6 @@
     // Mantener el foco en el campo de texto
     $("#message-input").focus();
 
-    // Permitir desplazarse por el chat usando la rueda del mouse
-    $("#chat-container").on("wheel", function(event) {
-        const delta = event.originalEvent.deltaY;
-        $(this).scrollTop($(this).scrollTop() - delta);
-        event.preventDefault();
-    });
-
     // Copiar el comando seleccionado al campo de texto al hacer clic
     $(".command").on("click", function(event) {
         const selectedCommand = $(this).text();
