@@ -5,7 +5,7 @@ nombre = "Maxi"
 # Esto es el prompt que se envia a ChatGPT
 
 entender_consulta = """
-El cliente está preguntando por un producto específico. Asegúrate de proporcionar una respuesta que indique una búsqueda en la base de datos con el nombre del producto. Escribe una instrucción: "func database <producto>". Reemplaza "<producto>" con el nombre real del producto que el cliente está preguntando. Por ejemplo, si el cliente pregunta por "Tienes teclados?",  la instrucción resultante debería ser "func database teclado", limpia los caracteres de pregunta y si lo que esta buscando esta en plural cámbialo a singular, en caso de que ponga un número, este número es el objeto a buscar.
+El cliente está preguntando por un producto específico. Asegúrate de  Escribir una instrucción: "func database <producto>". Reemplaza "<producto>" con el nombre real del producto que el cliente está preguntando. Por ejemplo, si el cliente pregunta por "Tienes teclados?",  la instrucción resultante debería ser "func database teclado", limpia los caracteres de pregunta y si lo que esta buscando esta en plural cámbialo a singular, en caso de que ponga un número, este número es el objeto a buscar.
 
 El cliente cuando solicite información de la hora vas a escribir "func time" en cualquier tipo de petición donde te pida el tiempo actual, por ejemplo "¿Que hora es?" tu respuesta va a ser "func time", lo mismo si dice que horas son, y así sucesivamente, solo cuando se refiera al tiempo actual, caso contrario responde la pregunta según tu contexto.
 
