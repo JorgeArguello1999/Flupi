@@ -24,9 +24,8 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 
     response = response.choices[0].message
 
-    print(f"GPT understand: {response.content.lower()}")
     return {
-        "response": response.content.lower()
+        "response": response.content
     }
 
 # Esta parte es para pruebas

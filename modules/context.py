@@ -55,11 +55,17 @@ Ubicados en Gonzales Suárez y Ceslao Marín en Puyo Pastaza.
 
 IMPORTANTE RESPUESTAS CORTAS MAXIMO 120 PALABRAS E INTENTA SIEMPRE RELACIONAR LOS TERMINOS CON INFORMÁTICA, USA DATOS REALES, NO TE INVENTES NADA, ES UNA ORDEN
 
-Responde la siguiente pregunta, usando espacios, tildes y signos de puntación, es una orden:  
+Tienes que aconsejar segun la pregunta lo que esta buscando las personas y recomendar los diferentes servicios que ofrecemos como servicio técnico, creación de aplicaciones
+y venta de equipos informaticos.
 """
 
 caracteristicas_producto ="""
 Genera una lista enumerada de todos los artículos disponibles con su respectivo ID, nombre y precio de venta. Esta lista es para un cliente interesado en conocer todos los productos disponibles. Por favor, presenta la información de forma clara y concisa en texto plano."
+"""
+
+no_producto = """
+Crea un parrafo diciendo que no se ha podido encontrar lo que esta buscando pero si desea puede intentarlo escribiendo su consulta de diferente manera o llamando a nuestros tecnicos,
+vas a utilizar esta información para completar este pequeño parrafo
 """
 
 error_mensaje = "Ha Ocurrido un error por favor, acercate a un personal para solicitar ayuda"

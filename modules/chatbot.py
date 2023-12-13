@@ -34,9 +34,18 @@ def get_date(trash):
 def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
-    return {
-        "response": database.search_product(texto) 
-    }
+    response = database.search_product(texto)
+
+    if response != False:
+        return {"response": response}
+    
+    else:
+        return {
+            "response": chatgpt.answer(
+                ask=context.context,
+                context=context.no_producto
+            )["response"]
+        }
 
 # Llamar al técnico
 def call_technician(trash, server_host="0.0.0.0", server_port=5000):

@@ -32,7 +32,7 @@ def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
             parrafo = "\n".join(parrafo)
             return parrafo 
         else:
-            return "El código o el item no existe en la base de datos"
+            return False
         
     except Exception as e:
         response = {
