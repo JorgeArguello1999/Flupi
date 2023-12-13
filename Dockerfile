@@ -14,4 +14,5 @@ RUN pip3 install -r requirements.txt
 EXPOSE 5000
 EXPOSE 3306
 
-CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "main:app"]
+# CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:5000", "main:app"]
+CMD ["python", "main.py"]
