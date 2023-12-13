@@ -24,9 +24,9 @@ def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
 
         # Si la respuesta tiene contenido
         if data:
-            parrafo = ["Los items relacionados a tu busqueda son los siguientes: "]
+            parrafo = ["Los items relacionados a tu busqueda son los siguientes: </br>"]
             for items in data:
-                texto = f"ID: {items['iditem']} - Nombre: {items['nitem']} - Precio: ${items['saldo']}" 
+                texto = f"ID: {items['iditem']} - Nombre: {items['nitem']} - Precio: ${items['saldo']} </br>" 
                 parrafo.append(texto)
             
             parrafo = "\n".join(parrafo)

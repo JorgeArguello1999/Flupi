@@ -72,14 +72,11 @@ def api_post():
         "device": data["device"]
     }
 
-    # Cargamos el contexto para identificar que necesita el usuario
-    contexto = context.entender_consulta
-
     # Enviamos a ChatGPT para que nos devuelva que pide el usuario
     response = chatgpt.answer(
         user= user["user"],
         ask= user["ask"],
-        context= contexto
+        context= context.entender_consulta
     )
 
     response = chatbot.chatbot(response["response"])
