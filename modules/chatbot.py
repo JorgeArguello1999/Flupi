@@ -15,7 +15,7 @@ def greet(trash):
 # Hora
 def get_time(trash):
     return {
-        "response": "Hola, la hora es: {datetime.datetime.now().strftime('%H:%M')}"
+        "response": f"Hola, la hora es: {datetime.datetime.now().strftime('%H:%M')}"
     }
 
 # Fecha
@@ -27,7 +27,7 @@ def get_date(trash):
     }
     fecha = f"{fecha_actual.day} de {nombres_meses[fecha_actual.month]} de {fecha_actual.year}"
     return {
-        "response": "La fecha es: {fecha}" 
+        "response": f"La fecha es: {fecha}" 
     } 
 
 # Producto - Descripción 
@@ -63,18 +63,6 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
         "response": mensaje
     }
 
-# Ejecutar cualquier consulta fuera de los comandos
-def execute_query(text):
-    contexto = context.context
-    answer = chatgpt.answer(
-        context=contexto, 
-        ask= text
-    ) 
-
-    return {
-        "response": answer["response"]     
-    } 
-
 # Diferentes palabras que activan diferentes funciones
 # Estas palabras estan configuradas en el context
 # Revisar el context.py para más información
@@ -89,9 +77,9 @@ actions = {
 def chatbot(text:str)->str:
     try:
         for command in actions:
-            if command in text:
+            if command.lower() in text:
                 return actions[command](text)
-        return execute_query(text)
+        return False
     
     except Exception as e:
         return f"Problema con la ejecución del comando: {text}"

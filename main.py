@@ -76,17 +76,25 @@ def api_post():
     response = chatgpt.answer(
         user= user["user"],
         ask= user["ask"],
-        context= context.entender_consulta
+        context= f"{context.entender_consulta} tu eres: {context.context}"
     )
 
-    response = chatbot.chatbot(response["response"])
+    comandos = chatbot.chatbot(response["response"])
+
+    # Se comprueba si se activo algún comando
+    if comandos:
+        response = comandos
+    
+    # Caso contrario se devuelve la respuesta de GPT 
+    else:
+        response = response["response"]
 
     # Salida de la API
     response = {
         "user": user["user"],
         "ask": user["ask"],
         "role": "assitant", 
-        "response": response["response"]
+        "response": response
     }
 
     return jsonify(response)
