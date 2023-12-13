@@ -83,7 +83,7 @@ def api_post():
 
     # Se comprueba si se activo algún comando
     if comandos:
-        response = comandos
+        response = comandos["response"]
     
     # Caso contrario se devuelve la respuesta de GPT 
     else:
