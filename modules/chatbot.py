@@ -1,8 +1,8 @@
 import datetime, requests
 try: 
-    from modules import chatgpt, context, database
+    from modules import context, database, chatgpt
 except:
-    import chatgpt, context, database
+    import context, database, chatgpt
 
 # Aqui añadir más funciones al sistema de ser necesario
 
@@ -29,13 +29,7 @@ def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
     response = database.search_product(texto)
-
-    contexto = context.caracteristicas_producto()
-    response = chatgpt.answer(
-        user="database",
-        context=contexto,
-        ask=texto
-    )
+    print(response)
     return response
 
 # Llamar al técnico
@@ -76,4 +70,4 @@ def chatbot(text:str)->str:
         return f"Problema con la ejecución del comando: {text}"
 
 if __name__ == "__main__":
-    print(chatbot("La la la la func database teclados"))
+    print(chatbot("func database laptop"))
