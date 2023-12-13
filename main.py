@@ -33,54 +33,8 @@ def home():
 def chatbot_get():
     return render_template('chatbot.html', comandos=comandos)
 
-# Chatbot Back
-"""
-@app.route('/chatbot/', methods=['POST'])
-def chatbot_post():
-    Parámetros:
-        - ask (str): Pregunta realizada al chatbot.
-        - device (str): Dispositivo desde el cual se hace la consulta (opcional).
-    Retorna: Respuesta del chatbot a la pregunta realizada.
-    data = request.get_json()
-
-    data = {
-        "ask" : data["ask"],
-        "user" : "Bot",
-        "device": data["device"]
-    }
-
-    if data["ask"].isdigit() == True:
-        # Si la pregunta es un número, busca la descripción del producto
-        respuesta = chatbot.get_product_description(data["ask"])
-    else:
-        # Si no es un número, realiza una consulta al chatbot
-        respuesta = requests.post(url=url_for('api_post'), data=data)
-
-    # Si la consulta es desde un dispositivo diferente a una computadora, devuelve un audio
-    if data["device"] != "computer":
-        salida = voice.speaker(respuesta)
-        return send_from_directory('static/audio_chatbot', salida)
-
-    return respuesta
-"""
-@app.route("/chatbot", methods=['POST'])
-def chatbot_post():
-    data = request.get_json()
-
-    data = {
-        "user": data["user"],
-        "ask": data["ask"],
-        "device": data["device"]
-    }
-
-    response = requests.post(
-        url= url_for('api_post'),
-        json= data
-    )
-    return response 
-
 # API
-@app.route("/api", methods=['GET'])
+@app.route("/api/", methods=['GET'])
 def api_get():
     return jsonify({
         "manual": "En el <body_form> muestro como se debe consultar",
@@ -107,7 +61,7 @@ def api_get():
         }
    })
 
-@app.route("/api", methods=['POST'])
+@app.route("/api/", methods=['POST'])
 def api_post():
     # Obtenemos el JSON
     data = request.get_json()

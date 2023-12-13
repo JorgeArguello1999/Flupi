@@ -99,12 +99,17 @@
             // Enviar el mensaje al servidor y recibir una respuesta
             $.ajax({
                 type: "POST",
-                url: "/chatbot/",
-                data: JSON.stringify({ "ask": userMessage, "device": "computer" }),
+                url: "/api/",
+                data: JSON.stringify({ 
+                    "ask": userMessage, 
+                    "user": "Bot",
+                    "device": "computer"
+                }),
                 contentType: "application/json",
                 dataType: "text",
                 success: function(data) {
                     showMessage(data, false);
+                    console.log(data);
                 }
             });
 
