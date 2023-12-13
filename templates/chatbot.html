@@ -83,7 +83,7 @@
         const response = responseData.response;
         const role = responseData.role;
 
-        const messageDiv = `<div class="message-bot"><p>${response}</p><p><strong>Rol: ${role}</strong></p></div>`;
+        const messageDiv = `<div class="message-bot">${getProfileImage(false)}<p>${response}</p></div>`;
         $("#chat-messages").prepend(messageDiv); // Agregar mensaje al principio
 
         // Desplazar hacia abajo para ver el mensaje más reciente
