@@ -5,6 +5,7 @@ from flask import send_from_directory
 from flask_cors import CORS
 from modules import voice, chatbot
 import os
+import requests
 
 from modules import chatgpt
 from modules import context
@@ -33,23 +34,27 @@ def chatbot_get():
     return render_template('chatbot.html', comandos=comandos)
 
 # Chatbot Back
+"""
 @app.route('/chatbot/', methods=['POST'])
 def chatbot_post():
-    """
     Parámetros:
         - ask (str): Pregunta realizada al chatbot.
         - device (str): Dispositivo desde el cual se hace la consulta (opcional).
     Retorna: Respuesta del chatbot a la pregunta realizada.
-    """
     data = request.get_json()
-    pregunta = data["ask"]
 
-    if pregunta.isdigit() == True:
+    data = {
+        "ask" : data["ask"],
+        "user" : "Bot",
+        "device": data["device"]
+    }
+
+    if data["ask"].isdigit() == True:
         # Si la pregunta es un número, busca la descripción del producto
-        respuesta = chatbot.get_product_description(pregunta)
+        respuesta = chatbot.get_product_description(data["ask"])
     else:
         # Si no es un número, realiza una consulta al chatbot
-        respuesta = chatbot.chatbot(pregunta)
+        respuesta = requests.post(url=url_for('api_post'), data=data)
 
     # Si la consulta es desde un dispositivo diferente a una computadora, devuelve un audio
     if data["device"] != "computer":
@@ -57,7 +62,22 @@ def chatbot_post():
         return send_from_directory('static/audio_chatbot', salida)
 
     return respuesta
+"""
+@app.route("/chatbot", methods=['POST'])
+def chatbot_post():
+    data = request.get_json()
 
+    data = {
+        "user": data["user"],
+        "ask": data["ask"],
+        "device": data["device"]
+    }
+
+    response = requests.post(
+        url= url_for('api_post'),
+        json= data
+    )
+    return response 
 
 # API
 @app.route("/api", methods=['GET'])
