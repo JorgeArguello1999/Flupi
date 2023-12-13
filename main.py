@@ -108,7 +108,6 @@ def api_post():
         context= contexto
     )
 
-    print(response["response"])
     response = chatbot.chatbot(response["response"])
 
     # Salida de la API

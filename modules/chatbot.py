@@ -57,11 +57,13 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
 # Ejecutar cualquier consulta fuera de los comandos
 def execute_query(text):
     contexto = context.context
+    answer = chatgpt.answer(
+        context=contexto, 
+        ask= text
+    ) 
+
     return {
-        "response": chatgpt.answer(
-            context=contexto, 
-            ask= text
-        ) 
+        "response": answer["response"]     
     } 
 
 # Diferentes palabras que activan diferentes funciones

@@ -25,9 +25,6 @@ def answer(user:str="anonym", context:str="", ask:str=""):
     response = response.choices[0].message
 
     return {
-        "user": user,
-        "ask": ask,
-        "role": response.role,
         "response": response.content
     }
 
@@ -35,7 +32,7 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 if __name__ == '__main__':
     import context
 
-    contexto = context.entender_consulta()
+    contexto = context.entender_consulta
     ask="Usuario: Tienes teclados?"
     user = "Jorge"
     salida = answer(
