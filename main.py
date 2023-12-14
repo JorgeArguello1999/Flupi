@@ -3,22 +3,20 @@ from flask import render_template
 from flask import redirect, url_for
 from flask import send_from_directory
 from flask_cors import CORS
-from modules import voice, chatbot
 
 import os
 import datetime
 
+from modules import voice 
+from modules import chatbot
 from modules import chatgpt
 from modules import context
-
+import _database_
 
 # Configuración inciial
 app = Flask(__name__)
 CORS(app)
 app.config['STATIC_URL'] = '/static'
-
-# Estado inicial del técnico
-work = {'status': False}
 
 # Acciones 
 comandos = list(chatbot.actions.keys())
@@ -117,8 +115,10 @@ def notify_frontend():
 # Notify Status
 @app.route('/notify', methods=['GET'])
 def notify_status():
-   return jsonify({
-        "status": work["status"]
+    work = _database_.get_alarm_status()
+
+    return jsonify({
+        "status": work
     })
 
 # Notify Back
@@ -129,11 +129,7 @@ def notify_backend(statuswork):
         - statuswork (int): 1 para llamar al técnico, 0 para desactivar.
     Retorna: Redirección a la página 'notify_f'.
     """
-    status = False
-    if statuswork == 1:
-        status = True
-    work["status"] = status
-
+    _database_.update_alarm_status(statuswork)
     return redirect(url_for('notify_frontend'))
 
 
