@@ -4,8 +4,9 @@ from flask import redirect, url_for
 from flask import send_from_directory
 from flask_cors import CORS
 from modules import voice, chatbot
+
 import os
-import requests
+import datetime
 
 from modules import chatgpt
 from modules import context
@@ -63,6 +64,8 @@ def api_get():
 
 @app.route("/api/", methods=['POST'])
 def api_post():
+    # Obtenemos la hora de Petición
+    hora_peticion =  datetime.datetime.now().strftime('%H:%M')
     # Obtenemos el JSON
     data = request.get_json()
 
@@ -89,12 +92,17 @@ def api_post():
     else:
         response = response["response"]
 
+    # Obtenemos hora respuesta
+    hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
+
     # Salida de la API
     response = {
         "user": user["user"],
         "ask": user["ask"],
         "role": "assitant", 
-        "response": response
+        "response": response,
+        "time_request": hora_peticion,
+        "time_answer": hora_respuesta
     }
 
     return jsonify(response)
