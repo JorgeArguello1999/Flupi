@@ -32,7 +32,7 @@ def home():
 def chatbot_get():
     return render_template('chatbot.html', comandos=comandos)
 
-# API
+# API para el chatbot
 @app.route("/api/", methods=['GET'])
 def api_get():
     return jsonify({
@@ -106,6 +106,24 @@ def api_post():
 
     return jsonify(response)
 
+# Ruta para modificar el contexto
+@app.route('/context/<filename>', methods=['GET'])
+def get_context(filename):
+    with open(f'context/{filename}', 'r') as file:
+        content = file.read()
+    return jsonify({'filename': filename, 'content': content})
+
+@app.route('/context/<filename>', methods=['POST'])
+def update_context(filename):
+    content = request.json.get('content')
+    with open(f'context/{filename}', 'w') as file:
+        file.write(content)
+    return jsonify({'filename': filename, 'message': 'File updated successfully'})
+
+@app.route('/context_f/', methods=['GET'])
+def read_context():
+    context_files = os.listdir('context') 
+    return render_template('context.html', files=context_files)
 
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
