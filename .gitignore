@@ -8,3 +8,5 @@ facesData/*
 .env
 *_temp_audio.mp3
 *texto_a_voz.mp3
+
+./static/texto_a_voz.mp3

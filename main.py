@@ -38,27 +38,30 @@ def chatbot_get():
 @app.route("/api/", methods=['GET'])
 def api_get():
     return jsonify({
-        "manual": "En el <body_form> muestro como se debe consultar",
+        "formato": "JSON",
         "method": {
             "GET": "Esta página",
             "POST": "Interacción con la API"
         },
-        "formato": "JSON",
         "body_form": {
             "user": "Nombre del Usuario",
             "ask": "Pregunta del usuario",
             "device": "Computer o Bot"
         },
         "ejemplo": {
-            "user": "Jorge",
-            "ask": "Tienes teclados?",
-            "device": "Computer"
-        },
-        "Devueleve": {
-            "user": "Jorge",
-            "ask": "Tienes teclados?",
-            "role": "assistant",
-            "response": "Datos",
+            "request_json": {
+                "user": "Jorge",
+                "ask": "Tienes teclados?",
+                "device": "Computer"
+            },
+            "response_json": {
+                "user": "Jorge",
+                "ask": "Tienes teclados?",
+                "role": "assistant",
+                "response": "Datos",
+                "time_answer": "00:01",
+                "time_request": "00:01"
+            }
         }
    })
 
@@ -69,16 +72,10 @@ def api_post():
     # Obtenemos el JSON
     data = request.get_json()
 
-    user = {
-        "user": data["user"],
-        "ask": data["ask"],
-        "device": data["device"]
-    }
-
     # Enviamos a ChatGPT para que nos devuelva que pide el usuario
     response = chatgpt.answer(
-        user= user["user"],
-        ask= user["ask"],
+        user= data["user"],
+        ask= data["ask"],
         context= f"{context.entender_consulta} tu eres: {context.context}"
     )
 
@@ -97,8 +94,8 @@ def api_post():
 
     # Salida de la API
     response = {
-        "user": user["user"],
-        "ask": user["ask"],
+        "user": data["user"],
+        "ask": data["ask"],
         "role": "assitant", 
         "response": response,
         "time_request": hora_peticion,
