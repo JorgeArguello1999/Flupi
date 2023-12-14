@@ -12,12 +12,26 @@
             {% for file in files %}
                 <option value="{{ file }}">{{ file }}</option>
             {% endfor %}
-        </select><br><br>
+        </select>
+        <button id="openBtn" type="button">Abrir</button><br><br>
         <textarea id="content" name="content" rows="10" cols="50"></textarea><br><br>
         <button type="submit">Guardar cambios</button>
     </form>
 
     <script>
+        // Cuando se hace clic en el botón "Abrir"
+        document.getElementById('openBtn').addEventListener('click', function(event) {
+            const selectedFile = document.getElementById('filename').value;
+            fetch(`/context/${selectedFile}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('content').value = data.content;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
         document.getElementById('editForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const filename = document.getElementById('filename').value;
