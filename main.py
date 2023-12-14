@@ -89,6 +89,10 @@ def api_post():
     else:
         response = response["response"]
 
+    if data["device"] == "bot":
+        response = voice.speaker(response)
+        return send_from_directory('static/audio_chatbot', response)
+
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
 
