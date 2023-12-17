@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'home',
     'notify',
-    'chatbot'
+    'chatbot',
+    'api'
 ]
 
 MIDDLEWARE = [
