@@ -85,10 +85,12 @@ def api_post(request):
                 "time_request": hora_peticion,
                 "time_answer": hora_respuesta
             }
-
+        
         except Exception as e:
             response = ({
                 "error": e
             })
+
+        print(response)
     
     return JsonResponse(response)

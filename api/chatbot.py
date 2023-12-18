@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 import datetime, requests
 
 from . import api_soporte
@@ -52,20 +54,17 @@ def get_product_description(text:str):
         }
 
 # Llamar al técnico
-def call_technician(trash, server_host="0.0.0.0", server_port=5000):
-    error_mensaje = Contextos.objects.filter(name='error_mensaje')
+def call_technician(trash):
+    error_message = Contextos.objects.filter(name='error_message').values()[0]['content']
     try:
-        requests.get(
-            url=f"http://{server_host}:{server_port}/notify/1"
-        )
-        mensaje = "Espera un momento, puedes tomar asiento"
-
+        requests.get("http://127.0.0.1:8000/notify/entry/1")
+        message = "Espera un momento, puedes tomar asiento"
     except Exception as error:
         print(f"Error al llamar al técnico: {error}")
-        mensaje = error_mensaje
+        message = str(error_message)  # Convirtiendo el mensaje de error a cadena de texto
     
     return {
-        "response": mensaje
+        "response": message
     }
 
 # Diferentes palabras que activan diferentes funciones
