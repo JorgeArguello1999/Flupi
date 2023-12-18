@@ -1,8 +1,9 @@
 import datetime, requests
-try: 
-    from modules import context, database, chatgpt
-except:
-    import context, database, chatgpt
+
+from . import api_soporte
+from . import chatgpt
+
+from .models import Contextos
 
 # Aqui añadir más funciones al sistema de ser necesario
 
@@ -34,7 +35,10 @@ def get_date(trash):
 def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
-    response = database.search_product(texto)
+    response = api_soporte.search_product(texto)
+
+    no_producto = Contextos.objects.filter(name='no_producto').values()[0]
+    contexto = Contextos.objects.filter(name="contexto").values()[0]
 
     if response != False:
         return {"response": response}
@@ -42,13 +46,14 @@ def get_product_description(text:str):
     else:
         return {
             "response": chatgpt.answer(
-                ask=context.context,
-                context=context.no_producto
+                ask=contexto,
+                context=no_producto
             )["response"]
         }
 
 # Llamar al técnico
 def call_technician(trash, server_host="0.0.0.0", server_port=5000):
+    error_mensaje = Contextos.objects.filter(name='error_mensaje')
     try:
         requests.get(
             url=f"http://{server_host}:{server_port}/notify/1"
@@ -57,7 +62,7 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
 
     except Exception as error:
         print(f"Error al llamar al técnico: {error}")
-        mensaje = context.error_mensaje
+        mensaje = error_mensaje
     
     return {
         "response": mensaje

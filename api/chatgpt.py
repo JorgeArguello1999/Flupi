@@ -30,13 +30,10 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 
 # Esta parte es para pruebas
 if __name__ == '__main__':
-    import context
-
-    contexto = context.entender_consulta
     ask="Usuario: Tienes teclados?"
     user = "Jorge"
     salida = answer(
-        context=contexto,
+        context="Solo responde",
         user=user,
         ask=ask,
     )

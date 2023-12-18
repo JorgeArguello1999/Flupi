@@ -1,12 +1,13 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
 
-#from .modules import context
-#from .modules import chatbot
-#from .modules import chatgpt
-#from .modules import voice
-
 import datetime
+import json
 
+from .models import Contextos
+
+from . import chatbot
+from . import chatgpt
 # Vistas de la API
 def api_get(request):
     return JsonResponse({
@@ -37,46 +38,57 @@ def api_get(request):
         }
    })
 
-"""
+@csrf_exempt
 def api_post(request):
-    # Obtenemos la hora de Petición
-    hora_peticion =  datetime.datetime.now().strftime('%H:%M')
-    # Obtenemos el JSON
-    data = request.get_json()
+    if request.method == "POST" and request.content_type == 'application/json':
+        try:
+            data = json.loads(request.body)
 
-    # Enviamos a ChatGPT para que nos devuelva que pide el usuario
-    response = chatgpt.answer(
-        user= data["user"],
-        ask= data["ask"],
-        context= f"{context.entender_consulta} tu eres: {context.context}"
-    )
+            # Obtenemos la hora de Petición
+            hora_peticion =  datetime.datetime.now().strftime('%H:%M')
 
-    comandos = chatbot.chatbot(response["response"])
+            # Consultamos a la base de datos
+            entender_consulta = Contextos.objects.filter(name='entender_consulta').values()[0]
+            contexto = Contextos.objects.filter(name='contexto').values()[0]
 
-    # Se comprueba si se activo algún comando
-    if comandos:
-        response = comandos["response"]
+            # Enviamos a ChatGPT para que nos devuelva que pide el usuario
+            response = chatgpt.answer(
+                user= data["user"],
+                ask= data["ask"],
+                context= f"{entender_consulta} tu eres: {contexto}"
+            )
+
+            comandos = chatbot.chatbot(response["response"])
+
+            # Se comprueba si se activo algún comando
+            if comandos:
+                response = comandos["response"]
+            
+            # Caso contrario se devuelve la respuesta de GPT 
+            else:
+                response = response["response"]
+
+            if data["device"] == "bot":
+                pass
+                # response = voice.speaker(response)
+                #return send_from_directory('static/audio_chatbot', response)
+
+            # Obtenemos hora respuesta
+            hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
+
+            # Salida de la API
+            response = {
+                "user": data["user"],
+                "ask": data["ask"],
+                "role": "assitant", 
+                "response": response,
+                "time_request": hora_peticion,
+                "time_answer": hora_respuesta
+            }
+
+        except Exception as e:
+            response = ({
+                "error": e
+            })
     
-    # Caso contrario se devuelve la respuesta de GPT 
-    else:
-        response = response["response"]
-
-    if data["device"] == "bot":
-        response = voice.speaker(response)
-        #return send_from_directory('static/audio_chatbot', response)
-
-    # Obtenemos hora respuesta
-    hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
-
-    # Salida de la API
-    response = {
-        "user": data["user"],
-        "ask": data["ask"],
-        "role": "assitant", 
-        "response": response,
-        "time_request": hora_peticion,
-        "time_answer": hora_respuesta
-    }
-
     return JsonResponse(response)
-"""
