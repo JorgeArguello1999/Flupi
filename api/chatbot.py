@@ -39,8 +39,8 @@ def get_product_description(text:str):
     texto = text.replace(func_words, "").strip()
     response = api_soporte.search_product(texto)
 
-    no_producto = Contextos.objects.filter(name='no_producto').values()[0]
-    contexto = Contextos.objects.filter(name="contexto").values()[0]
+    no_producto = Contextos.objects.filter(name='no_producto').values()[0]['content']
+    contexto = Contextos.objects.filter(name="contexto").values()[0]['content']
 
     if response != False:
         return {"response": response}
@@ -48,8 +48,8 @@ def get_product_description(text:str):
     else:
         return {
             "response": chatgpt.answer(
-                ask=contexto,
-                context=no_producto
+                ask=no_producto,
+                context=contexto
             )["response"]
         }
 

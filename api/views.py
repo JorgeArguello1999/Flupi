@@ -48,8 +48,8 @@ def api_post(request):
             hora_peticion =  datetime.datetime.now().strftime('%H:%M')
 
             # Consultamos a la base de datos
-            entender_consulta = Contextos.objects.filter(name='entender_consulta').values()[0]
-            contexto = Contextos.objects.filter(name='contexto').values()[0]
+            entender_consulta = Contextos.objects.filter(name='entender_consulta').values()[0]['content']
+            contexto = Contextos.objects.filter(name='contexto').values()[0]['content']
 
             # Enviamos a ChatGPT para que nos devuelva que pide el usuario
             response = chatgpt.answer(
@@ -91,6 +91,4 @@ def api_post(request):
                 "error": e
             })
 
-        print(response)
-    
     return JsonResponse(response)
