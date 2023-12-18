@@ -2,9 +2,12 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http.response import JsonResponse
 
+from django.contrib.auth.decorators import login_required
+
 from .models import StatusWork
 
 # Notify Front
+@login_required
 def notify_frontend(request):
     return render(request, 'notify.html')
 
@@ -17,6 +20,7 @@ def notify_status(request):
     })
 
 # Notify Back
+@login_required
 def notify_backend(request, statuswork):
     """
     Parámetros:

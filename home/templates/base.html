@@ -34,13 +34,20 @@
             <img src="/static/1.jpeg" alt="Imagen" height="50px">
             <img src="/static/5.jpeg" alt="Imagen" height="50px">
         </a>
+        {% if user.is_authenticated %}
+        <a href="{% url 'signout' %}">Cerrar Sesion</a>
+        {% else %}
+        <a href="{% url 'signin' %}">Iniciar Sesion</a>
+        {% endif %}
     </nav>
 
     <div class="list_items">
         <ul class="nav nav-tabs">
+            {% if user.is_authenticated %}
             <li class="nav-item"><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="{% url 'chatbot' %}">Chatbot</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'notify' %}">Notify</a></li>
+            {% endif %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'chatbot' %}">Chatbot</a></li>
             <li class="nav-item"><a class="nav-link" href="{% url 'api_get' %}">API</a></li>
         </ul>
     </div>
