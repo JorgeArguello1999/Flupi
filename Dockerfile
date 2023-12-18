@@ -1,16 +1,21 @@
-FROM python:3.11.2
+# Usa una imagen base de Python
+FROM python:3.9
 
+# Establece el directorio de trabajo en /app
 WORKDIR /app
 
-# Copia todos los archivos excepto el directorio APPS/
-COPY . .
+# Copia los archivos de tu proyecto al contenedor
+COPY . /app
 
-RUN apt-get update && apt-get install -y \
-    portaudio19-dev
+# Instala las dependencias del proyecto
+RUN pip install -r requirements.txt
 
-RUN pip3 install --upgrade pip
-RUN pip3 install -r requirements.txt
+# Expón el puerto en el que se ejecutará tu aplicación
+EXPOSE 8000
 
-EXPOSE 5000
+# Comando para ejecutar la migración inicial y crear el usuario admin (puede variar según tu proyecto)
+RUN python manage.py migrate
+RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('compumax@soporte.com', 'compumax@soporte.com', '@compumax2023')" | python manage.py shell
 
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "main:app"]
+# Comando para arrancar Gunicorn y ejecutar la aplicación
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "flupi.wsgi"]
