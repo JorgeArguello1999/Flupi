@@ -73,9 +73,9 @@
     // Función para obtener la imagen de perfil según el remitente
     function getProfileImage(isUser) {
         if (isUser) {
-            return `<img src="{% static '7.jpeg' %}" alt="user_profile" class="img_profile">`;
+            return `<img src="uploads/{{ imagen_ruta_user }}" alt="user_profile" class="img_profile">`;
         } else {
-            return `<img src="{% static 'compumax.jpeg' %}" alt="user_profile" class="img_profile">`;
+            return `<img src="uploads/{{ imagen_ruta_bot }}" alt="bot_profile" class="img_profile">`;
         }
     }
 
