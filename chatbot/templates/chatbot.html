@@ -112,7 +112,7 @@
         // Enviar el mensaje al servidor y recibir una respuesta
         $.ajax({
             type: "POST",
-            url: "{% url 'api_post' %}}",
+            url: "{% url 'api_post' %}",
             data: JSON.stringify({ 
                 "ask": userMessage, 
                 "user": "Bot",
