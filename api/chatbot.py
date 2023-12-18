@@ -55,17 +55,22 @@ def get_product_description(text:str):
 
 # Llamar al técnico
 def call_technician(trash):
-    error_message = Contextos.objects.filter(name='error_message').values()[0]['content']
+    url = reverse('notify_entry', kwargs={'statuswork': 1})
+
     try:
-        requests.get("http://127.0.0.1:8000/notify/entry/1")
-        message = "Espera un momento, puedes tomar asiento"
-    except Exception as error:
-        print(f"Error al llamar al técnico: {error}")
-        message = str(error_message)  # Convirtiendo el mensaje de error a cadena de texto
-    
-    return {
-        "response": message
-    }
+        salida = requests.get(f"http://0.0.0.0:8000/{url}")
+    except Exception as e:
+        print(e)
+
+    if salida.status_code == 200:
+        return {
+            "response": "Listo, espera un momento"
+        }
+
+    else:
+        return {
+            "response": Contextos.objects.filter(name='error_mensaje').values()[0]['content']
+        }
 
 # Diferentes palabras que activan diferentes funciones
 # Estas palabras estan configuradas en el context
