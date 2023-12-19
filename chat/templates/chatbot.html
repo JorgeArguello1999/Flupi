@@ -84,10 +84,11 @@
         function showApiResponse(responseData) {
             const response = responseData.response;
             const role = responseData.role;
-            const photoRole = responseData.photo_role; // Imagen base64 del rol
+            const photoUser = responseData.photo_user; // Imagen base64 del usuario
+            const photoRole = responseData.photo_role; // Imagen base64 del chatbot
             const timeAnswer = responseData.time_answer; // Hora de la respuesta
 
-            const messageDiv = `<div class="message-bot">${getProfileImage(false, photoRole)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
+            const messageDiv = `<div class="message-bot">${getProfileImage(false, photoUser)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
             $("#chat-messages").prepend(messageDiv);
 
             $("#chat-container").scrollTop(0);
@@ -121,7 +122,6 @@
                 dataType: "json",
                 success: function(data) {
                     showApiResponse(data);
-                    console.log(data);
                 }
             });
 
