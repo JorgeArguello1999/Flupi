@@ -8,6 +8,7 @@ from home.routes import home_bp
 from api.routes import api_bp
 from chat.routes import chat_bp
 from notify.routes import notify_bp
+from configs.routes import configs_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -17,6 +18,7 @@ app.register_blueprint(home_bp)
 app.register_blueprint(api_bp)
 app.register_blueprint(chat_bp)
 app.register_blueprint(notify_bp)
+app.register_blueprint(configs_bp)
 
 if __name__ == "__main__":
     app.run(
