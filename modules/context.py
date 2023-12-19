@@ -1,17 +1,19 @@
-def read_file(ruta:str)->str:
-    # Esta ruta apunta al directorio principal
-    ruta = 'context/' + ruta
+import sqlite3
 
-    with open(ruta, 'r') as archivo:
-        contenido = archivo.read()
-    return contenido
+def get_context(name:str)-> str:
+    """
+    :name -> Contexto a Consultar
+    """
+    conn = sqlite3.connect('alarm_status.db')
+    cursor = conn.cursor()
+    
+    response = cursor.execute(f"SELECT content FROM ContextData where name='{name}'")
+    response = response.fetchone()
+    response = response[0] if response else None
+    conn.close()
 
-entender_consulta = read_file('entender_consulta.txt')
+    return response
 
-context = read_file('context.txt')
-
-caracteristicas_producto = read_file('caracteristicas_producto.txt')
-
-no_producto = read_file('no_producto.txt')
-
-error_mensaje = read_file('error_mensaje.txt')
+if __name__ == "__main__":
+    salida = get_context("no_producto")
+    print(salida)
