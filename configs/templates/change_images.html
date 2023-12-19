@@ -30,7 +30,18 @@
     <script>
         // Función para actualizar la vista previa del archivo seleccionado actualmente
         function displayCurrentImagePreview(selectedImage) {
-            document.getElementById('currentImagePreview').src = `/uploads/${selectedImage}`;
+            fetch(`/configs/images/${selectedImage}`)
+                .then(response => response.json())
+                .then(data => {
+                    if ('content' in data) {
+                        document.getElementById('currentImagePreview').src = `data:image/jpeg;base64, ${data.content}`;
+                    } else {
+                        console.error('Image not found');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
 
         document.getElementById('openBtn').addEventListener('click', function(event) {
@@ -46,7 +57,7 @@
             const formData = new FormData();
             formData.append('new_image', newImage);
 
-            fetch(`/images/${filename}`, {
+            fetch(`/configs/images/${filename}`, {
                 method: 'POST',
                 body: formData
             })
