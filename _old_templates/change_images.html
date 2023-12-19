@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %} Editar Imágenes {% endblock %}
+{% block subtitle %} Editar Imágenes {% endblock %}
+
+{% block content %}
+   <h1>Editar Archivos de Imágenes</h1>
+
+   <form id="editForm">
+        <label for="filename">Seleccionar imagen:</label>
+        <select id="filename" name="filename">
+            {% for file in files %}
+                <option value="{{ file }}">{{ file }}</option>
+            {% endfor %}
+        </select>
+        <button id="openBtn" type="button">Abrir</button><br><br>
+        
+        <!-- Vista previa del archivo seleccionado actualmente -->
+        <img id="currentImagePreview" src="" alt="Current Preview" width="400"><br><br>
+        
+        <!-- Input para cargar un nuevo archivo -->
+        <input type="file" id="newImage" accept="image/*" required><br><br>
+        
+        <!-- Vista previa del nuevo archivo -->
+        <img id="newImagePreview" src="" alt="New Preview" width="400"><br><br>
+        
+        <button type="submit">Guardar cambios</button>
+    </form>
+
+    <script>
+        // Función para actualizar la vista previa del archivo seleccionado actualmente
+        function displayCurrentImagePreview(selectedImage) {
+            document.getElementById('currentImagePreview').src = `/uploads/${selectedImage}`;
+        }
+
+        document.getElementById('openBtn').addEventListener('click', function(event) {
+            const selectedImage = document.getElementById('filename').value;
+            displayCurrentImagePreview(selectedImage);
+        });
+
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const filename = document.getElementById('filename').value;
+            const newImage = document.getElementById('newImage').files[0];
+
+            const formData = new FormData();
+            formData.append('new_image', newImage);
+
+            fetch(`/images/${filename}`, {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                // Actualizar la vista previa del archivo actual y del nuevo archivo
+                displayCurrentImagePreview(filename);
+                document.getElementById('newImagePreview').src = URL.createObjectURL(newImage);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+
+        document.getElementById('newImage').addEventListener('change', function(event) {
+            const newImage = event.target.files[0];
+            const reader = new FileReader();
+            reader.onload = function() {
+                document.getElementById('newImagePreview').src = reader.result;
+            };
+            reader.readAsDataURL(newImage);
+        });
+
+        window.addEventListener('DOMContentLoaded', function() {
+            const selectedImage = document.getElementById('filename').value;
+            displayCurrentImagePreview(selectedImage);
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %} Home {% endblock %}
+{% block subtitle %} Home {% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h1>Bienvenido a CompuMax - Asistente de Ventas</h1>
+        
+                <div class="section">
+                    <h2>¿Qué es CompuMax?</h2>
+                    <p>
+                        CompuMax es una empresa de tecnología con más de veinticuatro años de experiencia.
+                        Ofrecemos una amplia gama de productos y servicios informáticos, desde desarrollo
+                        de software a medida hasta reparación de dispositivos y venta de equipos.
+                        Nuestro compromiso es brindar soluciones de alta calidad adaptadas a las necesidades
+                        de nuestros clientes.
+                    </p>
+                </div>
+
+                <div class="section">
+                    <h2>¿Cómo hacer preguntas al bot?</h2>
+                    <p>
+                        Puedes hacer preguntas al asistente de ventas ingresando tu consulta en el espacio
+                        designado y presionando el botón para enviarla. El asistente intentará proporcionarte
+                        una respuesta relevante relacionada con informática y los servicios que ofrece CompuMax.
+                        Recuerda utilizar términos informáticos y ser claro en tu consulta.
+                    </p>
+                    <p>
+                        Ejemplo de pregunta: "¿Cuáles son las aplicaciones destacadas de CompuMax?"
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <!-- Video -->
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe class="embed-responsive-item" src="{{ url_for('static', filename='video.mp4') }}" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

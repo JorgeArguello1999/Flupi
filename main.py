@@ -8,10 +8,6 @@ import os
 import datetime
 import sqlite3
 
-from modules import voice 
-from modules import chatbot
-from modules import chatgpt
-from modules import context
 import _database_
 
 # Configuración inciial
@@ -22,90 +18,11 @@ app.config['STATIC_URL'] = '/static'
 # Acciones 
 comandos = list(chatbot.actions.keys())
 
-# Home
-@app.route('/', methods=['GET'])
-def home():
-    return render_template('index.html')
-
-
 # Chatbot Front
 @app.route('/chatbot/', methods=['GET'])
 def chatbot_get():
     return render_template('chatbot.html', comandos=comandos)
 
-# API para el chatbot
-@app.route("/api/", methods=['GET'])
-def api_get():
-    return jsonify({
-        "formato": "JSON",
-        "method": {
-            "GET": "Esta página",
-            "POST": "Interacción con la API"
-        },
-        "body_form": {
-            "user": "Nombre del Usuario",
-            "ask": "Pregunta del usuario",
-            "device": "Computer o Bot"
-        },
-        "ejemplo": {
-            "request_json": {
-                "user": "Jorge",
-                "ask": "Tienes teclados?",
-                "device": "Computer"
-            },
-            "response_json": {
-                "user": "Jorge",
-                "ask": "Tienes teclados?",
-                "role": "assistant",
-                "response": "Datos",
-                "time_answer": "00:01",
-                "time_request": "00:01"
-            }
-        }
-   })
-
-@app.route("/api/", methods=['POST'])
-def api_post():
-    # Obtenemos la hora de Petición
-    hora_peticion =  datetime.datetime.now().strftime('%H:%M')
-    # Obtenemos el JSON
-    data = request.get_json()
-
-    # Enviamos a ChatGPT para que nos devuelva que pide el usuario
-    response = chatgpt.answer(
-        user= data["user"],
-        ask= data["ask"],
-        context= f"{context.get_context('entender_consulta')} tu eres: {context.get_context('context')}"
-    )
-
-    comandos = chatbot.chatbot(response["response"])
-
-    # Se comprueba si se activo algún comando
-    if comandos:
-        response = comandos["response"]
-    
-    # Caso contrario se devuelve la respuesta de GPT 
-    else:
-        response = response["response"]
-
-    if data["device"] == "bot":
-        response = voice.speaker(response)
-        return send_from_directory('static/audio_chatbot', response)
-
-    # Obtenemos hora respuesta
-    hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
-
-    # Salida de la API
-    response = {
-        "user": data["user"],
-        "ask": data["ask"],
-        "role": "assitant", 
-        "response": response,
-        "time_request": hora_peticion,
-        "time_answer": hora_respuesta
-    }
-
-    return jsonify(response)
 
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
