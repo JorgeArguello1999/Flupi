@@ -150,6 +150,25 @@ def read_context():
     context_files = os.listdir('context') 
     return render_template('context.html', files=context_files)
 
+# Ruta para las imagenes
+@app.route('/images/<filename>', methods=['GET'])
+def get_image(filename):
+    with open(f'uploads/{filename}', 'rb') as file:
+        content = file.read()
+    return jsonify({'filename': filename, 'content': content})
+
+@app.route('/images/<filename>', methods=['POST'])
+def update_image(filename):
+    new_image = request.files['new_image']
+    new_image.save(os.path.join('uploads', filename))
+    return jsonify({'filename': filename, 'message': 'File updated successfully'})
+
+@app.route('/images_f/', methods=['GET'])
+def read_images():
+    images_files = os.listdir('uploads') 
+    return render_template('change_images.html', files=images_files)
+
+
 if __name__ == "__main__":
     app.run(
         debug=os.environ.get("DEBUG"),
