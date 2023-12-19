@@ -1,6 +1,6 @@
 from configs import chatgpt
 from configs import context
-from configs import database
+from configs import api_compumax
 
 import datetime, requests
 
@@ -32,7 +32,7 @@ def get_date(trash):
 def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
-    response = database.search_product(texto)
+    response = api_compumax.search_product(texto)
 
     if response != False:
         return {"response": response}
