@@ -5,10 +5,10 @@ from flask import request
 
 import datetime
 
-from api.modules import chatgpt
-from api.modules import chatbot
-from api.modules import context
-from api.modules import voice
+from configs import chatgpt
+from configs import chatbot
+from configs import context
+from configs import voice
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 

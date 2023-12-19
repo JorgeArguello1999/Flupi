@@ -1,6 +1,6 @@
-from api.modules import chatgpt
-from api.modules import context
-from api.modules import database
+from configs import chatgpt
+from configs import context
+from configs import database
 
 import datetime, requests
 
