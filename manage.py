@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Registramos las rutas
-app.register_blueprint(home_bp, template_folder='home/templates')
+app.register_blueprint(home_bp)
 app.register_blueprint(api_bp)
 
 if __name__ == "__main__":

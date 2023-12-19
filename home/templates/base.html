@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" href="{{ url_for('static', filename='compumax.jpeg') }}" type="image/jpeg">
+    <link rel="icon" href="{{ url_for('home.static', filename='compumax.jpeg') }}" type="image/jpeg">
     <title>{% block title %} {% endblock %}</title>
 </head>
 <body>
@@ -25,12 +25,12 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">
-            <img src="/static/compumax.jpeg" width="50" height="50" class="d-inline-block align-top" alt="">
+            <img src="{{ url_for('home.static', filename='compumax.jpeg') }}" width="50" height="50" class="d-inline-block align-top" alt="">
             CompuMax |  Chat 
         </a>
         <a class="carousel">
-            <img src="/static/1.jpeg" alt="Imagen" height="50px">
-            <img src="/static/5.jpeg" alt="Imagen" height="50px">
+            <img src="{{ url_for('home.static', filename='1.jpeg') }}" alt="Imagen" height="50px">
+            <img src="{{ url_for('home.static', filename='5.jpeg') }}" alt="Imagen" height="50px">
         </a>
     </nav>
 
@@ -41,6 +41,7 @@
             <li class="nav-item"><a class="nav-link" href="/notify_f">Notify</a></li>
             <li class="nav-item"><a class="nav-link" href="/context_f">Contextos</a></li>
             <li class="nav-item"><a class="nav-link" href="/images_f">Imagenes</a></li>
+            <li class="nav-item"><a class="nav-link" href="/api">API</a></li>
         </ul>
     </div>
 
