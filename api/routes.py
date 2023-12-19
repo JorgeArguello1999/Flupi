@@ -9,6 +9,7 @@ from configs import chatgpt
 from configs import chatbot
 from configs import context
 from configs import voice
+from configs import images
 
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -38,7 +39,9 @@ def api_get():
                 "role": "assistant",
                 "response": "Datos",
                 "time_answer": "00:01",
-                "time_request": "00:01"
+                "time_request": "00:01",
+                "photo_role": "fotografia_base64",
+                "photo_user": "fotografia_base64"
             }
         }
    })
@@ -74,6 +77,9 @@ def api_post():
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
 
+    photo_chatbot = images.get_image('chatbot')
+    photo_user = images.get_image('usuario')
+
     # Salida de la API
     response = {
         "user": data["user"],
@@ -81,7 +87,9 @@ def api_post():
         "role": "assitant", 
         "response": response,
         "time_request": hora_peticion,
-        "time_answer": hora_respuesta
+        "time_answer": hora_respuesta,
+        "photo_user": photo_user,
+        "photo_role": photo_chatbot
     }
 
     return jsonify(response)
