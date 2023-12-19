@@ -2,8 +2,6 @@ from flask import Blueprint, render_template
 from flask import request
 from flask import jsonify
 
-import base64
-
 from configs import context
 from configs import images
 
@@ -45,9 +43,7 @@ def get_image_route(filename):
     image_data = images.get_image(filename)
 
     if image_data != 'Image not found':
-        # Codificar la imagen en base64
-        encoded_image = base64.b64encode(image_data).decode('utf-8')
-        return jsonify({'filename': filename, 'content': encoded_image})
+        return jsonify({'filename': filename, 'content': image_data})
     else:
         return jsonify({'message': 'Image not found'})
 

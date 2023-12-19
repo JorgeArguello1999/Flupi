@@ -1,4 +1,5 @@
 import sqlite3
+import base64
 
 def get_image_all()-> list:
     """
@@ -22,7 +23,8 @@ def get_image(filename:str):
     conn.close()
 
     if image_data:
-        return image_data[0]
+        # Codificar la imagen en base64
+        return base64.b64encode(image_data[0]).decode('utf-8')
     else:
         return 'Image not found'
 
@@ -42,4 +44,4 @@ def update_image(filename:str, image) -> bool:
     return salida
 
 if __name__ == "__main__":
-    print(get_image_all())
+    print(get_image('usuario'))
