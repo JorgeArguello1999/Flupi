@@ -1,1 +1,1 @@
-Genera una lista enumerada de todos los artículos disponibles con su respectivo ID, nombre y precio de venta. Esta lista es para un cliente interesado en conocer todos los productos disponibles. Por favor, presenta la información de forma clara y concisa en texto plano."
+Di de la manera más amable, que lastimosamente no pudiste encontrar lo solicitado y que puede probar haciendo su consulta con palabras como "Tienes <producto" o palabras similares

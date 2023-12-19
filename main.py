@@ -106,25 +106,6 @@ def api_post():
 
     return jsonify(response)
 
-# Ruta para modificar el contexto
-@app.route('/context/<filename>', methods=['GET'])
-def get_context(filename):
-    with open(f'context/{filename}', 'r') as file:
-        content = file.read()
-    return jsonify({'filename': filename, 'content': content})
-
-@app.route('/context/<filename>', methods=['POST'])
-def update_context(filename):
-    content = request.json.get('content')
-    with open(f'context/{filename}', 'w') as file:
-        file.write(content)
-    return jsonify({'filename': filename, 'message': 'File updated successfully'})
-
-@app.route('/context_f/', methods=['GET'])
-def read_context():
-    context_files = os.listdir('context') 
-    return render_template('context.html', files=context_files)
-
 # Notify Front
 @app.route('/notify_f', methods=['GET'])
 def notify_frontend():
@@ -150,6 +131,24 @@ def notify_backend(statuswork):
     _database_.update_alarm_status(statuswork)
     return redirect(url_for('notify_frontend'))
 
+# Ruta para modificar el contexto
+@app.route('/context/<filename>', methods=['GET'])
+def get_context(filename):
+    with open(f'context/{filename}', 'r') as file:
+        content = file.read()
+    return jsonify({'filename': filename, 'content': content})
+
+@app.route('/context/<filename>', methods=['POST'])
+def update_context(filename):
+    content = request.json.get('content')
+    with open(f'context/{filename}', 'w') as file:
+        file.write(content)
+    return jsonify({'filename': filename, 'message': 'File updated successfully'})
+
+@app.route('/context_f/', methods=['GET'])
+def read_context():
+    context_files = os.listdir('context') 
+    return render_template('context.html', files=context_files)
 
 if __name__ == "__main__":
     app.run(
