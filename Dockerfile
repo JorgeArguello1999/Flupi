@@ -14,10 +14,16 @@ RUN pip install -r requirements.txt
 # Expón el puerto en el que se ejecutará tu aplicación
 EXPOSE 8000
 
-# Comando para ejecutar la migración inicial y crear el usuario admin (puede variar según tu proyecto)
-RUN python manage.py migrate
-RUN python manage.py collectstatic --noinput
-RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('compumax@soporte.com', 'compumax@soporte.com', '@compumax2023')" | python manage.py shell
+RUN echo 'Running collecstatic...'
+RUN python manage.py collectstatic --no-input --settings=flupi.settings.production
 
-# Comando para arrancar Gunicorn y ejecutar la aplicación
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "flupi.wsgi"]
+RUN echo 'Applying migrations...'
+RUN python manage.py migrate --settings=flupi.settings.production
+
+RUN echo "Creando superusuario"
+RUN echo "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('compumax@soporte.com', 'compumax@soporte.com', '@compumax2023')" | python manage.py shell --settings=flupi.settings.production
+
+
+RUN echo 'Running server...'
+# CMD ["gunicorn --env DJANGO_SETTINGS_MODULE=flupi.settings.production flupi.wsgi --bind 0.0.0.0:8000"]
+CMD ["gunicorn", "--env", "DJANGO_SETTINGS_MODULE=flupi.settings.production", "flupi.wsgi", "--bind", "0.0.0.0:8000"]
