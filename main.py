@@ -74,7 +74,7 @@ def api_post():
     response = chatgpt.answer(
         user= data["user"],
         ask= data["ask"],
-        context= f"{context.entender_consulta} tu eres: {context.context}"
+        context= f"{context.get_context('entender_consulta')} tu eres: {context.get_context('context')}"
     )
 
     comandos = chatbot.chatbot(response["response"])

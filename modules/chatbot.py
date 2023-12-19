@@ -42,8 +42,8 @@ def get_product_description(text:str):
     else:
         return {
             "response": chatgpt.answer(
-                ask=context.context,
-                context=context.no_producto
+                ask=context.get_context('context'),
+                context=context.get_context('no_producto')
             )["response"]
         }
 

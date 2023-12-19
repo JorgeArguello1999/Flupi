@@ -32,7 +32,7 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 if __name__ == '__main__':
     import context
 
-    contexto = context.entender_consulta
+    contexto = context.get_context('entender_consulta')
     ask="Usuario: Tienes teclados?"
     user = "Jorge"
     salida = answer(
