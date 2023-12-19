@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+
+{% block title %} Chat {% endblock %}
+{% block subtitle %} Chat {% endblock %}
+
+{% block content %}
+
+<style>
+    /* Estilos adicionales para los mensajes */
+    .message-user {
+        color: #007bff;
+        text-align: right;
+        margin-bottom: 10px;
+
+        background-color: #cbe9ff;
+        border-radius: 10px;
+        border-style: solid;
+        border: 3px;
+        padding: 1em;
+        margin-left: 20%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .message-bot {
+        color: #28a745;
+        text-align: left;
+        margin-bottom: 10px;
+        
+        background-color: #b3e6c8;
+        border-radius: 10px;
+        border-style: solid;
+        border: 3px;
+        padding: 1em;
+        margin-right: 20%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .img_profile {
+        height: 30px;
+        border-radius: 10px;
+        margin-right: 10px;
+    }
+</style>
+
+<div class="centered-content">
+    <div id="chat-container">
+        <div id="chat-messages" class="mb-4">
+            <!-- Aquí se mostrarán los mensajes de la conversación -->
+        </div>
+        <form id="chat-form" class="custom-form fixed-bottom mb-4">
+            <div class="input-group mb-3">
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+                <button type="submit" class="btn btn-outline-primary">✈️</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+    // Función para obtener la imagen de perfil según el remitente
+    function getProfileImage(isUser) {
+        if (isUser) {
+            return `<img src="{{ url_for('chatbot.static', filename='1.jpeg') }}" alt="user_profile" class="img_profile">`;
+        } else {
+            return `<img src="{{ url_for('chatbot.static', filename='compumax.jpeg') }}" alt="chatbot_profile" class="img_profile">`;
+        }
+    }
+
+    // Función para mostrar solo la respuesta y el rol de la API
+    function showApiResponse(responseData) {
+        const response = responseData.response;
+        const role = responseData.role;
+
+        const messageDiv = `<div class="message-bot">${getProfileImage(false)}<p>${response}</p></div>`;
+        $("#chat-messages").prepend(messageDiv); // Agregar mensaje al principio
+
+        // Desplazar hacia abajo para ver el mensaje más reciente
+        $("#chat-container").scrollTop(0);
+    }
+
+    // Función para mostrar un mensaje en el chat
+    function showMessage(message, isUser) {
+        const sender = isUser ? 'Tú' : 'Chatbot';
+        const cssClass = isUser ? 'message-user' : 'message-bot';
+        const profileImg = getProfileImage(isUser);
+        const messageDiv = `<div class="${cssClass}">${profileImg}<p>${message}</p></div>`;
+        $("#chat-messages").prepend(messageDiv); // Agregar mensaje al principio
+
+        // Desplazar hacia abajo para ver el mensaje más reciente
+        $("#chat-container").scrollTop(0);
+    }
+
+    // Manejar el envío del formulario
+    $("#chat-form").submit(function(event) {
+        event.preventDefault();
+        const userMessage = $("#message-input").val();
+        showMessage(userMessage, true);
+
+        // Enviar el mensaje al servidor y recibir una respuesta
+        $.ajax({
+            type: "POST",
+            url: "/api/",
+            data: JSON.stringify({ 
+                "ask": userMessage, 
+                "user": "Bot",
+                "device": "computer"
+            }),
+            contentType: "application/json",
+            dataType: "json", // Cambiado a 'json' para parsear la respuesta como objeto JSON
+            success: function(data) {
+                showApiResponse(data);
+                console.log(data);
+            }
+        });
+
+        $("#message-input").val(""); // Limpiar el campo de entrada
+    });
+
+    // Mantener el foco en el campo de texto
+    $("#message-input").focus();
+
+    // Copiar el comando seleccionado al campo de texto al hacer clic
+    $(".command").on("click", function(event) {
+        const selectedCommand = $(this).text();
+        $("#message-input").val(selectedCommand);
+    });
+});
+
+</script>
+
+{% endblock %}

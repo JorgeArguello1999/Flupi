@@ -18,11 +18,6 @@ app.config['STATIC_URL'] = '/static'
 # Acciones 
 comandos = list(chatbot.actions.keys())
 
-# Chatbot Front
-@app.route('/chatbot/', methods=['GET'])
-def chatbot_get():
-    return render_template('chatbot.html', comandos=comandos)
-
 
 # Notify Front
 @app.route('/notify_f', methods=['GET'])

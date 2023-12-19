@@ -6,6 +6,7 @@ import os
 # Importamos las rutas
 from home.routes import home_bp 
 from api.routes import api_bp
+from chat.routes import chat_bp
 
 app = Flask(__name__)
 CORS(app)
@@ -13,6 +14,7 @@ CORS(app)
 # Registramos las rutas
 app.register_blueprint(home_bp)
 app.register_blueprint(api_bp)
+app.register_blueprint(chat_bp)
 
 if __name__ == "__main__":
     app.run(
