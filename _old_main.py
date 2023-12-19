@@ -19,31 +19,6 @@ app.config['STATIC_URL'] = '/static'
 comandos = list(chatbot.actions.keys())
 
 
-# Notify Front
-@app.route('/notify_f', methods=['GET'])
-def notify_frontend():
-    return render_template('notify.html')
-
-# Notify Status
-@app.route('/notify', methods=['GET'])
-def notify_status():
-    work = _database_.get_alarm_status()
-
-    return jsonify({
-        "status": work
-    })
-
-# Notify Back
-@app.route("/notify/<int:statuswork>", methods=["GET"])
-def notify_backend(statuswork):
-    """
-    Parámetros:
-        - statuswork (int): 1 para llamar al técnico, 0 para desactivar.
-    Retorna: Redirección a la página 'notify_f'.
-    """
-    _database_.update_alarm_status(statuswork)
-    return redirect(url_for('notify_frontend'))
-
 # Ruta para modificar el contexto
 @app.route('/context/<filename>', methods=['GET'])
 def get_context(filename):
