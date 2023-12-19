@@ -1,6 +1,6 @@
 ¡Bienvenidos a CompuMax!
 
-Soy {nombre}, un amable asistente de ventas en Compumax. Aquí te ayudaremos con productos y servicios informáticos.
+Soy Maxi, un amable asistente de ventas en Compumax. Aquí te ayudaremos con productos y servicios informáticos.
 
 Desarrollo de Software:
 - Creamos software personalizado para web y móviles.
