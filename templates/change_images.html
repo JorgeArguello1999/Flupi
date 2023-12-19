@@ -14,25 +14,38 @@
             {% endfor %}
         </select>
         <button id="openBtn" type="button">Abrir</button><br><br>
-        <img id="imagePreview" src="" alt="Preview" width="400"><br><br>
+        
+        <!-- Vista previa del archivo seleccionado actualmente -->
+        <img id="currentImagePreview" src="" alt="Current Preview" width="400"><br><br>
+        
+        <!-- Input para cargar un nuevo archivo -->
         <input type="file" id="newImage" accept="image/*" required><br><br>
+        
+        <!-- Vista previa del nuevo archivo -->
+        <img id="newImagePreview" src="" alt="New Preview" width="400"><br><br>
+        
         <button type="submit">Guardar cambios</button>
     </form>
 
     <script>
+        // Función para actualizar la vista previa del archivo seleccionado actualmente
+        function displayCurrentImagePreview(selectedImage) {
+            document.getElementById('currentImagePreview').src = `/uploads/${selectedImage}`;
+        }
+
         document.getElementById('openBtn').addEventListener('click', function(event) {
             const selectedImage = document.getElementById('filename').value;
-            document.getElementById('imagePreview').src = `/uploads/${selectedImage}`;
+            displayCurrentImagePreview(selectedImage);
         });
-    
+
         document.getElementById('editForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const filename = document.getElementById('filename').value;
             const newImage = document.getElementById('newImage').files[0];
-    
+
             const formData = new FormData();
             formData.append('new_image', newImage);
-    
+
             fetch(`/images/${filename}`, {
                 method: 'POST',
                 body: formData
@@ -40,28 +53,27 @@
             .then(response => response.json())
             .then(data => {
                 alert(data.message);
-                // Actualizar la vista previa de la imagen después de cargar la nueva imagen
-                document.getElementById('imagePreview').src = `/uploads/${filename}?${new Date().getTime()}`;
+                // Actualizar la vista previa del archivo actual y del nuevo archivo
+                displayCurrentImagePreview(filename);
+                document.getElementById('newImagePreview').src = URL.createObjectURL(newImage);
             })
             .catch(error => {
                 console.error('Error:', error);
             });
         });
-    
-        // Actualizar la vista previa de la imagen al seleccionar una nueva imagen
+
         document.getElementById('newImage').addEventListener('change', function(event) {
             const newImage = event.target.files[0];
             const reader = new FileReader();
             reader.onload = function() {
-                document.getElementById('imagePreview').src = reader.result;
+                document.getElementById('newImagePreview').src = reader.result;
             };
             reader.readAsDataURL(newImage);
         });
-    
-        // Obtener la vista previa de la imagen al cargar la página
+
         window.addEventListener('DOMContentLoaded', function() {
             const selectedImage = document.getElementById('filename').value;
-            document.getElementById('imagePreview').src = `/uploads/${selectedImage}`;
+            displayCurrentImagePreview(selectedImage);
         });
     </script>
 {% endblock %}
