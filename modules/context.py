@@ -1,6 +1,3 @@
-# Nombre del Robot
-nombre = "Maxi"
-
 def read_file(ruta:str)->str:
     # Esta ruta apunta al directorio principal
     ruta = 'context/' + ruta
@@ -12,7 +9,6 @@ def read_file(ruta:str)->str:
 entender_consulta = read_file('entender_consulta.txt')
 
 context = read_file('context.txt')
-context = context.replace('{nombre}', nombre)
 
 caracteristicas_producto = read_file('caracteristicas_producto.txt')
 
