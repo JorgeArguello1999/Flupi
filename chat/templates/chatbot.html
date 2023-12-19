@@ -71,10 +71,14 @@
     $(document).ready(function() {
         function getProfileImage(isUser, imageData) {
             if (isUser) {
-                return `<img src="${imageData}" alt="user_profile" class="img_profile">`;
+                return `<img src="${convertBase64ToImage(imageData)}" alt="user_profile" class="img_profile">`;
             } else {
-                return `<img src="${imageData}" alt="chatbot_profile" class="img_profile">`;
+                return `<img src="${convertBase64ToImage(imageData)}" alt="chatbot_profile" class="img_profile">`;
             }
+        }
+
+        function convertBase64ToImage(base64String) {
+            return `data:image/jpeg;base64,${base64String}`;
         }
 
         function showApiResponse(responseData) {
