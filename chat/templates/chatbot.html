@@ -88,7 +88,17 @@
             const photoRole = responseData.photo_role; // Imagen base64 del chatbot
             const timeAnswer = responseData.time_answer; // Hora de la respuesta
 
-            const messageDiv = `<div class="message-bot">${getProfileImage(false, photoUser)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
+            let photo = "";
+
+            if(role == "assistant"){
+                photo = photoRole;
+            }
+            if(role == "user"){
+                photo = photoUser;
+            }
+            console.log(role);
+
+            const messageDiv = `<div class="message-bot">${getProfileImage(false, photo)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
             $("#chat-messages").prepend(messageDiv);
 
             $("#chat-container").scrollTop(0);
@@ -108,7 +118,7 @@
         $("#chat-form").submit(function(event) {
             event.preventDefault();
             const userMessage = $("#message-input").val();
-            showMessage(userMessage, true);
+            showMessage(userMessage, true, 'user');
 
             $.ajax({
                 type: "POST",

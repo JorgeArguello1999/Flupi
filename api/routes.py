@@ -84,7 +84,7 @@ def api_post():
     response = {
         "user": data["user"],
         "ask": data["ask"],
-        "role": "assitant", 
+        "role": "assistant", 
         "response": response,
         "time_request": hora_peticion,
         "time_answer": hora_respuesta,
