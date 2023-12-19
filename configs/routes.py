@@ -4,6 +4,8 @@ from flask import jsonify
 
 import sqlite3
 
+from configs import context
+
 configs_bp = Blueprint('configs_bp', __name__, url_prefix='/configs', template_folder='templates', static_folder='static')
 
 # Ruta para modificar el contexto

@@ -5,6 +5,7 @@
 
 {% block content %}
    <h1>Editar Archivos de Contexto</h1>
+   <h3>Tener en cuenta de no usar "" o '' intente usar otros simbolos</h3>
 
    <form id="editForm">
         <label for="filename">Seleccionar archivo:</label>
@@ -22,7 +23,7 @@
         // Cuando se hace clic en el botón "Abrir"
         document.getElementById('openBtn').addEventListener('click', function(event) {
             const selectedFile = document.getElementById('filename').value;
-            fetch(`/context/${selectedFile}`)
+            fetch(`/configs/context/${selectedFile}`)  // Modificar la URL aquí
             .then(response => response.json())
             .then(data => {
                 document.getElementById('content').value = data.content;
@@ -37,7 +38,7 @@
             const filename = document.getElementById('filename').value;
             const content = document.getElementById('content').value;
             
-            fetch(`/context/${filename}`, {
+            fetch(`/configs/context/${filename}`, {  // Modificar la URL aquí
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -56,7 +57,7 @@
         // Obtener el contenido del archivo seleccionado al cargar la página
         window.addEventListener('DOMContentLoaded', function() {
             const filename = document.getElementById('filename').value;
-            fetch(`/context/${filename}`)
+            fetch(`/configs/context/${filename}`)  // Modificar la URL aquí
             .then(response => response.json())
             .then(data => {
                 document.getElementById('content').value = data.content;
