@@ -134,21 +134,33 @@ def notify_backend(statuswork):
 # Ruta para modificar el contexto
 @app.route('/context/<filename>', methods=['GET'])
 def get_context(filename):
-    with open(f'context/{filename}', 'r') as file:
-        content = file.read()
-    return jsonify({'filename': filename, 'content': content})
+    content = context.get_context(filename)
+
+    return jsonify({
+        'filename': filename, 
+        'content': content
+    })
 
 @app.route('/context/<filename>', methods=['POST'])
 def update_context(filename):
     content = request.json.get('content')
-    with open(f'context/{filename}', 'w') as file:
-        file.write(content)
-    return jsonify({'filename': filename, 'message': 'File updated successfully'})
+    content = context.update_context(filename, content)
+    if content:
+        salida = 'File updated successfully'
+    else:
+        salida = 'Error'
+
+    return jsonify({
+        'filename': filename, 
+        'message': salida
+    })
 
 @app.route('/context_f/', methods=['GET'])
 def read_context():
-    context_files = os.listdir('context') 
+    context_files = context.get_context_all()
     return render_template('context.html', files=context_files)
+
+
 
 # Ruta para las imagenes
 @app.route('/images/<filename>', methods=['GET'])

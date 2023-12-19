@@ -1,6 +1,18 @@
 import sqlite3
 
-def get_context(name:str)-> str:
+def get_context_all()-> list:
+    """
+    Obtener lista de todos los contextos
+    """
+    conn = sqlite3.connect('alarm_status.db')
+    cursor = conn.cursor()
+    
+    response = cursor.execute(f"SELECT name FROM ContextData")
+    response = [row[0] for row in response.fetchall()]
+    conn.close()
+    return response
+
+def get_context(name:str)-> dict:
     """
     :name -> Contexto a Consultar
     """
@@ -32,8 +44,8 @@ def update_context(name:str, text:str)-> bool:
         return False
 
 if __name__ == "__main__":
-    salida = get_context("error_mensaje")
-    print(salida)
+    print(get_context_all())
+    print(get_context("error_mensaje"))
 
-    editar = update_context("error_mensaje", input("Ingresa el contexto: "))
-    print(editar)
+    # editar = update_context("error_mensaje", input("Ingresa el contexto: "))
+    # print(editar)
