@@ -11,10 +11,13 @@ from configs import context
 from configs import voice
 from configs import images
 
+from security.protected_routes import requerir_autenticacion
+
 api_bp = Blueprint('api', __name__, url_prefix='/api')
 
 # API para el chatbot
 @api_bp.route("/", methods=['GET'])
+@requerir_autenticacion
 def api_get():
     return jsonify({
         "formato": "JSON",
