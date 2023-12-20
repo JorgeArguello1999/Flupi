@@ -1,5 +1,7 @@
-from flask import Flask
 from flask_cors import CORS
+from flask import Flask
+from flask import redirect
+from flask import url_for
 
 import os
 
@@ -14,6 +16,11 @@ from configs.routes import configs_bp
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
+
+# Ruta para enviar al Home cuando se ingresa al sitio
+@app.route('/')
+def index():
+    return redirect(url_for('home.home'))
 
 # Registramos las rutas
 app.register_blueprint(security_bp)
