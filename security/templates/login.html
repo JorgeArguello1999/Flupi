@@ -1,20 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Iniciar sesión</title>
-</head>
-<body>
-    <h1>Iniciar sesión</h1>
-    {% if error %}
-        <p>{{ error }}</p>
-    {% endif %}
+{% extends 'base_login.html' %}
+
+{% block title %}🔒 Login {% endblock %}
+
+{% block content %}
+   <link rel="stylesheet" href="{{ url_for('security.static', filename='login_style.css') }}">
     <form action="{{ url_for('security.login') }}" method="post">
+        <h1>🔒 Iniciar sesión</h1>
+        {% if error %}
+            <p style="color: red;">{{ error }}</p>
+        {% endif %}
         <label for="username">Usuario:</label>
         <input type="text" id="username" name="username" required><br>
         <label for="password">Contraseña:</label>
         <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Iniciar sesión">
     </form>
-</body>
-</html>
+{% endblock %}
