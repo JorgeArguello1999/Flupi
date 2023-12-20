@@ -33,15 +33,24 @@ def get_product_description(text:str):
     func_words = "func database"
     texto = text.replace(func_words, "").strip()
     response = api_compumax.search_product(texto)
+    
+    contexto = context.get_context('context')
+    no_producto = context.get_context('no_producto')
+    caracteristicas = context.get_context('caracteristicas_producto')
+    query = f'{caracteristicas}, productos:{response}'
 
     if response != False:
-        return {"response": response}
-    
+        return {
+            "response": chatgpt.answer(
+                context=contexto,
+                ask=f'{query}, el usuario quiere: {texto}'
+            )['response']
+        }
     else:
         return {
             "response": chatgpt.answer(
-                ask=context.get_context('context'),
-                context=context.get_context('no_producto')
+                ask=no_producto,
+                context=contexto
             )["response"]
         }
 
