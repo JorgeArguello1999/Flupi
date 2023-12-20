@@ -1,8 +1,9 @@
 import requests
 import json
+import os 
 
 # URL de la API donde esta la base de datos
-url = "http://local.compumax.ec:8750/webservices/precios/cargar_productos.php"
+url = os.environ.get("API_ROUTE")
 
 def search_product(item:str, condicion:str = "and items.saldo>0")-> str:
     """
