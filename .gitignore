@@ -6,5 +6,6 @@ venv/
 __pycache__/
 facesData/*
 .env
+audios/
 
 ./static/texto_a_voz.mp3
