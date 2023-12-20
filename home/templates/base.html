@@ -17,12 +17,12 @@
 
     <div class="list_items">
         <ul class="nav nav-tabs">
-            <li class="nav-item"><a class="nav-link active" href="/home">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="/chatbot">Chatbot</a></li>
-            <li class="nav-item"><a class="nav-link" href="/notify/notify_f">Notify</a></li>
-            <li class="nav-item"><a class="nav-link" href="/configs/context_f">Contextos</a></li>
-            <li class="nav-item"><a class="nav-link" href="/configs/images_f">Imagenes</a></li>
-            <li class="nav-item"><a class="nav-link" href="/api">API</a></li>
+            <li class="nav-item"><a class="nav-link active" href="{{ url_for('home.home') }}">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot.chatbot_get') }}">Chatbot</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('notify.notify_frontend') }}">Notify</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('configs.read_context') }}">Contextos</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('configs.read_images_route') }}">Imagenes</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('api.api_get') }}">API</a></li>
         </ul>
     </div>
 
