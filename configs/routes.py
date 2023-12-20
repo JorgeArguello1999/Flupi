@@ -5,7 +5,7 @@ from flask import jsonify
 from configs import context
 from configs import images
 
-configs_bp = Blueprint('configs_bp', __name__, url_prefix='/configs', template_folder='templates', static_folder='static')
+configs_bp = Blueprint('configs', __name__, url_prefix='/configs', template_folder='templates', static_folder='static')
 
 # Ruta para modificar el contexto
 @configs_bp.route('/context/<filename>', methods=['GET'])
