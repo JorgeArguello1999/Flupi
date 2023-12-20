@@ -4,6 +4,7 @@ from flask_cors import CORS
 import os
 
 # Importamos las rutas
+from security.routes import security_bp
 from home.routes import home_bp 
 from api.routes import api_bp
 from chat.routes import chat_bp
@@ -11,9 +12,11 @@ from notify.routes import notify_bp
 from configs.routes import configs_bp
 
 app = Flask(__name__)
+app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
 
 # Registramos las rutas
+app.register_blueprint(security_bp)
 app.register_blueprint(home_bp)
 app.register_blueprint(api_bp)
 app.register_blueprint(chat_bp)

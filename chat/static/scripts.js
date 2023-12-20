@@ -20,15 +20,15 @@ $(document).ready(function() {
 
         let photo = "";
 
-        if(role == "assistant"){
+        if(role === "assistant") {
             photo = photoRole;
-        }
-        if(role == "user"){
+        } else if(role === "user") {
             photo = photoUser;
         }
-        console.log(role);
 
-        const messageDiv = `<div class="message-bot">${getProfileImage(false, photo)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
+        const cssClass = role === "assistant" ? 'message-bot' : 'message-user';
+        
+        const messageDiv = `<div class="${cssClass}">${getProfileImage(role === "assistant", photo)}<p>${response}</p><span class="message-time">${timeAnswer}</span></div>`;
         $("#chat-messages").prepend(messageDiv);
 
         $("#chat-container").scrollTop(0);
@@ -54,10 +54,10 @@ $(document).ready(function() {
             type: "POST",
             url: "/api/",
             data: JSON.stringify({ 
-            "ask": userMessage, 
-            "user": "Bot",
-            "device": "computer"
-        }),
+                "ask": userMessage, 
+                "user": "Bot",
+                "device": "computer"
+            }),
             contentType: "application/json",
             dataType: "json",
             success: function(data) {
