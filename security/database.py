@@ -1,6 +1,7 @@
+from werkzeug.security import generate_password_hash
+from werkzeug.security import check_password_hash
 import sqlite3
 
-# Configuración de la base de datos
 def create_connection():
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -14,16 +15,39 @@ def create_connection():
     conn.commit()
     conn.close()
 
-def search_user(user:str, password:str) -> dict:
+def search_user(user:str, password:str) -> bool:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
-    cursor.execute(f'SELECT * FROM usuarios WHERE username = "{user}" AND password = "{password}"')
+    cursor.execute('SELECT * FROM usuarios WHERE username = ?', (user,))
+    response = cursor.fetchone()
+    conn.close()
+
+    if response and check_password_hash(response[2], password):
+        return True
+    else:
+        return False
+
+def get_user_by_username(user:str) -> bool:
+    conn = sqlite3.connect('alarm_status.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM usuarios WHERE username = ?', (user,))
     response = cursor.fetchone()
     conn.close()
 
     if response:
-        return True
+        return response
     else:
-        return False
+        return None
+
+def create_user(username: str, password: str) -> None:
+    conn = sqlite3.connect('alarm_status.db')
+    cursor = conn.cursor()
+    
+    # Cifra la contraseña antes de guardarla en la base de datos
+    hashed_password = generate_password_hash(password)
+    
+    cursor.execute("INSERT INTO usuarios (username, password) VALUES (?, ?)", (username, hashed_password))
+    conn.commit()
+    conn.close()
 
 create_connection()
