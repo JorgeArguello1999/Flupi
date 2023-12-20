@@ -13,6 +13,13 @@
         <a class="navbar-brand" href="#">
             <img src="{{ url_for('home.static', filename='compumax_banner.jpeg') }}" height="50" class="d-inline-block align-center" alt="">
         </a>
+
+        {% if 'username' in session %}
+            <p class="user">Bienvenido, {{ session['username'] }}!</p>
+            <a href="{{ url_for('security.logout') }}" id="url_cerrar" class="url_sesion">Cerrar sesión 🔒</a>
+        {% else %}
+            <a href="{{ url_for('security.login') }}" id="url_abrir" class="url_sesion">Iniciar sesión 🔓</a>
+        {% endif %}
     </nav>
 
     <div class="list_items">
