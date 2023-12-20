@@ -1,0 +1,15 @@
+.box, .boton-1, button{
+    text-align: center;
+    margin: 0 auto;
+    width: 50%;
+    padding: 1em;
+    border-radius: 2em;
+    font-size: large;
+    border-style: dashed;
+}
+.boton-1{
+    color: black;
+}
+.box{
+    color: white;
+}
