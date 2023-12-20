@@ -21,16 +21,8 @@ Para usar el bot tienes que realizar los siguientes pasos:
 
 Estas son las variables importantes:
 ``` bash
-GPT=tu-token
-
-HOST_DB=127.0.0.1
-PORT_DB=3306
-USER_DB=root
-PASSWD_DB=root
-DATABASE_DB=articulos
-# Nombre de la tabla donde se encuentran los items a consultar
-TABLE_DB=items
-
-DEBUG=True
+GPT=Your_OPENAI_TOKEN
+API_ROUTE=ROUTE_API_TO_CONSULT
+DEBUG=false
 
 ```
