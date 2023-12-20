@@ -1,7 +1,7 @@
 from gtts import gTTS
 import os
 
-dir = "./static/audio_chatbot/"
+dir = "./audios/"
 def speaker(texto:str):
     """
     :texto -> Lo que va a decir
@@ -13,7 +13,7 @@ def speaker(texto:str):
     nombre_archivo = "texto_a_voz.mp3"
     tts.save(f"{dir}{nombre_archivo}")
 
-    return nombre_archivo
+    return f'{nombre_archivo}'
 
 def clean(nombre_archivo:str):
     # Eliminamos el archivo de audio generado

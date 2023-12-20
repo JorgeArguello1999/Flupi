@@ -42,8 +42,8 @@ def get_product_description(text:str):
     if response != False:
         return {
             "response": chatgpt.answer(
-                context=contexto,
-                ask=f'{query}, el usuario quiere: {texto}'
+                context=query,
+                ask=f'El usuario quiere: {texto}'
             )['response']
         }
     else:
