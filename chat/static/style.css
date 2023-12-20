@@ -1,0 +1,44 @@
+/* Estilos adicionales para los mensajes */
+.message-user {
+    color: #007bff;
+    text-align: right;
+    margin-bottom: 10px;
+
+    background-color: #cbe9ff;
+    border-radius: 10px;
+    border-style: solid;
+    border: 3px;
+    padding: 1em;
+    margin-left: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.message-bot {
+    color: #28a745;
+    text-align: left;
+    margin-bottom: 10px;
+        
+    background-color: #b3e6c8;
+    border-radius: 10px;
+    border-style: solid;
+    border: 3px;
+    padding: 1em;
+    margin-right: 20%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.img_profile {
+    height: 30px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+
+.message-time {
+    margin-left: auto;
+    font-size: 0.8em;
+    color: #aaa;
+}
