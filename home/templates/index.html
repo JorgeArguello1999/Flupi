@@ -4,12 +4,12 @@
 {% block subtitle %} Home {% endblock %}
 
 {% block content %}
-    <div class="container">
+    <div class="container py-5">
         <div class="row">
             <div class="col-md-6">
-                <h1>Bienvenido a CompuMax - Asistente de Ventas</h1>
+                <h1 class="mb-4">Bienvenido a CompuMax - Asistente de Ventas</h1>
         
-                <div class="section">
+                <div class="section mb-4">
                     <h2>¿Qué es CompuMax?</h2>
                     <p>
                         CompuMax es una empresa de tecnología con más de veinticuatro años de experiencia.
@@ -36,11 +36,10 @@
 
             <div class="col-md-6">
                 <!-- Video -->
-                <div class="embed-responsive embed-responsive-16by9">
-                    <iframe class="embed-responsive-item" src="{{ url_for('home.static', filename='video.mp4') }}" allowfullscreen></iframe>
+                <div class="ratio ratio-16x9">
+                    <iframe src="{{ url_for('home.static', filename='video.mp4') }}" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
-
 {% endblock %}

@@ -1,36 +1,3 @@
-body{
-    background-color: #f0f0f0;
-}
-        
-.list_items{
-    background-color: white;
-}
-
-.carousel img{
-    border-radius: 80px;
-}
-
-.user{
-    background-color: white;
-    color: black;
-    padding: 1em;
-    border-radius: 1em;
-    border-style: solid;
-}
-
-.url_sesion{
-    padding: 1em;
-    text-decoration: none;
-}
-
-.url_sesion a:hover{
-    color: black;
-    background-color: white;
-}
-
-#url_cerrar{
-    color: red;
-}
-#url_abrir{
-    color: blue;
+.content{
+    margin: 1em;
 }
