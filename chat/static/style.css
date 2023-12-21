@@ -5,6 +5,10 @@
     padding: 10px;
     background-color: #ebebeb;
     margin-bottom: 100px;
+    bottom: 0; /* Alineación en la parte inferior */
+    left: 0; /* Alinear a la izquierda */
+    right: 0; /* Alinear a la derecha */
+    z-index: 999; /* Asegurar que esté encima de otros elementos */
 }
 
 .chat-input {
@@ -20,37 +24,31 @@
 }
 
 /* Estilos adicionales para los mensajes */
-.message-user {
-    color: black;
-    text-align: right;
-    margin-bottom: 10px;
-
-    background-color:  #cfd1d0;
-    border-radius: 10px;
-    border-style: solid;
-    border: 3px;
-    padding: 1em;
-    margin-left: 20%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    border-color: #5b9dab;
-}
-
+.message-user,
 .message-bot {
     color: black;
-    text-align: left;
+    text-align: left; /* Alinear el texto a la izquierda */
     margin-bottom: 10px;
-
     background-color: #cfd1d0;
     border-radius: 10px;
-    border-style: solid;
-    border: 3px;
+    border: 3px solid transparent; /* Añadir bordes sólidos */
     padding: 1em;
-    margin-right: 20%;
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+/* Estilos para mensaje de usuario */
+.message-user {
+    text-align: right; /* Alinear el texto a la derecha */
+    margin-left: 20%;
+    border-color: #5b9dab; /* Color del borde para el mensaje del usuario */
+}
+
+/* Estilos para mensaje de bot */
+.message-bot {
+    margin-right: 20%;
+    border-color: #9e1919; /* Color del borde para el mensaje del usuario */
 }
 
 .img_profile {
@@ -77,11 +75,11 @@
         font-size: smaller;
     }
 
-    .items_table{
+    .items_table {
         font-size: xx-small;
     }
 
-    .message-bot{
+    .message-bot {
         margin-bottom: 3em;
     }
 }
