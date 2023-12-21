@@ -6,11 +6,6 @@ certifi==2023.11.17
 charset-normalizer==3.3.2
 click==8.1.7
 distro==1.8.0
-Django==5.0
-django-admin==2.0.2
-django-cors-headers==4.3.1
-django-excel-response2==3.0.6
-django-six==1.0.5
 excel-base==1.0.4
 Flask==3.0.0
 Flask-Cors==4.0.0

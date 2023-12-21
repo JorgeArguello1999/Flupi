@@ -16,7 +16,7 @@ def html_tabla(data:str):
         # Contenido de la tabla
         contenido_tabla = ""
         for items in data:
-            fila = f"<tr><td>{items['iditem']}</td><td>{items['nitem']}</td><td>${items['saldo']}</td></tr>"
+            fila = f"<tr><td>{items['iditem']}</td><td>{items['nitem']}</td><td>${items['pventa']}</td></tr>"
             contenido_tabla += fila
 
         # Cierre de la tabla

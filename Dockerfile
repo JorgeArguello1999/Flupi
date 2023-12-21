@@ -5,8 +5,7 @@ WORKDIR /app
 # Copia todos los archivos excepto el directorio APPS/
 COPY . .
 
-RUN apt-get update && apt-get install -y \
-    portaudio19-dev
+RUN apt-get update && apt-get install -y portaudio19-dev
 
 RUN pip3 install --upgrade pip
 RUN pip3 install -r requirements.txt
