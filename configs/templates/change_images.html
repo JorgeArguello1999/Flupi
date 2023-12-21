@@ -4,28 +4,43 @@
 {% block subtitle %} Editar Imágenes {% endblock %}
 
 {% block content %}
-   <h1>Editar Archivos de Imágenes</h1>
+    <div class="container py-4">
+        <h1 class="mb-4">Editar Archivos de Imágenes</h1>
 
-   <form id="editForm">
-        <label for="filename">Seleccionar imagen:</label>
-        <select id="filename" name="filename">
-            {% for file in files %}
-                <option value="{{ file }}">{{ file }}</option>
-            {% endfor %}
-        </select>
-        <button id="openBtn" type="button">Abrir</button><br><br>
-        
-        <!-- Vista previa del archivo seleccionado actualmente -->
-        <img id="currentImagePreview" src="" alt="Current Preview" width="400"><br><br>
-        
-        <!-- Input para cargar un nuevo archivo -->
-        <input type="file" id="newImage" accept="image/*" required><br><br>
-        
-        <!-- Vista previa del nuevo archivo -->
-        <img id="newImagePreview" src="" alt="New Preview" width="400"><br><br>
-        
-        <button type="submit">Guardar cambios</button>
-    </form>
+        <form id="editForm">
+            <div class="mb-3">
+                <label for="filename" class="form-label">Seleccionar imagen:</label>
+                <select id="filename" name="filename" class="form-select">
+                    {% for file in files %}
+                        <option value="{{ file }}">{{ file }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button id="openBtn" type="button" class="btn btn-primary mb-3">Abrir</button><br>
+
+            <hr>
+
+            <!-- Input para cargar un nuevo archivo -->
+            <div class="mb-3">
+                <label for="newImage" class="form-label">Seleccionar nueva imagen:</label>
+                <input type="file" id="newImage" accept="image/*" class="form-control" required>
+            </div>
+
+            <!-- Vista previa de las imágenes -->
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <h4 for="currentImage" class="form-label">Imagen actual:</h4><br>
+                    <img id="currentImagePreview" src="" alt="Current Preview" width="100%">
+                </div>
+                <div class="col-md-6">
+                    <h4 for="newImage" class="form-label">Nueva imagen:</h4><br>
+                    <img id="newImagePreview" src="" alt="New Preview" width="100%">
+                </div>
+            </div>
+            <!-- Boton para guardar -->
+            <button type="submit" class="btn btn-success">Guardar cambios</button>
+       </form>
+    </div>
 
     <script src="{{ url_for('configs.static', filename='scripts_images.js') }}"></script>
 {% endblock %}

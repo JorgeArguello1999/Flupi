@@ -4,20 +4,28 @@
 {% block subtitle %} Context {% endblock %}
 
 {% block content %}
-   <h1>Editar Archivos de Contexto</h1>
-   <h3>Tener en cuenta de no usar "" o '' intente usar otros simbolos</h3>
+    <div class="container py-4">
+        <h1 class="mb-4">Editar Archivos de Contexto</h1>
+        <h3 class="mb-4">Tener en cuenta de no usar "" o '' intenta usar otros símbolos</h3>
 
-   <form id="editForm">
-        <label for="filename">Seleccionar archivo:</label>
-        <select id="filename" name="filename">
-            {% for file in files %}
-                <option value="{{ file }}">{{ file }}</option>
-            {% endfor %}
-        </select>
-        <button id="openBtn" type="button">Abrir</button><br><br>
-        <textarea id="content" name="content" rows="10" cols="50"></textarea><br><br>
-        <button type="submit">Guardar cambios</button>
-    </form>
+        <form id="editForm">
+            <div class="mb-3">
+                <label for="filename" class="form-label">Seleccionar archivo:</label>
+                <select id="filename" name="filename" class="form-select">
+                    {% for file in files %}
+                        <option value="{{ file }}">{{ file }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <button id="openBtn" type="button" class="btn btn-primary mb-3">Abrir</button><br>
+
+            <div class="mb-3">
+                <label for="content" class="form-label">Contenido:</label>
+                <textarea id="content" name="content" rows="10" cols="50" class="form-control"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success">Guardar cambios</button>
+        </form>
+    </div>
 
     <script src="{{ url_for('configs.static', filename='scripts_context.js') }}"></script>
 {% endblock %}
