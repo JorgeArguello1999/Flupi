@@ -3,9 +3,8 @@
     overflow-y: scroll;
     height: 75vh; /* Altura del área de mensajes, ajusta según tu preferencia */
     padding: 10px;
-    background-image: url('./fondo_chat.jpg'); /* Ruta de la imagen */
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-color: #ebebeb;
+    margin-bottom: 100px;
 }
 
 .chat-input {
@@ -22,11 +21,11 @@
 
 /* Estilos adicionales para los mensajes */
 .message-user {
-    color: white;
+    color: black;
     text-align: right;
     margin-bottom: 10px;
 
-    background-color:  #2d701e;
+    background-color:  #cfd1d0;
     border-radius: 10px;
     border-style: solid;
     border: 3px;
@@ -35,14 +34,15 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    border-color: #5b9dab;
 }
 
 .message-bot {
-    color: white;
+    color: black;
     text-align: left;
     margin-bottom: 10px;
-        
-    background-color: #455a64;
+
+    background-color: #cfd1d0;
     border-radius: 10px;
     border-style: solid;
     border: 3px;
@@ -62,7 +62,7 @@
 .message-time {
     margin-left: auto;
     font-size: 0.8em;
-    color: #ffffff;
+    color: #525252;
 }
 
 @media only screen and (max-width: 767px) {
