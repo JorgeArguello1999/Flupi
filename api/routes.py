@@ -5,6 +5,7 @@ from flask import request
 
 import datetime
 
+from configs import api_compumax
 from configs import chatgpt
 from configs import chatbot
 from configs import context
@@ -56,26 +57,31 @@ def api_post():
     # Obtenemos el JSON
     data = request.get_json()
 
-    # Enviamos a ChatGPT para que nos devuelva que pide el usuario
-    response = chatgpt.answer(
-        user= data["user"],
-        ask= data["ask"],
-        context= f"{context.get_context('entender_consulta')} tu eres: {context.get_context('context')}"
-    )
+    # En caso de que envie solo digitos
+    if data['ask'].isdigit():
+        response = api_compumax.search_product(data['ask']) 
 
-    comandos = chatbot.chatbot(response["response"])
-
-    # Se comprueba si se activo algún comando
-    if comandos:
-        response = comandos["response"]
-    
-    # Caso contrario se devuelve la respuesta de GPT 
     else:
-        response = response["response"]
+        # Enviamos a ChatGPT para que nos devuelva que pide el usuario
+        response = chatgpt.answer(
+            user= data["user"],
+            ask= data["ask"],
+            context= f"{context.get_context('entender_consulta')} tu eres: {context.get_context('context')}"
+        )
 
-    if data["device"] == "bot":
-        response = voice.speaker(response)
-        return send_from_directory('./audios', response)
+        comandos = chatbot.chatbot(response["response"])
+
+        # Se comprueba si se activo algún comando
+        if comandos:
+            response = comandos["response"]
+        
+        # Caso contrario se devuelve la respuesta de GPT 
+        else:
+            response = response["response"]
+
+        if data["device"] == "bot":
+            response = voice.speaker(response)
+            return send_from_directory('./audios', response)
 
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')

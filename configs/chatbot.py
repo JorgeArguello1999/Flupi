@@ -36,16 +36,10 @@ def get_product_description(text:str):
     
     contexto = context.get_context('context')
     no_producto = context.get_context('no_producto')
-    caracteristicas = context.get_context('caracteristicas_producto')
-    query = f'{caracteristicas}, productos:{response}'
 
     if response != False:
         return {
-            "response": chatgpt.answer(
-                context=query,
-                ask=f'El usuario quiere: {texto}'
-            )['response']
-        }
+            "response": response}
     else:
         return {
             "response": chatgpt.answer(
