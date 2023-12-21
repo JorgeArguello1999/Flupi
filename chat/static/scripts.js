@@ -3,11 +3,16 @@ $(document).ready(function() {
         $('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 300);
     }
 
-    function showMessage(message, isUser) {
+    function showMessage(message, isUser, image) {
         const sender = isUser ? 'Tú' : 'Chatbot';
         const cssClass = isUser ? 'message-user' : 'message-bot';
-        const currentTime = new Date().toLocaleTimeString(); // Obtener la hora actual
-        const messageDiv = `<div class="${cssClass}"><p>${message}</p><span class="message-time">${currentTime}</span></div>`;
+        const currentTime = new Date().toLocaleTimeString(); // Obtener la hora actual del computador
+        const messageDiv = `
+            <div class="${cssClass}">
+                <img src="data:image/png;base64,${image}" class="img_profile" />
+                <p>${message}</p>
+                <span class="message-time">${currentTime}</span>
+            </div>`;
         $("#chat-messages").append(messageDiv);
         scrollToBottom();
     }
@@ -16,10 +21,7 @@ $(document).ready(function() {
     $("#chat-form").submit(function(event) {
         event.preventDefault();
         const userMessage = $("#message-input").val();
-        showMessage(userMessage, true);
 
-        // Aquí puedes realizar la llamada a la API con fetch o AJAX si lo necesitas
-        // Ejemplo de llamada fetch a una API
         fetch('/api/', {
             method: 'POST',
             headers: {
@@ -34,7 +36,8 @@ $(document).ready(function() {
         .then(response => response.json())
         .then(data => {
             // Manejar la respuesta de la API
-            showMessage(data.response, false);
+            showMessage(data.response, false, data.photo_role); // Suponiendo que 'data.botImage' contiene la imagen en base64 del bot
+            showMessage(userMessage, true, data.photo_user); // Suponiendo que 'data.userImage' contiene la imagen en base64 del usuario
         })
         .catch(error => {
             console.error('Error:', error);
