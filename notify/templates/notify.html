@@ -4,19 +4,19 @@
 {% block subtitle %} Notify {% endblock %}
 
 {% block content %}
-
     <link rel="stylesheet" href="{{ url_for('notify.static', filename='style.css') }}">
+    <div class="container py-4">
+        <div class="box" id="box">
+            <p id="status" class="text-center">No ha cambiado</p>
+        </div>
 
-    <div class="box" id="box">
-        <p id="status">No ha cambiado</p>
+        <div class="d-grid gap-2">
+            <button id="boton" class="btn btn-primary btn-lg">Ya Salgo</button>
+        </div>
+
+        <audio id="audio" src="{{ url_for('notify.static', filename='sonido.mp3') }}" preload="auto">Ringtone</audio>
     </div>
-
-    <div class="boton-1">
-        <button id="boton">Ya Salgo</button>
-    </div>
-
-    <audio id="audio" src="{{ url_for('notify.static', filename='sonido.mp3') }}">Ringthone</audio>
-
+    
     <script>
     // URL de la API que deseas observar
     let apiUrl = "{{ url_for('notify.notify_status') }}";
@@ -73,7 +73,7 @@
                     }
                 } else {
                     mensaje.innerHTML = mensaje_no_clientes;
-                    caja.style.backgroundColor = "#80dbff";
+                    caja.style.backgroundColor = "#CCCCCC";
                     if (audioActivo) {
                         toggleAudio(false);
                         audioActivo = false;

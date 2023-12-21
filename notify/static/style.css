@@ -1,15 +1,26 @@
-.box, .boton-1, button{
-    text-align: center;
-    margin: 0 auto;
-    width: 50%;
-    padding: 1em;
-    border-radius: 2em;
-    font-size: large;
-    border-style: dashed;
+/* Estilos para los elementos con las clases .box y .boton-1, y para los botones */
+.box,
+.boton-1,
+button {
+  text-align: center;
+  margin: 0 auto;
+  width: 50%;
+  padding: 1em;
+  border-radius: 2em;
+  font-size: large;
+  border-color: black;
+  margin-bottom: 1em;
 }
-.boton-1{
+
+#status{
     color: black;
 }
-.box{
-    color: white;
+/* Estilos específicos para .boton-1 */
+.boton-1 {
+  color: black;
+}
+
+/* Estilos específicos para .box */
+.box {
+  color: white;
 }
