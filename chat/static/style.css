@@ -1,3 +1,22 @@
+/* Mantén tus estilos anteriores y añade estos para el chat */
+.chat-box {
+    overflow-y: scroll;
+    height: 70vh; /* Altura del área de mensajes, ajusta según tu preferencia */
+    padding: 10px;
+}
+
+.chat-input {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ccc;
+    display: flex;
+    align-items: center;
+}
+
 /* Estilos adicionales para los mensajes */
 .message-user {
     color: #007bff;

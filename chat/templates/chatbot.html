@@ -4,25 +4,18 @@
 {% block subtitle %} Chat {% endblock %}
 
 {% block content %}
-
 <link rel="stylesheet" href="{{ url_for('chatbot.static', filename='style.css') }}">
 
-<div class="centered-content">
-    <div id="chat-container">
-        <div id="chat-messages" class="mb-4">
-            <!-- Aquí se mostrarán los mensajes de la conversación -->
-        </div>
-        <form id="chat-form" class="custom-form fixed-bottom mb-4">
-            <div class="input-group mb-3">
-                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
-                <button type="submit" class="btn btn-outline-primary">✈️</button>
-            </div>
-        </form>
+<div id="chat-container">
+    <div id="chat-messages" class="chat-box">
+        <!-- Aquí se mostrarán los mensajes de la conversación -->
     </div>
+    <form id="chat-form" class="chat-input">
+        <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+        <button type="submit" class="btn btn-outline-primary">Enviar</button>
+    </form>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
 <script src="{{ url_for('chatbot.static', filename='scripts.js') }}"></script>
-
 {% endblock %}
