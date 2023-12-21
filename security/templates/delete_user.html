@@ -1,0 +1,14 @@
+<!-- delete_user.html -->
+
+{% extends "base.html" %}
+{% block content %}
+    <h1>Eliminar Usuario</h1>
+    <form method="post">
+        <label for="password">Ingrese la contraseña para eliminar el usuario:</label>
+        <input type="password" id="password" name="password">
+        <input type="submit" value="Eliminar">
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+    </form>
+{% endblock %}

@@ -6,6 +6,9 @@ from flask import redirect
 from flask import url_for
 
 from security import database
+from security.protected_routes import requerir_autenticacion
+
+import os
 
 security_bp = Blueprint('security', __name__, url_prefix='/security', template_folder='templates', static_folder='static')
 
@@ -25,7 +28,15 @@ def login():
 
     return render_template('login.html')
 
+@security_bp.route('/logout/')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('security.login'))
+
+
+# Esta ruta es solo accesible si se tiene acceso al sistema
 @security_bp.route('/signup', methods=['GET', 'POST'])
+@requerir_autenticacion
 def signup():
     if request.method == 'POST':
         username = request.form['username']
@@ -40,7 +51,24 @@ def signup():
 
     return render_template('signup.html')
 
-@security_bp.route('/logout/')
-def logout():
-    session.pop('username', None)
-    return redirect(url_for('security.login'))
+# Gestion de usuarios
+@security_bp.route('/users')
+@requerir_autenticacion
+def view_users():
+    users = database.get_all_users()
+    return render_template('view_users.html', users=users)
+
+@security_bp.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
+@requerir_autenticacion
+def delete_user(user_id):
+    if request.method == 'POST':
+        password = request.form['password']
+
+        if password == os.environ.get('ADMIN_KEY'):
+            database.delete_user_by_id(user_id)
+            return redirect(url_for('security.view_users'))
+        else:
+            error = "Contraseña incorrecta para eliminar usuario."
+            return render_template('delete_user.html', error=error)
+
+    return render_template('delete_user.html')
