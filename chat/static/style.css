@@ -61,3 +61,8 @@
     font-size: 0.8em;
     color: #aaa;
 }
+
+#chat_container{
+    margin-left: 2em;
+    margin-right: 2em;
+}
