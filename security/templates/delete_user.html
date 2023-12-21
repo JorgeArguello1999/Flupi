@@ -2,13 +2,14 @@
 
 {% extends "base.html" %}
 {% block content %}
+    <link rel="stylesheet" href="{{ url_for('security.static', filename='delete_style.css') }}">
     <h1>Eliminar Usuario</h1>
-    <form method="post">
+    <form method="post" class="delete-form">
         <label for="password">Ingrese la contraseña para eliminar el usuario:</label>
-        <input type="password" id="password" name="password">
-        <input type="submit" value="Eliminar">
+        <input type="password" id="password" name="password" class="password-input">
+        <button type="submit" class="delete-button">Eliminar &#128465;</button>
         {% if error %}
-            <p>{{ error }}</p>
+            <p class="error-message">&#9888; {{ error }}</p>
         {% endif %}
     </form>
 {% endblock %}

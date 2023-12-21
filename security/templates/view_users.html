@@ -3,9 +3,26 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Lista de Usuarios</h1>
-    <ul>
-        {% for user in users %}
-            <li>{{ user[1] }} <a href="{{ url_for('security.delete_user', user_id=user[0]) }}">Eliminar</a></li>
-        {% endfor %}
-    </ul>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Nombre de Usuario</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{ user[1] }}</td>
+                        <td>
+                            <a href="{{ url_for('security.delete_user', user_id=user[0]) }}" class="btn btn-danger">Eliminar &#128465;</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('security.signup') }}" class="btn btn-success">➕ Añadir nuevo Usuario</a>
 {% endblock %}
