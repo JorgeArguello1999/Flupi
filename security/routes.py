@@ -8,6 +8,9 @@ from flask import url_for
 from security import database
 from security.protected_routes import requerir_autenticacion
 
+from dotenv import load_dotenv
+load_dotenv()
+
 import os
 
 security_bp = Blueprint('security', __name__, url_prefix='/security', template_folder='templates', static_folder='static')

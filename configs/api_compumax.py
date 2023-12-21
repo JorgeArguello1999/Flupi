@@ -1,8 +1,11 @@
+from dotenv import load_dotenv
+
 import requests
 import json
 import os 
 
 # URL de la API donde esta la base de datos
+load_dotenv()
 url = os.environ.get("API_ROUTE")
 
 def html_tabla(data:str):

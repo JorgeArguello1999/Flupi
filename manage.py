@@ -3,6 +3,7 @@ from flask import Flask
 from flask import redirect
 from flask import url_for
 
+from dotenv import load_dotenv
 import os
 
 # Importamos las rutas
@@ -12,6 +13,9 @@ from api.routes import api_bp
 from chat.routes import chat_bp
 from notify.routes import notify_bp
 from configs.routes import configs_bp
+
+# Cargamos las variables de entorno
+load_dotenv()
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
