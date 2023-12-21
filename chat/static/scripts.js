@@ -20,7 +20,7 @@ $(document).ready(function() {
     $("#chat-form").submit(function(event) {
         event.preventDefault();
         const userMessage = $("#message-input").val();
-        const currentTime = new Date().toLocaleTimeString(); // Obtener la hora actual del navegador
+        const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
         fetch('/api/', {
             method: 'POST',

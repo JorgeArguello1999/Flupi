@@ -8,7 +8,7 @@ url = os.environ.get("API_ROUTE")
 def html_tabla(data:str):
     if data:
         # Encabezados de la tabla
-        encabezados = '<table border="1" width="90%"><tr><th>ID</th><th>Nombre</th><th>Precio</th></tr>' 
+        encabezados = '<table width="90%" class="items_table"><tr><th>ID</th><th>Nombre</th><th>Precio</th></tr>' 
 
         # Contenido de la tabla
         contenido_tabla = ""

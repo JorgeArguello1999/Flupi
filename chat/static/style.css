@@ -1,8 +1,11 @@
-/* Mantén tus estilos anteriores y añade estos para el chat */
+/* Estilos generales para el chat */
 .chat-box {
     overflow-y: scroll;
-    height: 70vh; /* Altura del área de mensajes, ajusta según tu preferencia */
+    height: 75vh; /* Altura del área de mensajes, ajusta según tu preferencia */
     padding: 10px;
+    background-image: url('./fondo_chat.jpg'); /* Ruta de la imagen */
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .chat-input {
@@ -19,11 +22,11 @@
 
 /* Estilos adicionales para los mensajes */
 .message-user {
-    color: #007bff;
+    color: white;
     text-align: right;
     margin-bottom: 10px;
 
-    background-color: #cbe9ff;
+    background-color:  #2d701e;
     border-radius: 10px;
     border-style: solid;
     border: 3px;
@@ -35,11 +38,11 @@
 }
 
 .message-bot {
-    color: #28a745;
+    color: white;
     text-align: left;
     margin-bottom: 10px;
         
-    background-color: #b3e6c8;
+    background-color: #455a64;
     border-radius: 10px;
     border-style: solid;
     border: 3px;
@@ -59,10 +62,26 @@
 .message-time {
     margin-left: auto;
     font-size: 0.8em;
-    color: #aaa;
+    color: #ffffff;
 }
 
-#chat_container{
-    margin-left: 2em;
-    margin-right: 2em;
+@media only screen and (max-width: 767px) {
+    .chat-box {
+        height: 100vh; /* Chat ocupa toda la pantalla en dispositivos móviles */
+    }
+
+    .container_chat {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%; /* El contenedor del chat ocupa todo el ancho en dispositivos móviles */
+        font-size: smaller;
+    }
+
+    .items_table{
+        font-size: xx-small;
+    }
+
+    .message-bot{
+        margin-bottom: 3em;
+    }
 }
