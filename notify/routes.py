@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask import jsonify
 from flask import redirect, url_for
 
-import configs.alarm_status as alarm_status
+import notify.alarm_status as alarm_status
 
 notify_bp = Blueprint('notify', __name__, url_prefix='/notify', template_folder='templates', static_folder='static')
 
