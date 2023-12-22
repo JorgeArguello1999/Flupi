@@ -14,13 +14,13 @@ from configs import images
 
 from security.protected_routes import requerir_autenticacion
 
-api_bp = Blueprint('api', __name__, url_prefix='/api')
+api_bp = Blueprint('api', __name__, url_prefix='/api', static_folder='static', template_folder='templates')
 
 # API para el chatbot
 @api_bp.route("/", methods=['GET'])
 @requerir_autenticacion
 def api_get():
-    return jsonify({
+    json = ({
         "formato": "JSON",
         "method": {
             "GET": "Esta página",
@@ -48,7 +48,8 @@ def api_get():
                 "photo_user": "fotografia_base64"
             }
         }
-   })
+    })
+    return render_template('api_information.html', json=json)
 
 @api_bp.route("/", methods=['POST'])
 def api_post():

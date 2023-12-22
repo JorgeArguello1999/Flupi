@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Información de la API {% endblock %}
+
+{% block content %}
+
+    <style>
+        /* Estilos para las columnas */
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+        .column {
+            width: 48%; /* Establece el ancho de las columnas */
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        pre {
+            white-space: pre-wrap;
+        }
+    </style>
+
+    <div class="container">
+        <!-- Columna de Información sobre la API -->
+        <div class="column">
+            <h2>Información sobre la API</h2>
+            <ul>
+                <li>Formato: {{ json.formato }}</li>
+                <li>Método:
+                    <ul>
+                        <li>GET: {{ json.method.GET }}</li>
+                        <li>POST: {{ json.method.POST }}</li>
+                    </ul>
+                </li>
+                <li>Cuerpo del formulario:
+                    <ul>
+                        <li>Usuario: {{ json.body_form.user }}</li>
+                        <li>Pregunta: {{ json.body_form.ask }}</li>
+                        <li>Dispositivo: {{ json.body_form.device }}</li>
+                    </ul>
+                </li>
+            </ul>
+ 
+            <h3>Importante</h3>
+            <ul>
+                <li>El tiempo es del servidor</li>
+                <li>En el campo device, Computer devuelve JSON, para devolver audio escribiremos "bot" en device</li>
+                <li>La api no guarda en Base de Datos ninguna respuesta</li>
+            </ul>
+        </div>
+
+        <!-- Columna de JSON -->
+        <div class="column">
+            <h2>JSON</h2>
+            <h3>Request JSON</h3>
+            <pre><code>{{ json.ejemplo.request_json | tojson | safe }}</code></pre>
+            <h3>Response JSON</h3>
+            <pre><code>{{ json.ejemplo.response_json | tojson | safe }}</code></pre>
+        </div>
+    </div>
+
+{% endblock %}

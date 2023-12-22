@@ -37,7 +37,10 @@
             <div class="col-md-6">
                 <!-- Video -->
                 <div class="ratio ratio-16x9">
-                    <iframe src="{{ url_for('home.static', filename='video.mp4') }}" allowfullscreen></iframe>
+                    <video controls>
+                        <source src="{{ url_for('home.static', filename='video.mp4') }}" type="video/mp4">
+                        Tu navegador no admite el elemento de video.
+                    </video>
                 </div>
             </div>
         </div>
