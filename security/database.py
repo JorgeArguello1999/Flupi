@@ -1,6 +1,7 @@
 from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 import sqlite3
+import uuid
 
 def create_connection():
     conn = sqlite3.connect('alarm_status.db')
@@ -9,7 +10,8 @@ def create_connection():
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             username TEXT NOT NULL,
-            password TEXT NOT NULL
+            password TEXT NOT NULL,
+            token TEXT NOT NULL
         )
     ''')
     conn.commit()
@@ -53,8 +55,11 @@ def create_user(username: str, password: str) -> None:
     
     # Cifra la contraseña antes de guardarla en la base de datos
     hashed_password = generate_password_hash(password)
+
+    # Generamos un token aleatorio para el usuario
+    token = str(uuid.uuid4())
     
-    cursor.execute("INSERT INTO usuarios (username, password) VALUES (?, ?)", (username, hashed_password))
+    cursor.execute("INSERT INTO usuarios (username, password, token) VALUES (?, ?, ?)", (username, hashed_password, token))
     conn.commit()
     conn.close()
 

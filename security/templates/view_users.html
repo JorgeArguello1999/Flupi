@@ -8,6 +8,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th>Nombre de Usuario</th>
+                    <th>Token</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -15,6 +16,7 @@
                 {% for user in users %}
                     <tr>
                         <td>{{ user[1] }}</td>
+                        <td>{{ user[3] }}</td>
                         <td>
                             <a href="{{ url_for('security.delete_user', user_id=user[0]) }}" class="btn btn-danger">Eliminar &#128465;</a>
                         </td>
