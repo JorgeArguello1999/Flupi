@@ -2,8 +2,11 @@ from flask import Blueprint, render_template
 from flask import jsonify
 from flask import send_from_directory
 from flask import request
+from flask import url_for
 
 import datetime
+import requests
+import json
 
 from configs import api_compumax
 from configs import chatgpt
@@ -12,7 +15,10 @@ from configs import context
 from configs import voice
 from configs import images
 
+from security.database import get_user_by_username
+
 from security.protected_routes import requerir_autenticacion
+from security.protected_api import token_required
 
 api_bp = Blueprint('api', __name__, url_prefix='/api', static_folder='static', template_folder='templates')
 
@@ -35,7 +41,8 @@ def api_get():
             "request_json": {
                 "user": "Jorge",
                 "ask": "Tienes teclados?",
-                "device": "Computer"
+                "device": "Computer",
+                "token": "Tu token"
             },
             "response_json": {
                 "user": "Jorge",
@@ -51,7 +58,32 @@ def api_get():
     })
     return render_template('api_information.html', json=json)
 
+@api_bp.route("/chat", methods=['POST'])
+def api_middleware():
+    data = request.get_json()
+    token = get_user_by_username('chatbot')[3]
+
+    data = {
+        "user": data["user"],
+        "ask": data["ask"],
+        "device": data["device"],
+        "token": token
+    }
+
+    # Convertir el diccionario 'data' a formato JSON
+    json_data = json.dumps(data)
+
+    salida = requests.post(
+        url='http://127.0.0.1:5000/api/',
+        data=json_data,  # Enviar el JSON en lugar de un diccionario Python
+        headers={"Content-Type": "application/json"}
+    ).json()
+
+    return jsonify(salida)
+
+
 @api_bp.route("/", methods=['POST'])
+@token_required
 def api_post():
     # Obtenemos la hora de Petición
     hora_peticion =  datetime.datetime.now().strftime('%H:%M')
@@ -103,12 +135,3 @@ def api_post():
     }
 
     return jsonify(response)
-
-
-from security.protected_api import token_required
-
-# Uso del decorador en una ruta de la API
-@api_bp.route("/protec", methods=['POST'])
-@token_required
-def ruta_protegida():
-    return jsonify({'message': 'Esta es una ruta protegida y el token es válido'})

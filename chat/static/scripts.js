@@ -22,7 +22,7 @@ $(document).ready(function() {
         const userMessage = $("#message-input").val();
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
-        fetch('/api/', {
+        fetch('/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
