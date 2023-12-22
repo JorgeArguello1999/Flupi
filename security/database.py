@@ -37,6 +37,18 @@ def search_user(user:str, password:str) -> bool:
     else:
         return False
 
+def search_token(token:str) -> bool:
+    conn = sqlite3.connect('alarm_status.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT token FROM usuarios WHERE token = ?', (token,))
+    response = cursor.fetchone()
+    conn.close()
+
+    if response:
+        return True
+    else:
+        return False
+
 def get_user_by_username(user:str) -> bool:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -71,3 +83,7 @@ def delete_user_by_id(user_id: int) -> None:
     conn.close()
 
 create_connection()
+
+if __name__ == "__main__":
+    salida = search_token('dcfbaac-e8e8-47b4-8493-75232f17a7bd')
+    print(salida)

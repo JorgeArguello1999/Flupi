@@ -103,3 +103,12 @@ def api_post():
     }
 
     return jsonify(response)
+
+
+from security.protected_api import token_required
+
+# Uso del decorador en una ruta de la API
+@api_bp.route("/protec", methods=['POST'])
+@token_required
+def ruta_protegida():
+    return jsonify({'message': 'Esta es una ruta protegida y el token es válido'})
