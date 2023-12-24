@@ -5,7 +5,7 @@ from flask import session
 from flask import redirect
 from flask import url_for
 
-from security import database
+from databases import database
 from security.protected_routes import requerir_autenticacion
 
 from dotenv import load_dotenv

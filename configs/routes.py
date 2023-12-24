@@ -2,8 +2,8 @@ from flask import Blueprint, render_template
 from flask import request
 from flask import jsonify
 
-from configs import context
-from configs import images
+from databases import context
+from databases import images
 
 from security.protected_routes import requerir_autenticacion
 

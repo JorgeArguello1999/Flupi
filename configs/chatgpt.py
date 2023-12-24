@@ -30,7 +30,7 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 
 # Esta parte es para pruebas
 if __name__ == '__main__':
-    import context
+    import databases.context as context
 
     contexto = context.get_context('entender_consulta')
     ask="Usuario: Tienes teclados?"

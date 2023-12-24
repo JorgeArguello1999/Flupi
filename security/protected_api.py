@@ -1,7 +1,7 @@
 from functools import wraps
 from flask import request, jsonify
 
-from security.database import search_token
+from databases.database import search_token
 
 def token_required(func):
     @wraps(func)

@@ -11,11 +11,11 @@ import json
 from configs import api_compumax
 from configs import chatgpt
 from configs import chatbot
-from configs import context
+from databases import context
 from configs import voice
-from configs import images
+from databases import images
 
-from security.database import get_user_by_username
+from databases.database import get_user_by_username
 
 from security.protected_routes import requerir_autenticacion
 from security.protected_api import token_required
