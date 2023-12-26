@@ -6,6 +6,7 @@ import os
 load_dotenv()
 
 ruta_tokens = os.environ.get('JSON_GCS')
+nombre = os.environ.get('NOMBRE')
 
 # Inicializa la app de Firebase
 cred = credentials.Certificate(ruta_tokens)
@@ -18,7 +19,7 @@ def read_document(collection_name, key):
         coleccion_ref = db.collection(collection_name)
         documentos = coleccion_ref.stream()
         data_dict = {documento.id: documento.to_dict().get(key) for documento in documentos if key in documento.to_dict()}
-        return data_dict
+        return data_dict[nombre]
     except Exception as e:
         print(f"Error: {e}")
         return None
@@ -69,11 +70,6 @@ def listar_todo_firestore():
     try:
         # Obtiene todas las colecciones
         colecciones = [col.id for col in db.collections()]
-
-        print("Colecciones almacenadas en Firestore:")
-        for coleccion in colecciones:
-            print(coleccion)
-
         return colecciones
 
     except Exception as e:
@@ -82,8 +78,7 @@ def listar_todo_firestore():
 
 if __name__ == '__main__':
     # Ejemplo de uso de las funciones
-    """
-    resultados = read_document('contextos', 'general')
+    resultados = read_document('contextos', 'no_producto')
     print(resultados)
 
     """
@@ -91,3 +86,4 @@ if __name__ == '__main__':
     print(claves)
 
     print(listar_todo_firestore())
+    """
