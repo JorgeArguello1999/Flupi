@@ -1,0 +1,14 @@
+['inicio', 'no_producto', 'entender_consulta', 'general', 'error_mensaje', 'ip', 'campo_nuevo']
+Colecciones almacenadas en Firestore:
+categoria_chat
+configuracion
+contextos
+grupo_chat_compumax
+mensajes_compumax
+mensajes_interno_compumax
+personal_compumax
+promociones_compumax
+tareas_categorias
+tareas_compumax
+usuarios_compumax
+['categoria_chat', 'configuracion', 'contextos', 'grupo_chat_compumax', 'mensajes_compumax', 'mensajes_interno_compumax', 'personal_compumax', 'promociones_compumax', 'tareas_categorias', 'tareas_compumax', 'usuarios_compumax']
