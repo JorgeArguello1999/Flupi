@@ -30,9 +30,9 @@ def answer(user:str="anonym", context:str="", ask:str=""):
 
 # Esta parte es para pruebas
 if __name__ == '__main__':
-    from databases import database
+    from databases import contextos
 
-    contexto = database.get_context('entender_consulta')
+    contexto = contextos.get_context('entender_consulta')
     ask="Usuario: Tienes teclados?"
     user = "Jorge"
     salida = answer(

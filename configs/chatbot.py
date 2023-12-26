@@ -1,5 +1,6 @@
 from configs import chatgpt
 from databases import database 
+from databases import contextos
 from configs import api_compumax
 
 import datetime, requests
@@ -34,8 +35,8 @@ def get_product_description(text:str):
     texto = text.replace(func_words, "").strip()
     response = api_compumax.search_product(texto)
     
-    contexto = database.get_context('context')
-    no_producto = database.get_context('no_producto')
+    contexto = contextos.get_context('general')
+    no_producto = contextos.get_context('no_producto')
 
     if response != False:
         return {

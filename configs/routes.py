@@ -3,6 +3,7 @@ from flask import request
 from flask import jsonify
 
 from databases import database
+from databases import contextos
 
 from security.protected_routes import requerir_autenticacion
 
@@ -12,7 +13,7 @@ configs_bp = Blueprint('configs', __name__, url_prefix='/configs', template_fold
 @configs_bp.route('/context/<filename>', methods=['GET'])
 @requerir_autenticacion
 def get_context(filename):
-    content = database.get_context(filename)
+    content = contextos.get_context(filename)
 
     return jsonify({
         'filename': filename, 
@@ -37,7 +38,7 @@ def update_context(filename):
 @configs_bp.route('/context_f/', methods=['GET'])
 @requerir_autenticacion
 def read_context():
-    context_files = database.get_context_all()
+    context_files = contextos.get_context_all()
     return render_template('context.html', files=context_files)
 
 

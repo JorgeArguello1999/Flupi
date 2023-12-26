@@ -12,8 +12,8 @@ from configs import api_compumax
 from configs import chatgpt
 from configs import chatbot
 from databases import database 
+from databases import contextos
 from configs import voice
-from databases import database
 
 from databases.database import get_user_by_username
 
@@ -99,7 +99,7 @@ def api_post():
         response = chatgpt.answer(
             user= data["user"],
             ask= data["ask"],
-            context= f"{database.get_context('entender_consulta')} tu eres: {database.get_context('context')}"
+            context= f"{contextos.get_context('entender_consulta')} tu eres: {contextos.get_context('general')}"
         )
 
         comandos = chatbot.chatbot(response["response"])
