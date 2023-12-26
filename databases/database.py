@@ -82,6 +82,7 @@ def delete_user_by_id(user_id: int) -> None:
     conn.commit()
     conn.close()
 
+# Contextos
 def get_context_all()-> list:
     """
     Obtener lista de todos los contextos
@@ -125,6 +126,7 @@ def update_context(name:str, text:str)-> bool:
         print(e)
         return False
 
+# Imagenes
 def get_image_all()-> list:
     """
     Obtener lista de todos los contextos
@@ -222,6 +224,7 @@ def initialize_db():
     conn.commit()
     conn.close()
 
+# Notify
 # Función para obtener el estado actual de la alarma desde la base de datos
 def get_alarm_status():
     conn = sqlite3.connect('alarm_status.db')
@@ -243,6 +246,7 @@ def update_alarm_status(status):
 
 import base64
 
+# Images
 def get_image_all()-> list:
     """
     Obtener lista de todos los contextos
