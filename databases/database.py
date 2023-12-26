@@ -3,6 +3,7 @@ from werkzeug.security import check_password_hash
 import sqlite3
 import uuid
 # Usuarios
+"""
 def get_all_users() -> list:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -10,6 +11,7 @@ def get_all_users() -> list:
     users = cursor.fetchall()
     conn.close()
     return users
+"""
 
 def search_user(user:str, password:str) -> bool:
     conn = sqlite3.connect('alarm_status.db')
@@ -35,6 +37,7 @@ def search_token(token:str) -> bool:
     else:
         return False
 
+"""
 def get_user_by_username(user:str) -> bool:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -46,7 +49,9 @@ def get_user_by_username(user:str) -> bool:
         return response
     else:
         return None
+"""
 
+"""
 def create_user(username: str, password: str) -> None:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -60,6 +65,7 @@ def create_user(username: str, password: str) -> None:
     cursor.execute("INSERT INTO usuarios (username, password, token) VALUES (?, ?, ?)", (username, hashed_password, token))
     conn.commit()
     conn.close()
+"""
 
 def delete_user_by_id(user_id: int) -> None:
     conn = sqlite3.connect('alarm_status.db')
