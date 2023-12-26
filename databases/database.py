@@ -2,21 +2,7 @@ from werkzeug.security import generate_password_hash
 from werkzeug.security import check_password_hash
 import sqlite3
 import uuid
-
-def create_connection():
-    conn = sqlite3.connect('alarm_status.db')
-    cursor = conn.cursor()
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS usuarios (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            password TEXT NOT NULL,
-            token TEXT NOT NULL
-        )
-    ''')
-    conn.commit()
-    conn.close()
-
+# Usuarios
 def get_all_users() -> list:
     conn = sqlite3.connect('alarm_status.db')
     cursor = conn.cursor()
@@ -82,49 +68,6 @@ def delete_user_by_id(user_id: int) -> None:
     conn.commit()
     conn.close()
 
-# Contextos
-def get_context_all()-> list:
-    """
-    Obtener lista de todos los contextos
-    """
-    conn = sqlite3.connect('alarm_status.db')
-    cursor = conn.cursor()
-    
-    response = cursor.execute(f"SELECT name FROM ContextData")
-    response = [row[0] for row in response.fetchall()]
-    conn.close()
-    return response
-
-def get_context(name:str)-> dict:
-    """
-    :name -> Contexto a Consultar
-    """
-    conn = sqlite3.connect('alarm_status.db')
-    cursor = conn.cursor()
-    
-    response = cursor.execute(f"SELECT content FROM ContextData where name='{name}'")
-    response = response.fetchone()
-    response = response[0] if response else None
-    conn.close()
-
-    return response
-
-def update_context(name:str, text:str)-> bool:
-    """
-    :name -> Contexto a modificar
-    :text -> Texto a Actualizar
-    """
-    try:
-        conn = sqlite3.connect('alarm_status.db')
-        cursor = conn.cursor()
-        cursor.execute(f'UPDATE ContextData SET content="{text}" WHERE name="{name}"')
-        conn.commit()
-        conn.close()
-        return True
-    
-    except Exception as e:
-        print(e)
-        return False
 
 # Imagenes
 def get_image_all()-> list:
@@ -169,9 +112,6 @@ def update_image(filename:str, image) -> bool:
     return salida
 
 if __name__ == "__main__":
-    print(get_context_all())
-    print(get_context("error_mensaje"))
-
     # editar = update_context("error_mensaje", input("Ingresa el contexto: "))
     # print(editar)
 

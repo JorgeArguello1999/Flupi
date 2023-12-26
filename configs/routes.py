@@ -24,7 +24,7 @@ def get_context(filename):
 @requerir_autenticacion
 def update_context(filename):
     content = request.json.get('content')
-    content = database.update_context(filename, content)
+    content = contextos.update_context(filename, content)
     if content:
         salida = 'File updated successfully'
     else:
