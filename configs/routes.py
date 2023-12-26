@@ -2,8 +2,7 @@ from flask import Blueprint, render_template
 from flask import request
 from flask import jsonify
 
-from databases import context
-from databases import images
+from databases import database
 
 from security.protected_routes import requerir_autenticacion
 
@@ -13,7 +12,7 @@ configs_bp = Blueprint('configs', __name__, url_prefix='/configs', template_fold
 @configs_bp.route('/context/<filename>', methods=['GET'])
 @requerir_autenticacion
 def get_context(filename):
-    content = context.get_context(filename)
+    content = database.get_context(filename)
 
     return jsonify({
         'filename': filename, 
@@ -24,7 +23,7 @@ def get_context(filename):
 @requerir_autenticacion
 def update_context(filename):
     content = request.json.get('content')
-    content = context.update_context(filename, content)
+    content = database.update_context(filename, content)
     if content:
         salida = 'File updated successfully'
     else:
@@ -38,7 +37,7 @@ def update_context(filename):
 @configs_bp.route('/context_f/', methods=['GET'])
 @requerir_autenticacion
 def read_context():
-    context_files = context.get_context_all()
+    context_files = database.get_context_all()
     return render_template('context.html', files=context_files)
 
 
@@ -46,7 +45,7 @@ def read_context():
 @configs_bp.route('/images/<filename>', methods=['GET'])
 @requerir_autenticacion
 def get_image_route(filename):
-    image_data = images.get_image(filename)
+    image_data = database.get_image(filename)
 
     if image_data != 'Image not found':
         return jsonify({'filename': filename, 'content': image_data})
@@ -59,7 +58,7 @@ def update_image_route(filename):
     new_image = request.files['new_image']
     new_image_data = new_image.read()
 
-    result = images.update_image(filename, new_image_data)
+    result = database.update_image(filename, new_image_data)
 
     if result == "Imagen actualizada correctamente en la base de datos.":
         return jsonify({'filename': filename, 'message': 'File updated successfully'})
@@ -69,5 +68,5 @@ def update_image_route(filename):
 @configs_bp.route('/images_f/', methods=['GET'])
 @requerir_autenticacion
 def read_images_route():
-    image_names = images.get_image_all()
+    image_names = database.get_image_all()
     return render_template('change_images.html', files=image_names)

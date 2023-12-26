@@ -11,9 +11,9 @@ import json
 from configs import api_compumax
 from configs import chatgpt
 from configs import chatbot
-from databases import context
+from databases import database 
 from configs import voice
-from databases import images
+from databases import database
 
 from databases.database import get_user_by_username
 
@@ -99,7 +99,7 @@ def api_post():
         response = chatgpt.answer(
             user= data["user"],
             ask= data["ask"],
-            context= f"{context.get_context('entender_consulta')} tu eres: {context.get_context('context')}"
+            context= f"{database.get_context('entender_consulta')} tu eres: {database.get_context('context')}"
         )
 
         comandos = chatbot.chatbot(response["response"])
@@ -119,8 +119,8 @@ def api_post():
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
 
-    photo_chatbot = images.get_image('chatbot')
-    photo_user = images.get_image('usuario')
+    photo_chatbot = database.get_image('chatbot')
+    photo_user = database.get_image('usuario')
 
     # Salida de la API
     response = {

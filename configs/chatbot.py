@@ -1,5 +1,5 @@
 from configs import chatgpt
-from databases import context
+from databases import database 
 from configs import api_compumax
 
 import datetime, requests
@@ -34,8 +34,8 @@ def get_product_description(text:str):
     texto = text.replace(func_words, "").strip()
     response = api_compumax.search_product(texto)
     
-    contexto = context.get_context('context')
-    no_producto = context.get_context('no_producto')
+    contexto = database.get_context('context')
+    no_producto = database.get_context('no_producto')
 
     if response != False:
         return {
@@ -58,7 +58,7 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
 
     except Exception as error:
         print(f"Error al llamar al técnico: {error}")
-        mensaje = context.error_mensaje
+        mensaje = database.error_mensaje
     
     return {
         "response": mensaje
