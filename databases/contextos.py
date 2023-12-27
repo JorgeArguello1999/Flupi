@@ -47,6 +47,6 @@ def update_context(name: str, text:str) -> bool:
 
 # Ejemplo de uso:
 if __name__ == "__main__":
-    print(get_context('no_producto'))
-    print(update_context('no_producto', 'Ha'))
+    print(get_context('compumax', 'no_producto'))
+    # print(update_context('no_producto', 'Ha'))
     print(get_context('no_producto'))
