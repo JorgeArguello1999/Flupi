@@ -7,9 +7,10 @@ import os
 
 load_dotenv()
 
-class FirestoreCRUD:
-    def __init__(self, ruta_tokens):
-        self.cred = credentials.Certificate(ruta_tokens)
+class Firestore:
+    def __init__(self):
+        self.ruta_tokens = os.getenv('JSON_GCS')
+        self.cred = credentials.Certificate(self.ruta_tokens)
         firebase_admin.initialize_app(self.cred)
         self.proyecto = os.environ.get('NOMBRE')
         self.proyecto = 'Compumax'
@@ -95,26 +96,22 @@ class FirestoreCRUD:
 
 if __name__ == '__main__':
     # Reemplaza 'JSON_GCS' con tu variable de entorno real
-    ruta_tokens = os.getenv('JSON_GCS')
 
-    firestore_crud = FirestoreCRUD(ruta_tokens)
+    firestore_crud = Firestore()
 
-    """
     # Ejemplos de uso:
     # Buscar documentos en una colección filtrando por un campo y valor específicos
-    listar = firestore_crud.listar('contextos')
+    listar = firestore_crud.get_all('contextos')
     print(listar)
 
     # Crear un nuevo documento en una colección con los datos proporcionados
     nuevo_doc_datos = {'campo1': 'valor1', 'campo2': 'valor2'}
-    nuevo_doc_id = firestore_crud.crear_documento('contextos', nuevo_doc_datos)
+    nuevo_doc_id = firestore_crud.create_collection('contextos', nuevo_doc_datos)
 
     # Actualizar un documento existente en una colección con nuevos datos
     datos_actualizados = {'alarm': False}
     firestore_crud.update_create_registry('contextos', 'Compumax', datos_actualizados)
 
     # Eliminar un documento por su ID de una colección específica
-    firestore_crud.eliminar_documento('contextos', 'prueba')
-    """
 
-    firestore_crud.eliminar_campo('contextos', 'Edumax', 'prueba')
+    firestore_crud.eliminar_campo('contextos', 'Compumax', 'prueba')
