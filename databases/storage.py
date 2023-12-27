@@ -12,6 +12,7 @@ class FirestoreCRUD:
         self.cred = credentials.Certificate(ruta_tokens)
         firebase_admin.initialize_app(self.cred)
         self.proyecto = os.environ.get('NOMBRE')
+        self.proyecto = 'Compumax'
         self.db = firestore.client()
 
     # Obtener todo el Diccionario
@@ -44,7 +45,8 @@ class FirestoreCRUD:
             print(f"Error al buscar documentos: {e}")
             return []
 
-    def crear_documento(self, coleccion, datos):
+    # Crea una coleccion
+    def create_collection(self, coleccion, datos):
         try:
             doc_ref = self.db.collection(coleccion).document()
             doc_ref.set(datos)
@@ -54,7 +56,8 @@ class FirestoreCRUD:
             print(f"Error al crear el documento: {e}")
             return None
 
-    def actualizar_documento(self, coleccion, doc_id, nuevos_datos):
+    # Actualizar o crear un Campo
+    def update_create_registry(self, coleccion, doc_id, nuevos_datos):
         try:
             doc_ref = self.db.collection(coleccion).document(doc_id)
             doc_ref.update(nuevos_datos)
@@ -64,7 +67,8 @@ class FirestoreCRUD:
             print(f"Error al actualizar el documento: {e}")
             return False
 
-    def eliminar_documento(self, coleccion, doc_id):
+    # Eliminar un documento
+    def delete_document(self, coleccion, doc_id):
         try:
             doc_ref = self.db.collection(coleccion).document(doc_id)
             doc_ref.delete()
@@ -73,6 +77,21 @@ class FirestoreCRUD:
         except Exception as e:
             print(f"Error al eliminar el documento: {e}")
             return False
+    
+    # Eliminar campo
+    def eliminar_campo(self, coleccion, doc_id, campo):
+        try:
+            doc_ref = self.db.collection(coleccion).document(doc_id)
+
+            # Actualizar el campo que deseas eliminar con firebase_admin.firestore.DELETE_FIELD
+            doc_ref.update({campo: firebase_admin.firestore.DELETE_FIELD})
+
+            print(f"Campo '{campo}' del documento con ID '{doc_id}' eliminado exitosamente.")
+            return True
+
+        except Exception as e:
+            print(f"Error al eliminar el campo: {e}")
+            return False
 
 if __name__ == '__main__':
     # Reemplaza 'JSON_GCS' con tu variable de entorno real
@@ -80,27 +99,22 @@ if __name__ == '__main__':
 
     firestore_crud = FirestoreCRUD(ruta_tokens)
 
+    """
     # Ejemplos de uso:
     # Buscar documentos en una colección filtrando por un campo y valor específicos
     listar = firestore_crud.listar('contextos')
     print(listar)
 
-    """
-    resultados_busqueda = firestore_crud.buscar_documentos('contextos', 'general', 'asdf')
-    print(resultados_busqueda)
-
-    # Obtener un documento por su ID en una colección específica
-    documento = firestore_crud.obtener_documento_por_id('contextos', 'alarm')
-    print(documento)
-
     # Crear un nuevo documento en una colección con los datos proporcionados
     nuevo_doc_datos = {'campo1': 'valor1', 'campo2': 'valor2'}
-    nuevo_doc_id = firestore_crud.crear_documento('mi_coleccion', nuevo_doc_datos)
+    nuevo_doc_id = firestore_crud.crear_documento('contextos', nuevo_doc_datos)
 
     # Actualizar un documento existente en una colección con nuevos datos
-    datos_actualizados = {'campo_actualizado': 'nuevo_valor'}
-    firestore_crud.actualizar_documento('mi_coleccion', 'ID_del_documento', datos_actualizados)
+    datos_actualizados = {'alarm': False}
+    firestore_crud.update_create_registry('contextos', 'Compumax', datos_actualizados)
 
     # Eliminar un documento por su ID de una colección específica
-    firestore_crud.eliminar_documento('mi_coleccion', 'ID_del_documento')
+    firestore_crud.eliminar_documento('contextos', 'prueba')
     """
+
+    firestore_crud.eliminar_campo('contextos', 'Edumax', 'prueba')
