@@ -1,7 +1,7 @@
 from databases import FireStoreBase
 
 # Iniciamos el objeto para contextos
-contextos = FireStoreBase.Firestore()
+contextos = FireStoreBase.Firestore('contextos')
 
 def get_context_all() -> list:
     response = contextos.get_value('mensajes')

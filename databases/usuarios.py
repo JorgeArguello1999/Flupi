@@ -6,7 +6,7 @@ import uuid
 from databases import FireStoreUsuarios
 
 # Iniciamos el objeto para usuarios
-usuarios = FireStoreUsuarios.Users()
+usuarios = FireStoreUsuarios.Users('usuarios')
 
 def create_user(username:str, password:str) -> bool:
     token = str(uuid.uuid4())

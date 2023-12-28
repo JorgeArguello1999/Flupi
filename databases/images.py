@@ -4,7 +4,7 @@ except:
     import FireStoreBase
 
 # Iniciamos el objeto para imagenes
-imagenes = FireStoreBase.Firestore()
+imagenes = FireStoreBase.Firestore('imagenes')
 
 def get_image_all() -> list:
     response = imagenes.get_value('fotos')

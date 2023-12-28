@@ -2,6 +2,7 @@ from firebase_admin import credentials, firestore
 from dotenv import load_dotenv
 
 import firebase_admin
+import os
 
 try:
     from databases import FireStoreBase
@@ -11,9 +12,15 @@ except:
 load_dotenv()
 
 class Users(FireStoreBase.Firestore):
-    def __init__(self):
-        super().__init__()
-        self.subcoleccion = 'usuarios'
+    def __init__(self, name:str):
+        self.ruta_tokens = os.getenv('JSON_GCS')
+        self.proyecto = os.environ.get('NOMBRE')
+        self.coleccion = os.environ.get('DB')
+            
+        # Inicialización de la aplicación Firebase
+        self.cred = credentials.Certificate(self.ruta_tokens)
+        self.app = firebase_admin.initialize_app(self.cred, name=name)
+        self.db = firestore.client(app=self.app)
 
     def get_users(self):
         try:
