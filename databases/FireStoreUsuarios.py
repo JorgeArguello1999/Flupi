@@ -16,6 +16,7 @@ class Users(FireStoreBase.Firestore):
         self.ruta_tokens = os.getenv('JSON_GCS')
         self.proyecto = os.environ.get('NOMBRE')
         self.coleccion = os.environ.get('DB')
+        self.subcoleccion = 'usuarios'
             
         # Inicialización de la aplicación Firebase
         self.cred = credentials.Certificate(self.ruta_tokens)
