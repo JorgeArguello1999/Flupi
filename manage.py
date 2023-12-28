@@ -2,6 +2,8 @@ from flask_cors import CORS
 from flask import Flask
 from flask import redirect
 from flask import url_for
+from flask import request
+from flask import abort
 
 from dotenv import load_dotenv
 import os
@@ -17,9 +19,18 @@ from configs.routes import configs_bp
 # Cargamos las variables de entorno
 load_dotenv()
 
+# IP's aceptadas
+allowed_ips = ["192.168.11.112", "127.0.0.1"]
+
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
+
+# Middleware
+@app.before_request
+def restrict_by_ip():
+    if request.remote_addr not in allowed_ips:
+        abort(403) 
 
 # Ruta para enviar al Home cuando se ingresa al sitio
 @app.route('/')
@@ -35,8 +46,15 @@ app.register_blueprint(notify_bp)
 app.register_blueprint(configs_bp)
 
 if __name__ == "__main__":
-    app.run(
-        debug=os.environ.get("DEBUG"),
-        host="0.0.0.0",
-        port=5000
-    )
+    if os.getenv('DEBUG') == True:
+        app.run(
+            debug=True,
+            host="0.0.0.0",
+            port=5000
+        )
+    else:
+        app.run(
+            debug=False,
+            host="0.0.0.0",
+            port=5000
+        )
