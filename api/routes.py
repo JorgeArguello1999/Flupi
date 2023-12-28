@@ -59,30 +59,6 @@ def api_get():
     })
     return render_template('api_information.html', json=json)
 
-@api_bp.route("/chat", methods=['POST'])
-def api_middleware():
-    data = request.get_json()
-    token = get_user_by_username('chatbot')[1]
-
-    data = {
-        "user": data["user"],
-        "ask": data["ask"],
-        "device": data["device"],
-        "token": token
-    }
-
-    # Convertir el diccionario 'data' a formato JSON
-    json_data = json.dumps(data)
-
-    salida = requests.post(
-        url='http://127.0.0.1:5000/api/',
-        data=json_data,  # Enviar el JSON en lugar de un diccionario Python
-        headers={"Content-Type": "application/json"}
-    ).json()
-
-    return jsonify(salida)
-
-
 @api_bp.route("/", methods=['POST'])
 @token_required
 def api_post():

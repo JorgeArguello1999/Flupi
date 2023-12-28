@@ -22,7 +22,7 @@ $(document).ready(function() {
         const userMessage = $("#message-input").val();
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
-        fetch('/api/chat', {
+        fetch('/api', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -30,7 +30,8 @@ $(document).ready(function() {
             body: JSON.stringify({
                 "ask": userMessage,
                 "user": "Bot",
-                "device": "computer"
+                "device": "computer",
+                "token": "9d38ebd0-a669-4fc7-91b4-d8f9f6352957"
             })
         })
         .then(response => response.json())
