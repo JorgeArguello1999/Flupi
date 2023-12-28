@@ -62,7 +62,7 @@ def api_get():
 @api_bp.route("/chat", methods=['POST'])
 def api_middleware():
     data = request.get_json()
-    token = get_user_by_username('chatbot')[3]
+    token = get_user_by_username('chatbot')[1]
 
     data = {
         "user": data["user"],

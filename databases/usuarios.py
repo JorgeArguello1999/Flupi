@@ -49,9 +49,10 @@ def search_token(token:str) -> bool:
 def get_user_by_username(user:str) -> bool:
     response = usuarios.get_users()
 
-    data = [ i for i in response.values() if i['username'] == user] 
+    data = [ list(i.values()) for i in response.values() if i['username'] == user] 
+    
     if data:
-        return True
+        return data[0]
     else: 
         return False
 
@@ -62,8 +63,8 @@ def delete_user_by_id(user_id) -> bool:
         return False
   
 if __name__ == '__main__':
-    print(get_all_users())
+    # print(get_all_users())
     # print(create_user("jorge", "hola"))
     # print(search_user(user='jorge', password='hola'))
-    # print(get_user_by_username('jorge'))
-    print(delete_user_by_id('jorge'))
+    print(get_user_by_username('chatbot'))
+    # print(delete_user_by_id('jorge'))
