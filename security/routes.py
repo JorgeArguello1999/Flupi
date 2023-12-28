@@ -61,7 +61,7 @@ def view_users():
     users = usuarios.get_all_users()
     return render_template('view_users.html', users=users)
 
-@security_bp.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
+@security_bp.route('/delete_user/<user_id>', methods=['GET', 'POST'])
 @requerir_autenticacion
 def delete_user(user_id):
     if request.method == 'POST':
