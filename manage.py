@@ -18,9 +18,17 @@ from chat.routes import chat_bp
 from notify.routes import notify_bp
 from configs.routes import configs_bp
 
+import init
+
 # Cargamos las variables de entorno
 load_dotenv()
 
+# Verificamos los datos en la base de datos
+base_datos = os.getenv('DB')
+proyecto = os.getenv('NOMBRE')
+init.initialize(base_datos, proyecto)
+
+# Configuración Inicial
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
