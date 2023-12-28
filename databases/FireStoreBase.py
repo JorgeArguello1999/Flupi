@@ -13,9 +13,17 @@ class Firestore:
         self.proyecto = os.environ.get('NOMBRE')
         self.coleccion = os.environ.get('DB')
 
+        """
         self.cred = credentials.Certificate(self.ruta_tokens)
         firebase_admin.initialize_app(self.cred)
         self.db = firestore.client()
+        """
+    
+        # Inicialización de la aplicación Firebase
+        self.cred = credentials.Certificate(self.ruta_tokens)
+        self.app = firebase_admin.initialize_app(self.cred, name='my-unique-app-name')
+        self.db = firestore.client(app=self.app)
+
 
     # Obtener todo el Diccionario
     def get_all(self) -> json:

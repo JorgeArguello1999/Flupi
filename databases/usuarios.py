@@ -3,9 +3,9 @@ from werkzeug.security import check_password_hash
 
 import uuid
 
-import FireStoreUsuarios
+from databases import FireStoreUsuarios
 
-# Iniciamos el objeto para contextos
+# Iniciamos el objeto para usuarios
 usuarios = FireStoreUsuarios.Users()
 
 def create_user(username:str, password:str) -> bool:

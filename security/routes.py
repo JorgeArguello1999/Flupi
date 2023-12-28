@@ -5,7 +5,7 @@ from flask import session
 from flask import redirect
 from flask import url_for
 
-from databases import database
+from databases import usuarios
 from security.protected_routes import requerir_autenticacion
 
 from dotenv import load_dotenv
@@ -21,8 +21,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        user = database.get_user_by_username(username)
-        if user and database.search_user(username, password):
+        user = usuarios.get_user_by_username(username)
+        if user and usuarios.search_user(username, password):
             session['username'] = username
             return redirect(url_for('home.home'))
         else:
@@ -45,11 +45,11 @@ def signup():
         username = request.form['username']
         password = request.form['password']
 
-        if database.get_user_by_username(username):
+        if usuarios.get_user_by_username(username):
             error = "El nombre de usuario ya está en uso. Por favor, elige otro."
             return render_template('signup.html', error=error)
 
-        database.create_user(username, password)
+        usuarios.create_user(username, password)
         return redirect(url_for('security.login'))
 
     return render_template('signup.html')
@@ -58,7 +58,7 @@ def signup():
 @security_bp.route('/users')
 @requerir_autenticacion
 def view_users():
-    users = database.get_all_users()
+    users = usuarios.get_all_users()
     return render_template('view_users.html', users=users)
 
 @security_bp.route('/delete_user/<int:user_id>', methods=['GET', 'POST'])
@@ -68,7 +68,7 @@ def delete_user(user_id):
         password = request.form['password']
 
         if password == os.environ.get('ADMIN_KEY'):
-            database.delete_user_by_id(user_id)
+            usuarios.delete_user_by_id(user_id)
             return redirect(url_for('security.view_users'))
         else:
             error = "Contraseña incorrecta para eliminar usuario."

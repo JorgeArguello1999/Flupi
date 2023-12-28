@@ -1,5 +1,4 @@
 from configs import chatgpt
-from databases import database 
 from databases import contextos
 from configs import api_compumax
 
@@ -59,7 +58,7 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
 
     except Exception as error:
         print(f"Error al llamar al técnico: {error}")
-        mensaje = database.error_mensaje
+        mensaje = "Ha ocurrido un problema, solicita ayuda"
     
     return {
         "response": mensaje

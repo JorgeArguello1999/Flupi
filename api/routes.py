@@ -11,12 +11,13 @@ import json
 from configs import api_compumax
 from configs import chatgpt
 from configs import chatbot
-from databases import database 
-from databases import contextos
 from configs import voice
 
-from databases.database import get_user_by_username
 
+from databases import contextos
+from databases import images
+
+from databases.usuarios import get_user_by_username
 from security.protected_routes import requerir_autenticacion
 from security.protected_api import token_required
 
@@ -119,8 +120,8 @@ def api_post():
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
 
-    photo_chatbot = database.get_image('chatbot')
-    photo_user = database.get_image('usuario')
+    photo_chatbot = images.get_image('chatbot')
+    photo_user = images.get_image('usuario')
 
     # Salida de la API
     response = {
