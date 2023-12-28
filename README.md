@@ -27,6 +27,7 @@ DEBUG=false
 FLASK_KEY=clave para flask
 
 ADMIN_KEY=esta frase es la que se necesita para eliminar usuarios
+DB= Base de datos principal de donde se encuentra la información
 NOMBRE= Con esto busca dentro de la base de datos
 JSON_CGS= Ruta donde esta el json para firebase
 
