@@ -2,20 +2,18 @@ from firebase_admin import credentials, firestore
 from dotenv import load_dotenv
 
 import firebase_admin
-import os
+
+try:
+    from databases import FireStoreBase
+except:
+    import FireStoreBase
 
 load_dotenv()
 
-class Users:
+class Users(FireStoreBase.Firestore):
     def __init__(self):
-        self.ruta_tokens = os.getenv('JSON_GCS')
-        self.proyecto = os.getenv('NOMBRE')
-        self.coleccion = os.getenv('DB')
+        super().__init__()
         self.subcoleccion = 'usuarios'
-
-        self.cred = credentials.Certificate(self.ruta_tokens)
-        firebase_admin.initialize_app(self.cred)
-        self.db = firestore.client()
 
     def get_users(self):
         try:

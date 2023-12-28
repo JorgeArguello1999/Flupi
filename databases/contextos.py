@@ -1,7 +1,4 @@
-try:
-    from databases import FireStoreBase
-except:
-    import databases.FireStoreBase as FireStoreBase
+from databases import FireStoreBase
 
 # Iniciamos el objeto para contextos
 contextos = FireStoreBase.Firestore()
