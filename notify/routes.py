@@ -2,7 +2,7 @@ from flask import Blueprint, render_template
 from flask import jsonify
 from flask import redirect, url_for
 
-from databases import database
+from databases import alarm
 
 notify_bp = Blueprint('notify', __name__, url_prefix='/notify', template_folder='templates', static_folder='static')
 
@@ -14,7 +14,7 @@ def notify_frontend():
 # Notify Status
 @notify_bp.route('/', methods=['GET'])
 def notify_status():
-    work = database.get_alarm_status()
+    work = alarm.get_alarm_status()
 
     return jsonify({
         "status": work
@@ -28,5 +28,5 @@ def notify_backend(statuswork):
         - statuswork (int): 1 para llamar al técnico, 0 para desactivar.
     Retorna: Redirección a la página 'notify_f'.
     """
-    database.update_alarm_status(statuswork)
+    alarm.update_alarm_status(statuswork)
     return redirect(url_for('notify.notify_frontend'))
