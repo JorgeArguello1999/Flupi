@@ -7,7 +7,7 @@ except:
 contextos = firestore.Firestore()
 
 def get_context_all() -> list:
-    response = contextos.get_value('contextos', 'mensajes')
+    response = contextos.get_value('mensajes')
 
     if response:
         response = response.keys()
@@ -16,7 +16,7 @@ def get_context_all() -> list:
         return ['Problema con la base de datos']
 
 def get_context(key:str) -> str:
-    response = contextos.get_value('contextos', 'mensajes')
+    response = contextos.get_value('mensajes')
     if response: 
         return response.get(key)
     else:
@@ -24,11 +24,11 @@ def get_context(key:str) -> str:
 
 def update_context(name:str, text:str) -> bool:
     data = {f'mensajes.{name}':text }
-    response = contextos.update_create_registry('contextos', data)
+    response = contextos.update_create_registry(data)
     return response
 
 
 if __name__ == "__main__":
-    # print(get_context('no_producto'))
-    print(update_context('general', 'familia'))
-    print(get_context('no_producto'))
+    print(get_context_all())
+    print(update_context('general', 'amilia'))
+    print(get_context('general'))

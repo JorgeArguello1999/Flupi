@@ -10,16 +10,17 @@ load_dotenv()
 class Firestore:
     def __init__(self):
         self.ruta_tokens = os.getenv('JSON_GCS')
+        self.proyecto = os.environ.get('NOMBRE')
+        self.coleccion = os.environ.get('DB')
+
         self.cred = credentials.Certificate(self.ruta_tokens)
         firebase_admin.initialize_app(self.cred)
-        self.proyecto = os.environ.get('NOMBRE')
-        self.proyecto = 'Compumax'
         self.db = firestore.client()
 
     # Obtener todo el Diccionario
-    def get_all(self, coleccion:str) -> json:
+    def get_all(self) -> json:
         try:
-            docs = self.db.collection(coleccion).stream()
+            docs = self.db.collection(self.coleccion).stream()
 
             datos_coleccion = {}
             for doc in docs:
@@ -32,9 +33,9 @@ class Firestore:
             return json.dumps({'error': f'Error: {e}'}, indent=2)
 
     # Obtener solo un campo del Diccionario
-    def get_value(self, coleccion:str, campo:str) -> json:
+    def get_value(self, campo:str) -> json:
         try:
-            docs = self.db.collection(coleccion).stream()
+            docs = self.db.collection(self.coleccion).stream()
 
             datos_coleccion = {}
             for doc in docs:
@@ -47,9 +48,9 @@ class Firestore:
             return []
 
     # Crea una coleccion
-    def create_collection(self, coleccion:str, datos:json) -> bool:
+    def create_collection(self, datos:json) -> bool:
         try:
-            doc_ref = self.db.collection(coleccion).document()
+            doc_ref = self.db.collection(self.coleccion).document()
             doc_ref.set(datos)
             print(f"Documento {doc_ref.id} creado exitosamente.")
             return True
@@ -59,9 +60,9 @@ class Firestore:
             return False
 
     # Actualizar o crear un Campo
-    def update_create_registry(self, coleccion:str, nuevos_datos:json) -> bool:
+    def update_create_registry(self, nuevos_datos:json) -> bool:
         try:
-            doc_ref = self.db.collection(coleccion).document(self.proyecto)
+            doc_ref = self.db.collection(self.coleccion).document(self.proyecto)
             doc_ref.update(nuevos_datos)
             print(f"Documento con ID '{self.proyecto}' actualizado exitosamente.")
             return True
@@ -71,9 +72,9 @@ class Firestore:
             return False
 
     # Eliminar un documento
-    def delete_document(self, coleccion:str, doc_id:str) -> bool:
+    def delete_document(self, doc_id:str) -> bool:
         try:
-            doc_ref = self.db.collection(coleccion).document(doc_id)
+            doc_ref = self.db.collection(self.coleccion).document(doc_id)
             doc_ref.delete()
             print(f"Documento con ID '{doc_id}' eliminado exitosamente.")
             return True
@@ -83,9 +84,9 @@ class Firestore:
             return False
     
     # Eliminar campo
-    def delete_value(self, coleccion:str, campo:str) -> bool:
+    def delete_value(self, campo:str) -> bool:
         try:
-            doc_ref = self.db.collection(coleccion).document(self.proyecto)
+            doc_ref = self.db.collection(self.coleccion).document(self.proyecto)
 
             # Actualizar el campo que deseas eliminar con firebase_admin.firestore.DELETE_FIELD
             doc_ref.update({campo: firebase_admin.firestore.DELETE_FIELD})

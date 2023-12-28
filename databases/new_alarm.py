@@ -7,7 +7,7 @@ except:
 alarm = firestore.Firestore()
 
 def get_alarm_status():
-    resposne = alarm.get_value('contextos', 'alarm')
+    resposne = alarm.get_value('alarm')
 
     if resposne:
         return resposne
@@ -16,7 +16,7 @@ def get_alarm_status():
     
 def update_alarm_status(status):
     data = {'alarm': status}
-    response = alarm.update_create_registry('contextos', data)
+    response = alarm.update_create_registry(data)
     if response:
         return {"status": response}
     else:
