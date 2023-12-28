@@ -16,8 +16,10 @@ def get_image(filename:str):
     return response.get(filename)
 
 def update_image(filename:str, image) -> bool:
-    pass
+    data = {f'fotos.{filename}': image}
+    return imagenes.update_create_registry(data)
 
 if __name__ == '__main__':
-    # print(get_image_all())
-    print(get_image('hatbot'))
+    print(get_image_all())
+    print(get_image('chatbot'))
+    print(update_image('chatbot', '8'))
