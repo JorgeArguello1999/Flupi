@@ -1,3 +1,5 @@
+import base64
+
 try:
     from databases import FireStoreBase
 except:
@@ -13,7 +15,9 @@ def get_image_all() -> list:
 
 def get_image(filename:str):
     response = imagenes.get_value('fotos')
-    return response.get(filename)
+    salida = response.get(filename)
+    salida = base64.b64encode(salida).decode('utf-8')
+    return salida 
 
 def update_image(filename:str, image) -> bool:
     data = {f'fotos.{filename}': image}

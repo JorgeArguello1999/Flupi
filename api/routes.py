@@ -96,8 +96,13 @@ def api_post():
     # Obtenemos hora respuesta
     hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
 
-    photo_chatbot = images.get_image('chatbot')
-    photo_user = images.get_image('usuario')
+    try:
+        photo_chatbot = images.get_image('chatbot')
+        photo_user = images.get_image('usuario')
+    except Exception as e:
+        print("Error: ", e)
+        photo_chatbot = ''
+        photo_user = ''
 
     # Salida de la API
     response = {
