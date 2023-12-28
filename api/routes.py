@@ -116,4 +116,6 @@ def api_post():
         "photo_role": photo_chatbot
     }
 
+    print(f'API Usuario: <<{data["user"]}>> Token: <<{data["token"]}>>')
+
     return jsonify(response)
