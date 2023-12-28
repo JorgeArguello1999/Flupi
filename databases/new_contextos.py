@@ -1,10 +1,10 @@
 try:
-    from databases import firestore
+    from databases import FireStoreBase
 except:
-    import firestore
+    import databases.FireStoreBase as FireStoreBase
 
 # Iniciamos el objeto para contextos
-contextos = firestore.Firestore()
+contextos = FireStoreBase.Firestore()
 
 def get_context_all() -> list:
     response = contextos.get_value('mensajes')

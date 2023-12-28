@@ -1,10 +1,10 @@
 try:
-    from databases import firestore
+    from databases import FireStoreBase
 except:
-    import firestore
+    import databases.FireStoreBase as FireStoreBase
 
 # Iniciamos el objeto para contextos
-alarm = firestore.Firestore()
+alarm = FireStoreBase.Firestore()
 
 def get_alarm_status():
     resposne = alarm.get_value('alarm')
