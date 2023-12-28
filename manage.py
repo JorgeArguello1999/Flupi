@@ -8,6 +8,8 @@ from flask import abort
 from dotenv import load_dotenv
 import os
 
+from databases import ips
+
 # Importamos las rutas
 from security.routes import security_bp
 from home.routes import home_bp 
@@ -19,9 +21,6 @@ from configs.routes import configs_bp
 # Cargamos las variables de entorno
 load_dotenv()
 
-# IP's aceptadas
-allowed_ips = ["192.168.11.112", "127.0.0.1"]
-
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
@@ -29,7 +28,8 @@ CORS(app)
 # Middleware
 @app.before_request
 def restrict_by_ip():
-    if request.remote_addr not in allowed_ips:
+    list_ips = ips.get_ips() + ['127.0.0.1']
+    if request.remote_addr not in list_ips:
         abort(403) 
 
 # Ruta para enviar al Home cuando se ingresa al sitio
