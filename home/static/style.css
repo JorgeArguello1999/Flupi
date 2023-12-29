@@ -4,3 +4,8 @@ body{
 .content{
     margin: 1em;
 }
+
+.my-class a{
+    text-decoration: none;
+    color: white;
+}

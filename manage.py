@@ -58,15 +58,9 @@ app.register_blueprint(notify_bp)
 app.register_blueprint(configs_bp)
 
 if __name__ == "__main__":
-    if os.getenv('DEBUG') == True:
-        app.run(
-            debug=True,
-            host="0.0.0.0",
-            port=5000
-        )
-    else:
-        app.run(
-            debug=False,
-            host="0.0.0.0",
-            port=5000
-        )
+    debug = os.environ.get('DEBUG')
+    app.run(
+        debug=debug,
+        host="0.0.0.0",
+        port=5000
+    )
