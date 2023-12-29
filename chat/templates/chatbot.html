@@ -20,9 +20,6 @@
 
 <script>
 $(document).ready(function() {
-    let apiUrl = '/api'; 
-    apiUrl = apiUrl.replace(/^http:\/\//i, 'https://');
-    console.log(apiUrl);
 
     function scrollToBottom() {
         $('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 300);
@@ -40,6 +37,9 @@ $(document).ready(function() {
         $("#chat-messages").append(messageDiv);
         scrollToBottom();
     }
+    var apiUrl = window.location.origin;
+    apiUrl = apiUrl+'/api/';
+    console.log(apiUrl);
 
     // Intercepta el envío del formulario
     $("#chat-form").submit(function(event) {
