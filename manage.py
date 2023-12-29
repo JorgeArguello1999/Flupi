@@ -36,13 +36,13 @@ app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
 
 # Middleware
-"""
 @app.before_request
 def restrict_by_ip():
     list_ips = ips.get_ips() + ['127.0.0.1']
-    if request.remote_addr not in list_ips:
-        abort(403) 
-"""
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    
+    if client_ip not in list_ips:
+        abort(403)
 
 # Ruta para enviar al Home cuando se ingresa al sitio
 @app.route('/')
