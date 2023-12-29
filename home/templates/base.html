@@ -44,9 +44,10 @@
             <li class="nav-item"><a class="nav-link" href="{{ url_for('chatbot.chatbot_get') }}">✉️ Chatbot</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('notify.notify_frontend') }}">🔔 Notify</a></li>
             {% if 'username' in session %}
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('api.api_get') }}">🌐 API</a></li>
+            <li class="nav-item"><a class="nav-link" href="{{ url_for('configs.home_config_get') }}">⚙️ Configuración Home</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('configs.read_context') }}">⚙️ Contextos</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('configs.read_images_route') }}">📷 Imagenes</a></li>
-            <li class="nav-item"><a class="nav-link" href="{{ url_for('api.api_get') }}">🌐 API</a></li>
             <li class="nav-item"><a class="nav-link" href="{{ url_for('security.view_users') }}">👥 Usuarios</a></li>
             {% endif %}
         </ul>

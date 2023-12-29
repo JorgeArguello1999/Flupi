@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} Configuración Home {% endblock %}
+{% block subtitle %} Configuración Home {% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Configuración Home</h1>
+
+    <!-- Formulario para editar y enviar a la base de datos -->
+    <div>
+        <h2>Editar Contenido:</h2>
+        <form id="edit-form">
+            <div class="form-group">
+                <label for="new-content">Contenido Actual / Nuevo Contenido:</label>
+                <textarea class="form-control" id="new-content" rows="4">{{ html | safe }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // JavaScript para enviar la solicitud al servidor al enviar el formulario
+    document.getElementById('edit-form').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        var newContent = document.getElementById('new-content').value; // Obtener el valor del textarea
+
+        fetch('home_config', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                "content": newContent
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Manejar la respuesta del servidor, por ejemplo, mostrar un mensaje de éxito
+            console.log(data);
+            alert('Cambios guardados exitosamente');
+            // No es necesario actualizar el contenido del textarea después del éxito del servidor, a menos que sea necesario
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Hubo un error al guardar los cambios');
+        });
+    });
+</script>
+
+{% endblock %}

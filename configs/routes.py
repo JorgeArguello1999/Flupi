@@ -4,6 +4,7 @@ from flask import jsonify
 
 from databases import contextos
 from databases import images
+from databases import home as content
 
 from security.protected_routes import requerir_autenticacion
 
@@ -71,3 +72,18 @@ def update_image_route(filename):
 def read_images_route():
     image_names = images.get_image_all()
     return render_template('change_images.html', files=image_names)
+    
+
+# HOME
+@configs_bp.route('home_config', methods=['GET'])
+@requerir_autenticacion
+def home_config_get():
+    html = content.get_home()
+    return render_template('home_config.html', html=html)
+
+@configs_bp.route('home_config', methods=['POST'])
+@requerir_autenticacion
+def home_config_post():
+    data = request.json.get('content') 
+    response = content.update_home(data=data)
+    return jsonify(response)
