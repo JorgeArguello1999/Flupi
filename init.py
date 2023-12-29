@@ -47,13 +47,13 @@ def initialize(database:str, proyect_name:str)-> bool:
 
         # Crea una subcolección 'usuarios' dentro del documento actual
         usuarios_ref = documento_ref.collection('usuarios')
-        usuarios_ref.document().set({
+        usuarios_ref.document('K6V29TNhTe7NUXG4BzLj').set({
             "username": "chatbot",
             "password": "scrypt:32768:8:1$ZjLndAQf91pvjEaD$c0b7d368d207ac6d459bd5602c6747f32cb945fdab458dd63afd440f2afa87383a4897db28448f1a7fcb389718eb47ad186a05c0eedeb01be45c8a033bd51a61",
             "token": "bb76d7a3-3fdf-46af-ba78-424b965bb5a9"
         })
 
-        usuarios_ref.document().set({
+        usuarios_ref.document('SzY49qb9TaCeSvWmDhue').set({
             "username": "compumax@soporte.com",
             "password": "scrypt:32768:8:1$57QUZ18g6CYk7txl$ee2d798e5fda302612e01c630cb57b7f2c91e8ea4754eeabcc655b4456a673d7de81eefdf2d45dd672494c7a178c9a63e46dc8811fcb0f58e6a7869b72cb95c5",
             "token": "97293a31-9100-4f8f-8647-64856d1e2101"

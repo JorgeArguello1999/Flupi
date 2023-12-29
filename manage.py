@@ -8,6 +8,7 @@ from flask import abort
 from dotenv import load_dotenv
 import os
 
+# Base de datos
 from databases import ips
 
 # Importamos las rutas
@@ -18,6 +19,7 @@ from chat.routes import chat_bp
 from notify.routes import notify_bp
 from configs.routes import configs_bp
 
+# Inicializar base de datos
 import init
 
 # Cargamos las variables de entorno
@@ -34,11 +36,13 @@ app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
 
 # Middleware
+"""
 @app.before_request
 def restrict_by_ip():
     list_ips = ips.get_ips() + ['127.0.0.1']
     if request.remote_addr not in list_ips:
         abort(403) 
+"""
 
 # Ruta para enviar al Home cuando se ingresa al sitio
 @app.route('/')
