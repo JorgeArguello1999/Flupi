@@ -14,7 +14,7 @@ db = firestore.client()
 # Estructura deseada que deseamos verificar
 estructura = {
     "alarm": 0,
-    "ips": ["192.168.11.114"],
+    "ips": ["186.4.248.9"],
     "fotos": {
         "chatbot": "foto_base64",
         "usuario": "foto_base64"
