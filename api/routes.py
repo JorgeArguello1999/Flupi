@@ -62,39 +62,37 @@ def api_get():
 @api_bp.route("/", methods=['POST'])
 @token_required
 def api_post():
+    def get_current_time():
+        return datetime.datetime.now().strftime('%H:%M')
+
     # Obtenemos la hora de Petición
-    hora_peticion =  datetime.datetime.now().strftime('%H:%M')
+    hora_peticion = get_current_time()
+    
     # Obtenemos el JSON
     data = request.get_json()
 
-    # En caso de que envie solo digitos
     if data['ask'].isdigit():
-        response = api_compumax.search_product(data['ask']) 
-
+        # En caso de que envíe solo dígitos
+        response = api_compumax.search_product(data['ask'])
     else:
-        # Enviamos a ChatGPT para que nos devuelva que pide el usuario
-        response = chatgpt.answer(
-            user= data["user"],
-            ask= data["ask"],
-            context= f"{contextos.get_context('entender_consulta')} tu eres: {contextos.get_context('general')}"
+        # Enviamos a ChatGPT para que nos devuelva lo que pide el usuario
+        chat_response = chatgpt.answer(
+            user=data["user"],
+            ask=data["ask"],
+            context=f"{contextos.get_context('entender_consulta')} tu eres: {contextos.get_context('general')}"
         )
 
-        comandos = chatbot.chatbot(response["response"])
+        comandos = chatbot.chatbot(chat_response["response"])
 
-        # Se comprueba si se activo algún comando
-        if comandos:
-            response = comandos["response"]
-        
-        # Caso contrario se devuelve la respuesta de GPT 
-        else:
-            response = response["response"]
+        # Se comprueba si se activó algún comando
+        response = comandos["response"] if comandos else chat_response["response"]
 
         if data["device"] == "bot":
             response = voice.speaker(response)
             return send_from_directory('./audios', response)
 
     # Obtenemos hora respuesta
-    hora_respuesta =  datetime.datetime.now().strftime('%H:%M')
+    hora_respuesta = get_current_time()
 
     try:
         photo_chatbot = images.get_image('chatbot')
@@ -105,10 +103,10 @@ def api_post():
         photo_user = ''
 
     # Salida de la API
-    response = {
+    api_response = {
         "user": data["user"],
         "ask": data["ask"],
-        "role": "assistant", 
+        "role": "assistant",
         "response": response,
         "time_request": hora_peticion,
         "time_answer": hora_respuesta,
@@ -118,4 +116,4 @@ def api_post():
 
     print(f'API Usuario: <<{data["user"]}>> Token: <<{data["token"]}>>')
 
-    return jsonify(response)
+    return jsonify(api_response)

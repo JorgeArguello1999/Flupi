@@ -10,6 +10,7 @@ import os
 
 # Base de datos
 from databases import ips
+from databases import contextos
 
 # Importamos las rutas
 from security.routes import security_bp
@@ -34,6 +35,8 @@ init.initialize(base_datos, proyecto)
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
+
+contextos.load_context_values()
 
 # Middleware
 @app.before_request
