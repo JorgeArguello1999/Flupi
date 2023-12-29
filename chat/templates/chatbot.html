@@ -20,6 +20,10 @@
 
 <script>
 $(document).ready(function() {
+    let apiUrl = '/api'; 
+    apiUrl = apiUrl.replace(/^http:\/\//i, 'https://');
+    console.log(apiUrl);
+
     function scrollToBottom() {
         $('#chat-messages').animate({ scrollTop: $('#chat-messages').prop('scrollHeight') }, 300);
     }
@@ -43,7 +47,7 @@ $(document).ready(function() {
         const userMessage = $("#message-input").val();
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
-        fetch('/api', {
+        fetch(apiUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
