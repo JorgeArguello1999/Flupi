@@ -1,43 +1,47 @@
-from dotenv import load_dotenv
 from openai import OpenAI
+import google.generativeai as genai
+
+import json
+
+from dotenv import load_dotenv
 import os
+
 load_dotenv()
+key = os.getenv('API_KEY')
 
 # Enviamos el Token de Verificacion
-client = OpenAI(api_key=os.environ.get("GPT"))
 
-def answer(user:str="anonym", context:str="", ask:str=""):
+def answer(user:str="anonym", context:str="", ask:str="") -> json:
+    genai.configure(api_key=key) 
     """
     :param context contexto para responder la pregunta
     :param user nombre o IP de la persona que pregunta
     :param ask pregunta del usuario
     """
-
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages= [
-            {"role": "system", "content": context},
-            {"role": "user", "content": ask}
-        ],
-        temperature=0
+    model = genai.GenerativeModel(
+        'gemini-pro',
+        safety_settings={'HARASSMENT': 'block_none'},
+        generation_config={
+            "temperature": 1,
+            "top_p": 1,
+            "top_k": 1,
+            "max_output_tokens": 1024
+        }
     )
 
-    response = response.choices[0].message
+    chat = model.start_chat(history=[])
+    combined_input = context + "\n" + ask 
+    response = chat.send_message(combined_input, stream=True)
+    response.resolve()
 
-    return {
-        "response": response.content
-    }
+    if response:
+        respuesta_completa = ''.join(chunk.text for chunk in response)
+    else:
+        respuesta_completa = "No se recibió respuesta del modelo."
 
-# Esta parte es para pruebas
+    print(f"\nBot: {respuesta_completa}")
+    return {"response": respuesta_completa}
+
 if __name__ == '__main__':
-    from databases import contextos
-
-    contexto = contextos.get_context('entender_consulta')
-    ask="Usuario: Tienes teclados?"
-    user = "Jorge"
-    salida = answer(
-        context=contexto,
-        user=user,
-        ask=ask,
-    )
+    salida = answer()
     print(salida)
