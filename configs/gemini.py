@@ -8,8 +8,6 @@ import os
 load_dotenv()
 key = os.getenv('API_KEY')
 
-# Enviamos el Token de Verificacion
-
 def answer(user:str="anonym", context:str="", ask:str="") -> json:
     genai.configure(api_key=key) 
     """
