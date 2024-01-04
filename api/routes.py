@@ -9,7 +9,7 @@ import requests
 import json
 
 from configs import api_compumax
-from configs import chatgpt
+from configs import gemini
 from configs import chatbot
 from configs import voice
 
@@ -76,7 +76,7 @@ def api_post():
         response = api_compumax.search_product(data['ask'])
     else:
         # Enviamos a ChatGPT para que nos devuelva lo que pide el usuario
-        chat_response = chatgpt.answer(
+        chat_response = gemini.answer(
             user=data["user"],
             ask=data["ask"],
             context=f"{contextos.get_context('entender_consulta')} tu eres: {contextos.get_context('general')}"

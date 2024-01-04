@@ -1,4 +1,4 @@
-from configs import chatgpt
+from configs import gemini
 from databases import contextos
 from configs import api_compumax
 
@@ -42,7 +42,7 @@ def get_product_description(text:str):
             "response": response}
     else:
         return {
-            "response": chatgpt.answer(
+            "response": gemini.answer(
                 ask=no_producto,
                 context=contexto
             )["response"]
