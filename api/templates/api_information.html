@@ -4,23 +4,7 @@
 
 {% block content %}
 
-    <style>
-        /* Estilos para las columnas */
-        .container {
-            display: flex;
-            justify-content: space-between;
-        }
-        .column {
-            width: 48%; /* Establece el ancho de las columnas */
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-        pre {
-            white-space: pre-wrap;
-        }
-    </style>
-
+<link rel="stylesheet" href="{{ url_for('api.static', filename='style.css') }}">
     <div class="container">
         <!-- Columna de Información sobre la API -->
         <div class="column">

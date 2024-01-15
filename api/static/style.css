@@ -1,0 +1,14 @@
+/* Estilos para las columnas */
+.container {
+    display: flex;
+    justify-content: space-between;
+}
+.column {
+    width: 48%; /* Establece el ancho de las columnas */
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+pre {
+    white-space: pre-wrap;
+}
