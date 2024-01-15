@@ -61,31 +61,16 @@
                 scrollToBottom();
             }
 
+            // Script original adaptado
+            var apiUrl = window.location.origin;
+            apiUrl = apiUrl + '/api/';
+            console.log(apiUrl);
+
             // Intercepta el envío del formulario
             chatForm.submit(function(event) {
                 event.preventDefault();
                 const userMessage = messageInput.val();
                 const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-                // Aquí debes agregar la lógica de la API para obtener la respuesta del chatbot
-
-                // Ejemplo de cómo puedes usar la función showMessage
-                showMessage(userMessage, true, 'imagen_usuario', currentTime);
-                // Aquí deberías mostrar la respuesta del chatbot utilizando showMessage
-
-                messageInput.val('');
-            });
-
-            // Script original adaptado
-            var apiUrl = window.location.origin;
-            apiUrl = apiUrl+'/api/';
-            console.log(apiUrl);
-
-            // Intercepta el envío del formulario
-            $("#chat-form").submit(function(event) {
-                event.preventDefault();
-                const userMessage = $("#message-input").val();
-                const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
                 fetch(apiUrl, {
                     method: 'POST',
@@ -109,7 +94,7 @@
                     console.error('Error:', error);
                 });
 
-                $("#message-input").val("");
+                messageInput.val("");
             });
         });
     </script>
