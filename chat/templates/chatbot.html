@@ -38,7 +38,7 @@ $(document).ready(function() {
         scrollToBottom();
     }
     var apiUrl = window.location.origin;
-    apiUrl = apiUrl+'/api/';
+    apiUrl = apiUrl+'/chatbot/';
     console.log(apiUrl);
 
     // Intercepta el envío del formulario
@@ -53,10 +53,7 @@ $(document).ready(function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "ask": userMessage,
-                "user": "Bot",
-                "device": "computer",
-                "token": "{{ token }}"
+                "ask": userMessage
             })
         })
         .then(response => response.json())

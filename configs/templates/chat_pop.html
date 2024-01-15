@@ -63,7 +63,7 @@
 
             // Script original adaptado
             var apiUrl = window.location.origin;
-            apiUrl = apiUrl + '/api/';
+            apiUrl = apiUrl + '/chatbot/';
             console.log(apiUrl);
 
             // Intercepta el envío del formulario
@@ -78,10 +78,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        "ask": userMessage,
-                        "user": "Bot",
-                        "device": "computer",
-                        "token": "97293a31-9100-4f8f-8647-64856d1e2101"
+                        "ask": userMessage
                     })
                 })
                 .then(response => response.json())
