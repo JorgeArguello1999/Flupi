@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/themes/df-messenger-default.css">
+    <style>
+        /* Estilos generales */
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilos para el botón de apertura del chat */
+        #chat-open-btn {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #chat-open-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para el cuadro de diálogo emergente */
+        #chat-popup {
+            display: none;
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            width: 300px;
+            height: 400px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilos para el contenido del cuadro de diálogo emergente */
+        #chat-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        #chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        #chat-form {
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            display: flex;
+            background-color: #f9f9f9;
+        }
+
+        #message-input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .btn {
+            padding: 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Estilos para los mensajes */
+        .message-user,
+        .message-bot {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .img_profile {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .message-user p,
+        .message-bot p {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .message-time {
+            margin-left: auto;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <!-- Botón de apertura del chat -->
+    <div id="chat-open-btn">Abrir Chat</div>
+
+    <!-- Cuadro de diálogo emergente -->
+    <div id="chat-popup">
+        <div id="chat-container" class="container_chat">
+            <div id="chat-messages" class="chat-box">
+                <!-- Aquí se mostrarán los mensajes de la conversación -->
+            </div>
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+                <button type="submit" class="btn btn-outline-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://www.gstatic.com/dialogflow-console/fast/df-messenger/prod/v1/df-messenger.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Elementos del chat
+            const chatOpenBtn = $('#chat-open-btn');
+            const chatPopup = $('#chat-popup');
+            const chatMessages = $('#chat-messages');
+            const chatForm = $('#chat-form');
+            const messageInput = $('#message-input');
+
+            // Mostrar el cuadro de diálogo emergente al hacer clic en el botón de apertura
+            chatOpenBtn.click(function() {
+                chatPopup.toggle();
+                scrollToBottom();
+            });
+
+            // Función para desplazarse hacia abajo en el contenedor de mensajes
+            function scrollToBottom() {
+                chatMessages.animate({ scrollTop: chatMessages.prop('scrollHeight') }, 300);
+            }
+
+            // Función para mostrar un mensaje en el chat
+            function showMessage(message, isUser, image, time) {
+                const sender = isUser ? 'Tú' : 'Chatbot';
+                const cssClass = isUser ? 'message-user' : 'message-bot';
+                const messageDiv = `
+                    <div class="${cssClass}">
+                        <img src="data:image/png;base64,${image}" class="img_profile" />
+                        <p>${message}</p>
+                        <span class="message-time">${time}</span>
+                    </div>`;
+                chatMessages.append(messageDiv);
+                scrollToBottom();
+            }
+
+            // Intercepta el envío del formulario
+            chatForm.submit(function(event) {
+                event.preventDefault();
+                const userMessage = messageInput.val();
+                const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                // Aquí debes agregar la lógica de la API para obtener la respuesta del chatbot
+
+                // Ejemplo de cómo puedes usar la función showMessage
+                showMessage(userMessage, true, 'imagen_usuario', currentTime);
+                // Aquí deberías mostrar la respuesta del chatbot utilizando showMessage
+
+                messageInput.val('');
+            });
+
+            // Script original adaptado
+            var apiUrl = window.location.origin;
+            apiUrl = apiUrl+'/api/';
+            console.log(apiUrl);
+
+            // Intercepta el envío del formulario
+            $("#chat-form").submit(function(event) {
+                event.preventDefault();
+                const userMessage = $("#message-input").val();
+                const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
+
+                fetch(apiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        "ask": userMessage,
+                        "user": "Bot",
+                        "device": "computer",
+                        "token": "97293a31-9100-4f8f-8647-64856d1e2101"
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Manejar la respuesta de la API
+                    showMessage(userMessage, true, data.photo_user, currentTime); // Mostrar la foto del usuario después de su mensaje
+                    showMessage(data.response, false, data.photo_role, currentTime); // Mostrar la respuesta del chatbot después del mensaje del usuario
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+                $("#message-input").val("");
+            });
+        });
+    </script>
+</body>
+</html>
