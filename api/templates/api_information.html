@@ -50,7 +50,7 @@
         <div class="code-box">
             <h2>Código HTML del Chat</h2>
             <pre><code>
-                &lt;link rel="stylesheet" href="{{ url_for('api.static', filename='style_chat_pop.css') }}"&gt;
+                &lt;link rel="stylesheet" href="{{ url_for('configs.static', filename='style_chat_pop.css') }}"&gt;
                 &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
                 &lt;script src="{{ url_for('configs.static', filename='script_widget.js') }}"&gt;&lt;/script&gt;
                 &lt;script&gt; init("{{ url_for('chatbot.chatbot_get') }}"); &lt;/script&gt;
@@ -74,10 +74,10 @@
         </div>
     </div>
 
-    <link rel="stylesheet" href="http://127.0.0.1:5000/configs/static/style_chat_pop.css">
+    <link rel="stylesheet" href="{{ url_for('configs.static', filename='style_chat_pop.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="http://127.0.0.1:5000/configs/static/script_widget.js"></script>
-    <script> init("http://127.0.0.1:5000/chatbot/"); </script>
+    <script src="{{ url_for('configs.static', filename='script_widget.js') }}"></script>
+    <script> init("{{ url_for('chatbot.chatbot_get') }}"); </script>
 
     <!-- Botón de apertura del chat -->
     <div id="chat-open-btn">Abrir Chat</div>

@@ -87,8 +87,3 @@ def home_config_post():
     data = request.json.get('content') 
     response = content.update_home(data=data)
     return jsonify(response)
-
-@configs_bp.route('chat_pop', methods=['GET'])
-@requerir_autenticacion
-def chat_pop():
-    return render_template('chat_pop.html')
