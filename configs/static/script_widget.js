@@ -1,4 +1,4 @@
-function init(){
+function init(apiUrl){
     $(document).ready(function() {
         // Elementos del chat
         const chatOpenBtn = $('#chat-open-btn');
@@ -31,12 +31,7 @@ function init(){
             chatMessages.append(messageDiv);
             scrollToBottom();
         }
-
-        // Script original adaptado
-        var apiUrl = window.location.origin;
-        apiUrl = apiUrl + '/chatbot/';
-        console.log(apiUrl);
-
+        
         // Intercepta el envío del formulario
         chatForm.submit(function(event) {
             event.preventDefault();
@@ -66,4 +61,3 @@ function init(){
         });
     });
 }
-init();
