@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <link rel="stylesheet" href="http://127.0.0.1:5000/configs/static/style_chat_pop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://127.0.0.1:5000/configs/static/scripts_chat_pop.js"></script>
+
+    <!-- Botón de apertura del chat -->
+    <div id="chat-open-btn">Abrir Chat</div>
+
+    <!-- Cuadro de diálogo emergente -->
+    <div id="chat-popup">
+        <div id="chat-container" class="container_chat">
+            <div id="chat-messages" class="chat-box">
+                <!-- Aquí se mostrarán los mensajes de la conversación -->
+            </div>
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+                <button type="submit" class="btn btn-outline-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
