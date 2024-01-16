@@ -45,4 +45,54 @@
         </div>
     </div>
 
+    <!-- Columna de Código HTML del Chat -->
+    <div class="code-container">
+        <div class="code-box">
+            <h2>Código HTML del Chat</h2>
+            <pre><code>
+                &lt;link rel="stylesheet" href="{{ url_for('api.static', filename='style_chat_pop.css') }}"&gt;
+                &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
+                &lt;script src="{{ url_for('configs.static', filename='script_widget.js') }}"&gt;&lt;/script&gt;
+                &lt;script&gt; init("{{ url_for('chatbot.chatbot_get') }}"); &lt;/script&gt;
+
+                &lt;!-- Botón de apertura del chat --&gt;
+                &lt;div id="chat-open-btn"&gt;Abrir Chat&lt;/div&gt;
+
+                &lt;!-- Cuadro de diálogo emergente --&gt;
+                &lt;div id="chat-popup"&gt;
+                    &lt;div id="chat-container" class="container_chat"&gt;
+                        &lt;div id="chat-messages" class="chat-box"&gt;
+                            &lt;!-- Aquí se mostrarán los mensajes de la conversación --&gt;
+                        &lt;/div&gt;
+                        &lt;form id="chat-form" class="chat-input"&gt;
+                            &lt;input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje..."&gt;
+                            &lt;button type="submit" class="btn btn-outline-primary"&gt;Enviar&lt;/button&gt;
+                        &lt;/form&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            </code></pre>
+        </div>
+    </div>
+
+    <link rel="stylesheet" href="http://127.0.0.1:5000/configs/static/style_chat_pop.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="http://127.0.0.1:5000/configs/static/script_widget.js"></script>
+    <script> init("http://127.0.0.1:5000/chatbot/"); </script>
+
+    <!-- Botón de apertura del chat -->
+    <div id="chat-open-btn">Abrir Chat</div>
+
+    <!-- Cuadro de diálogo emergente -->
+    <div id="chat-popup">
+        <div id="chat-container" class="container_chat">
+            <div id="chat-messages" class="chat-box">
+                <!-- Aquí se mostrarán los mensajes de la conversación -->
+            </div>
+            <form id="chat-form" class="chat-input">
+                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
+                <button type="submit" class="btn btn-outline-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}
