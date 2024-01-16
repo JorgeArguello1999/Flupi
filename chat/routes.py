@@ -30,8 +30,13 @@ def chatbot_post():
 
     try:
         response = requests.post('http://127.0.0.1:5000/api', json=data)
+
+        print('<<Status>>: ', str(response.status_code))
+        if "200" not in str(response.status_code):
+            response = requests.post('https://127.0.0.1:5000/api', json=data)
+
         return jsonify(response.json())
     
     except Exception as e:
         print(f'Error: {e}')
-        return jsonify({"error": str(e)})
+        return jsonify({"response": str(e)})

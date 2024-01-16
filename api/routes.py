@@ -116,6 +116,6 @@ def api_post():
 
     print(f'API Usuario: <<{data["user"]}>> Token: <<{data["token"]}>>')
 
-    print(f"Pregunta: {api_response['ask']} Respuesta: {api_response['response']}")
+    print(f"<<Pregunta>>: {api_response['ask']} <<Respuesta>>: {api_response['response']}")
 
     return jsonify(api_response)
