@@ -19,6 +19,7 @@ from api.routes import api_bp
 from chat.routes import chat_bp
 from notify.routes import notify_bp
 from configs.routes import configs_bp
+from widget.routes import widget_bp
 
 # Inicializar base de datos
 import init
@@ -59,6 +60,7 @@ app.register_blueprint(api_bp)
 app.register_blueprint(chat_bp)
 app.register_blueprint(notify_bp)
 app.register_blueprint(configs_bp)
+app.register_blueprint(widget_bp)
 
 if __name__ == "__main__":
     debug = os.environ.get('DEBUG')

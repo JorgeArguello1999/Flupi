@@ -59,9 +59,9 @@
 
     // Contenido dinámico en JavaScript
     var dynamicCode = `
-        &lt;link rel="stylesheet" href="${originUrl}/configs/static/style_chat_pop.css"&gt;
+        &lt;link rel="stylesheet" href="${originUrl}/widget/static/style_chat_pop.css"&gt;
         &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
-        &lt;script src="${originUrl}/configs/static/script_widget.js"&gt;&lt;/script&gt;
+        &lt;script src="${originUrl}/widget/static/script_widget.js"&gt;&lt;/script&gt;
         &lt;script&gt; init("${originUrl}/chatbot/"); &lt;/script&gt;
 
         &lt;!-- Boton para abrir el chat --&gt;
@@ -86,9 +86,9 @@
     </script>
 
     <!-- Ejemplo de integración del Widget-->
-    <link rel="stylesheet" href="{{ url_for('configs.static', filename='style_chat_pop.css') }}">
+    <link rel="stylesheet" href="{{ url_for('widget.static', filename='style_chat_pop.css') }}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('configs.static', filename='script_widget.js') }}"></script>
+    <script src="{{ url_for('widget.static', filename='script_widget.js') }}"></script>
     <!-- URL a la que va apuntar el Widget -->
     <script> init("{{ url_for('chatbot.chatbot_get') }}"); </script>
 
