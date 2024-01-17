@@ -82,8 +82,16 @@ body {
 .message-user,
 .message-bot {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* Alinear al inicio */
     margin-bottom: 10px;
+}
+
+.message-user {
+    justify-content: flex-end; /* Justificar al final para ubicar a la derecha */
+}
+
+.message-bot {
+    justify-content: flex-start; /* Justificar al inicio para ubicar a la izquierda */
 }
 
 .img_profile {
@@ -93,26 +101,33 @@ body {
     margin-right: 10px;
 }
 
-.message-bot p{
-    background-color: #c2c3c4;
-}
-.message-user p{
-    background-color: #c5dcfa;
-}
-
-.message-user p,
-.message-bot p {
+.message-bot p,
+.message-user p {
     padding: 10px;
     font-size: 15px;
     border-radius: 5px;
+    margin: 0; /* Eliminar el margen predeterminado para que se ajuste mejor al contenedor */
 }
 
 .message-time {
-    margin-left: auto;
     color: #777;
     font-size: 10px;
 }
- 
+
+/* Ajustar la posición de la hora dentro del mensaje */
+.message-time {
+    margin-left: 10px; /* Ajusta según sea necesario */
+}
+
+/* Ajustar estilos de los mensajes para que se parezcan a WhatsApp */
+.message-user p {
+    background-color: #c5dcfa;
+}
+
+.message-bot p {
+    background-color: #c2c3c4;
+}
+
 #title {
     background-color: #e8eef0 ;
     padding: 1em;
