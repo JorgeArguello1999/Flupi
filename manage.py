@@ -33,7 +33,9 @@ app = Flask(__name__)
 app.secret_key = os.environ.get('FLASK_KEY')
 CORS(app)
 
-contextos.load_context_values()
+@app.before_request
+def load_context():
+    contextos.load_context_values()
 
 # Middleware
 @app.before_request
