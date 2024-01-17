@@ -1,9 +1,5 @@
 from flask_cors import CORS
-from flask import Flask
-from flask import redirect
-from flask import url_for
-from flask import request
-from flask import abort
+from flask import Flask, redirect, url_for, request, abort
 
 from dotenv import load_dotenv
 import os
@@ -42,7 +38,18 @@ contextos.load_context_values()
 # Middleware
 @app.before_request
 def restrict_by_ip():
-    list_ips = ips.get_ips() + ['127.0.0.1']
+    # Obtén la ruta actual
+    current_path = request.path
+
+    # Lista de IPs permitidas para la aplicación widget
+    widget_ips = ['127.0.0.1']
+
+    # Si la ruta corresponde a la aplicación widget, no verificamos la IP
+    if current_path.startswith('/widget'):
+        return
+
+    # En caso contrario, verificamos la IP
+    list_ips = ips.get_ips() + widget_ips
     client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
     
     if client_ip not in list_ips:
