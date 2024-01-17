@@ -9,9 +9,14 @@ function init(apiUrl){
 
         // Mostrar el cuadro de diálogo emergente al hacer clic en el botón de apertura
         chatOpenBtn.click(function() {
-            chatPopup.toggle();
-            scrollToBottom();
+            const chatPopupVisible = chatPopup.is(":visible");
+            if (!chatPopupVisible) {
+                chatPopup.css("bottom", chatOpenBtn.outerHeight() + parseInt(chatOpenBtn.css("bottom")) + "px");
+            }
+                chatPopup.toggle();
+                scrollToBottom();
         });
+ 
 
         // Función para desplazarse hacia abajo en el contenedor de mensajes
         function scrollToBottom() {
