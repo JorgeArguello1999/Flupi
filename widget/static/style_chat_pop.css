@@ -54,7 +54,7 @@ body {
     padding: 10px;
     border-top: 1px solid #ddd;
     display: flex;
-    background-color: #f9f9f9;
+    background-color: #e8eef0 ;
 }
 
 #message-input {
@@ -94,12 +94,10 @@ body {
 }
 
 .message-bot p{
-    background-color: greenyellow;
-    color: black;
+    background-color: #c2c3c4;
 }
 .message-user p{
-    background-color: grey;
-    color: white;
+    background-color: #c5dcfa;
 }
 
 .message-user p,
@@ -115,3 +113,7 @@ body {
     font-size: 10px;
 }
  
+#title {
+    background-color: #e8eef0 ;
+    padding: 1em;
+}
