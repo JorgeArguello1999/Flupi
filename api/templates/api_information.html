@@ -62,7 +62,7 @@
         &lt;link rel="stylesheet" href="${originUrl}/widget/static/style_chat_pop.css"&gt;
         &lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;
         &lt;script src="${originUrl}/widget/static/script_widget.js"&gt;&lt;/script&gt;
-        &lt;script&gt; init("${originUrl}/chatbot/"); &lt;/script&gt;
+        &lt;script&gt; init("${originUrl}/widget/"); &lt;/script&gt;
 
         &lt;!-- Boton para abrir el chat --&gt;
         &lt;div id="chat-open-btn"&gt;Abrir Chat&lt;/div&gt;
@@ -90,7 +90,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{{ url_for('widget.static', filename='script_widget.js') }}"></script>
     <!-- URL a la que va apuntar el Widget -->
-    <script> init("{{ url_for('chatbot.chatbot_get') }}"); </script>
+    <script> init("{{ url_for('widget.widget_post') }}"); </script>
 
     <!-- Botón de apertura del chat -->
     <div id="chat-open-btn">Abrir Chat</div>
