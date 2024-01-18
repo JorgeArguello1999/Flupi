@@ -35,6 +35,12 @@ $(document).ready(function() {
         // Guardamos las preguntas en la lista para generar un contexto
         list.push(userMessage);
 
+        // Mostrar mensaje del usuario originalmente enviado
+        showMessage(userMessage, true, null, currentTime);
+
+        // Mostrar mensaje de escritura del bot
+        showMessage("Escribiendo...", false, null, currentTime);
+
         fetch(apiUrl, {
             method: 'POST',
             headers: {
@@ -46,11 +52,25 @@ $(document).ready(function() {
         })
         .then(response => response.json())
         .then(data => {
-            // Manejar la respuesta de la API
-            showMessage(userMessage, true, data.photo_user, currentTime); // Mostrar la foto del usuario después de su mensaje
-            showMessage(data.response, false, data.photo_role, currentTime); // Mostrar la respuesta del chatbot después del mensaje del usuario
+            // Eliminar el mensaje de escritura del bot
+            $('#chat-messages').find('.message-bot:contains("Escribiendo...")').remove();
+
+            // Mostrar mensaje de respuesta de la API con la foto y la pregunta
+            showMessage(data.response, false, data.photo_role, currentTime);
+
+            // Actualizar el mensaje del usuario con la información de la API
+            $('#chat-messages').find('.message-user:contains("' + userMessage + '")').html(`
+                <img src="data:image/png;base64,${data.photo_user}" class="img_profile" />
+                <p>${data.question}</p>
+                <span class="message-time">${currentTime}</span>
+            `);
+
+            scrollToBottom();
         })
         .catch(error => {
+            // Eliminar el mensaje de escritura del bot en caso de error
+            $('#chat-messages').find('.message-bot:contains("Escribiendo...")').remove();
+
             console.error('Error:', error);
         });
 
