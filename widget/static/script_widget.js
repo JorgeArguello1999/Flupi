@@ -1,3 +1,18 @@
+// Variable global para almacenar las fotos
+let globalPhotos = [];
+
+// Función para obtener las fotos y almacenarlas en la variable global
+function getPhotos(apiUrl) {
+    return fetch(`${apiUrl}/photos/`)
+        .then(response => response.json())
+        .then(data => {
+            globalPhotos = data;  // Almacenar las fotos en la variable global
+        })
+        .catch(error => {
+            console.error('Error fetching photos:', error);
+        });
+}
+
 function init(apiUrl){
     $(document).ready(function() {
         // Elementos del chat
@@ -6,6 +21,10 @@ function init(apiUrl){
         const chatMessages = $('#chat-messages');
         const chatForm = $('#chat-form');
         const messageInput = $('#message-input');
+
+        // Cargamos las fotos 
+        getPhotos(apiUrl);
+        console.log(globalPhotos);
 
         // Mostrar el cuadro de diálogo emergente al hacer clic en el botón de apertura
         chatOpenBtn.click(function() {
@@ -77,11 +96,11 @@ function init(apiUrl){
                     chatMessages.find('.message-bot:contains("Escribiendo...")').remove();
 
                     // Mostrar mensaje de respuesta de la API con la foto y la pregunta
-                    showMessage(data.response, false, data.photo_role, currentTime);
+                    showMessage(data.response, false, globalPhotos.photo_role, currentTime);
 
                     // Actualizar el mensaje del usuario con la información de la API
                     chatMessages.find('.message-user:contains("' + userMessage + '")').html(`
-                        <img src="data:image/png;base64,${data.photo_user}" class="img_profile" />
+                        <img src="data:image/png;base64,${globalPhotos.photo_user}" class="img_profile" />
                         <p>${userMessage}</p>
                         <span class="message-time">${currentTime}</span>
                     `);
