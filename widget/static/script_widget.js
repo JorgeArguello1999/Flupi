@@ -39,19 +39,20 @@ function init(apiUrl){
 
         // Lista de preguntas realizadas por el usuario
         let list = [];
-        // Message, para que entienda que esta pasando "Minicontexto"
-        let contexto = `Preguntas anteriores: ${list.toString()}`;
-        
+
         // Intercepta el envío del formulario
-        chatForm.submit(function(event) {
+        chatForm.submit(function (event) {
             event.preventDefault();
             const userMessage = messageInput.val();
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+            // Limitar la longitud del contexto y crear un resumen
+            const contexto = `Con base a estas interacciones: ${list.slice(-5).join(';')} > Responde unicamente la pregunta actual: ${userMessage}`;
+
             // Guardamos las preguntas en la lista para generar un contexto
-            list.push(userMessage)
-            contexto = `En base a esto responde la ultima pregunta: ${list.join(', ')} `;
-            console.log(contexto)
+            list.push(userMessage);
+
+            console.log(contexto);
 
             fetch(apiUrl, {
                 method: 'POST',
@@ -62,15 +63,15 @@ function init(apiUrl){
                     "ask": contexto
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                // Manejar la respuesta de la API
-                showMessage(userMessage, true, data.photo_user, currentTime); // Mostrar la foto del usuario después de su mensaje
-                showMessage(data.response, false, data.photo_role, currentTime); // Mostrar la respuesta del chatbot después del mensaje del usuario
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+                .then(response => response.json())
+                .then(data => {
+                    // Manejar la respuesta de la API
+                    showMessage(userMessage, true, data.photo_user, currentTime);
+                    showMessage(data.response, false, data.photo_role, currentTime);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
 
             messageInput.val("");
         });
