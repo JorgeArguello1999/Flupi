@@ -61,7 +61,7 @@ $(document).ready(function() {
             // Actualizar el mensaje del usuario con la información de la API
             $('#chat-messages').find('.message-user:contains("' + userMessage + '")').html(`
                 <img src="data:image/png;base64,${data.photo_user}" class="img_profile" />
-                <p>${data.question}</p>
+                <p>${userMessage}</p>
                 <span class="message-time">${currentTime}</span>
             `);
 
