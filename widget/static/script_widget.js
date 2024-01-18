@@ -36,6 +36,11 @@ function init(apiUrl){
             chatMessages.append(messageDiv);
             scrollToBottom();
         }
+
+        // Lista de preguntas realizadas por el usuario
+        let list = [];
+        // Message, para que entienda que esta pasando "Minicontexto"
+        let contexto = `Preguntas anteriores: ${list.toString()}`;
         
         // Intercepta el envío del formulario
         chatForm.submit(function(event) {
@@ -43,13 +48,18 @@ function init(apiUrl){
             const userMessage = messageInput.val();
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
+            // Guardamos las preguntas en la lista para generar un contexto
+            list.push(userMessage)
+            contexto = `En base a esto responde la ultima pregunta: ${list.join(', ')} `;
+            console.log(contexto)
+
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "ask": userMessage
+                    "ask": contexto
                 })
             })
             .then(response => response.json())
