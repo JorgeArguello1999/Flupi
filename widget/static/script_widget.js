@@ -52,6 +52,9 @@ function init(apiUrl){
             // Guardamos las preguntas en la lista para generar un contexto
             list.push(userMessage);
 
+            // Mostrar mensaje de escritura del bot
+            showMessage("Escribiendo...", false, null, currentTime);
+
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
@@ -63,11 +66,17 @@ function init(apiUrl){
             })
                 .then(response => response.json())
                 .then(data => {
+                    // Eliminar el mensaje de escritura del bot
+                    chatMessages.find('.message-bot:contains("Escribiendo...")').remove();
+
                     // Manejar la respuesta de la API
                     showMessage(userMessage, true, data.photo_user, currentTime);
                     showMessage(data.response, false, data.photo_role, currentTime);
                 })
                 .catch(error => {
+                    // Eliminar el mensaje de escritura del bot en caso de error
+                    chatMessages.find('.message-bot:contains("Escribiendo...")').remove();
+
                     console.error('Error:', error);
                 });
 
