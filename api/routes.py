@@ -15,7 +15,6 @@ from configs import voice
 
 
 from databases import contextos
-from databases import images
 
 from databases.usuarios import get_user_by_username
 from security.protected_routes import requerir_autenticacion
@@ -51,9 +50,19 @@ def api_get():
                 "role": "assistant",
                 "response": "Datos",
                 "time_answer": "00:01",
-                "time_request": "00:01",
-                "photo_role": "fotografia_base64",
-                "photo_user": "fotografia_base64"
+                "time_request": "00:01"
+            },
+            "photos": {
+                "adicional": {
+                    "Fotos de usuario": "Las fotos de usuario se han movido a la ruta",
+                    "ruta": "widget/photos/"
+                },
+                "Fotos Estructura": {
+                    "GET": {
+                        "photo_user": "foto_base64",
+                        "photo_role": "foto_base64"
+                    }
+                }
             }
         }
     })
@@ -94,14 +103,6 @@ def api_post():
     # Obtenemos hora respuesta
     hora_respuesta = get_current_time()
 
-    try:
-        photo_chatbot = images.get_image('chatbot')
-        photo_user = images.get_image('usuario')
-    except Exception as e:
-        print("Error: ", e)
-        photo_chatbot = ''
-        photo_user = ''
-
     # Salida de la API
     api_response = {
         "user": data["user"],
@@ -109,9 +110,7 @@ def api_post():
         "role": "assistant",
         "response": response,
         "time_request": hora_peticion,
-        "time_answer": hora_respuesta,
-        "photo_user": photo_user,
-        "photo_role": photo_chatbot
+        "time_answer": hora_respuesta
     }
 
     print(f'API Usuario: <<{data["user"]}>> Token: <<{data["token"]}>>')

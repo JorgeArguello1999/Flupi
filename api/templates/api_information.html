@@ -32,6 +32,7 @@
                 <li>En el campo device, Computer devuelve JSON, para devolver audio escribiremos "bot" en device</li>
                 <li>La api no guarda en Base de Datos ninguna respuesta</li>
                 <li>Siempre tener un usuario llamado chatbot</li>
+                <li>Las imágenes estan en la ruta /widget/photos </li>
             </ul>
         </div>
 
@@ -42,6 +43,8 @@
             <pre><code>{{ json.ejemplo.request_json | tojson | safe }}</code></pre>
             <h3>Response JSON</h3>
             <pre><code>{{ json.ejemplo.response_json | tojson | safe }}</code></pre>
+            <h3>Fotografías</h3>
+            <pre><code>{{ json.ejemplo.photos | tojson | safe }}</code></pre>
         </div>
     </div>
 
