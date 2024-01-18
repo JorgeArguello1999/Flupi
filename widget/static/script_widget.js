@@ -75,11 +75,11 @@ function init(apiUrl){
             // Guardamos las preguntas en la lista para generar un contexto
             list.push(userMessage);
 
-            // Mostrar mensaje del usuario originalmente enviado
-            showMessage(userMessage, true, null, currentTime);
+            // Mostrar mensaje del usuario originalmente enviado con la imagen
+            showMessage(userMessage, true, globalPhotos.photo_user, currentTime);
 
-            // Mostrar mensaje de escritura del bot
-            showMessage("Escribiendo...", false, null, currentTime);
+            // Mostrar mensaje de escritura del bot con la imagen
+            showMessage("Escribiendo...", false, globalPhotos.photo_role, currentTime);
 
             fetch(apiUrl, {
                 method: 'POST',
