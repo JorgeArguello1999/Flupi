@@ -2,8 +2,8 @@
 let globalPhotos = [];
 
 // Función para obtener las fotos y almacenarlas en la variable global
-function getPhotos(apiUrl) {
-    return fetch(`${apiUrl}/photos/`)
+function getPhotos(photosUrl) {
+    return fetch(photosUrl)
         .then(response => response.json())
         .then(data => {
             globalPhotos = data;  // Almacenar las fotos en la variable global
@@ -33,8 +33,11 @@ $(document).ready(function() {
     }
     var originUrl= window.location.origin;
     let apiUrl = originUrl+'/chatbot/';
-    let photosUrl = originUrl+'/widget/';
+    let photosUrl = originUrl+'/widget/photos/';
+
+    console.log(originUrl);
     console.log(apiUrl);
+    console.log(photosUrl);
 
     // Cargamos las fotos
     getPhotos(photosUrl);
