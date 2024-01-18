@@ -24,7 +24,6 @@ function init(apiUrl){
 
         // Cargamos las fotos 
         getPhotos(apiUrl);
-        console.log(globalPhotos);
 
         // Mostrar el cuadro de diálogo emergente al hacer clic en el botón de apertura
         chatOpenBtn.click(function() {

@@ -1,3 +1,18 @@
+// Variable global para almacenar las fotos
+let globalPhotos = [];
+
+// Función para obtener las fotos y almacenarlas en la variable global
+function getPhotos(apiUrl) {
+    return fetch(`${apiUrl}/photos/`)
+        .then(response => response.json())
+        .then(data => {
+            globalPhotos = data;  // Almacenar las fotos en la variable global
+        })
+        .catch(error => {
+            console.error('Error fetching photos:', error);
+        });
+}
+
 $(document).ready(function() {
 
     function scrollToBottom() {
@@ -16,9 +31,13 @@ $(document).ready(function() {
         $("#chat-messages").append(messageDiv);
         scrollToBottom();
     }
-    var apiUrl = window.location.origin;
-    apiUrl = apiUrl+'/chatbot/';
+    var originUrl= window.location.origin;
+    let apiUrl = originUrl+'/chatbot/';
+    let photosUrl = originUrl+'/widget/';
     console.log(apiUrl);
+
+    // Cargamos las fotos
+    getPhotos(photosUrl);
 
     // Lista de preguntas realizadas por el usuario
     let list = [];
@@ -36,10 +55,10 @@ $(document).ready(function() {
         list.push(userMessage);
 
         // Mostrar mensaje del usuario originalmente enviado
-        showMessage(userMessage, true, null, currentTime);
+        showMessage(userMessage, true, globalPhotos.photo_user, currentTime);
 
         // Mostrar mensaje de escritura del bot
-        showMessage("Escribiendo...", false, null, currentTime);
+        showMessage("Escribiendo...", false, globalPhotos.photo_role, currentTime);
 
         fetch(apiUrl, {
             method: 'POST',
@@ -56,11 +75,11 @@ $(document).ready(function() {
             $('#chat-messages').find('.message-bot:contains("Escribiendo...")').remove();
 
             // Mostrar mensaje de respuesta de la API con la foto y la pregunta
-            showMessage(data.response, false, data.photo_role, currentTime);
+            showMessage(data.response, false, globalPhotos.photo_role, currentTime);
 
             // Actualizar el mensaje del usuario con la información de la API
             $('#chat-messages').find('.message-user:contains("' + userMessage + '")').html(`
-                <img src="data:image/png;base64,${data.photo_user}" class="img_profile" />
+                <img src="data:image/png;base64,${globalPhotos.photo_user}" class="img_profile" />
                 <p>${userMessage}</p>
                 <span class="message-time">${currentTime}</span>
             `);
