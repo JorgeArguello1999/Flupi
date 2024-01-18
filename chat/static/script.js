@@ -20,11 +20,20 @@ $(document).ready(function() {
     apiUrl = apiUrl+'/chatbot/';
     console.log(apiUrl);
 
+    // Lista de preguntas realizadas por el usuario
+    let list = [];
+
     // Intercepta el envío del formulario
     $("#chat-form").submit(function(event) {
         event.preventDefault();
         const userMessage = $("#message-input").val();
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
+
+        // Limitar la longitud del contexto y crear un resumen
+        const contexto = `Con base a estas interacciones: ${list.slice(-5).join(';')} > Responde unicamente la pregunta actual: ${userMessage}`;
+
+        // Guardamos las preguntas en la lista para generar un contexto
+        list.push(userMessage);
 
         fetch(apiUrl, {
             method: 'POST',
@@ -32,7 +41,7 @@ $(document).ready(function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "ask": userMessage
+                "ask": contexto 
             })
         })
         .then(response => response.json())

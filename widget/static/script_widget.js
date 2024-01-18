@@ -52,8 +52,6 @@ function init(apiUrl){
             // Guardamos las preguntas en la lista para generar un contexto
             list.push(userMessage);
 
-            console.log(contexto);
-
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
