@@ -97,7 +97,7 @@ function init(apiUrl){
                     chatMessages.find('.message-bot:contains("Escribiendo...")').remove();
 
                     // Mostrar mensaje de respuesta de la API con la foto y la pregunta
-                    showMessage(data.response, false, globalPhotos.photo_role, currentTime);
+                    showMessage(data.response.toString(), false, globalPhotos.photo_role, currentTime);
 
                     // Actualizar el mensaje del usuario con la información de la API
                     chatMessages.find('.message-user:contains("' + userMessage + '")').html(`
