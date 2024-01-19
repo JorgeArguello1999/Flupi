@@ -52,7 +52,7 @@ $(document).ready(function() {
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
 
         // Limitar la longitud del contexto y crear un resumen
-        const contexto = `Con base a estas interacciones: ${list.slice(-2).join(';')} > Responde unicamente la pregunta actual: ${userMessage}`;
+        const contexto = `<<Anteriores>>: ${list.slice(-2).join(';')} <<Actual>>: ${userMessage}`;
 
         // Guardamos las preguntas en la lista para generar un contexto
         list.push(userMessage);
