@@ -23,8 +23,8 @@ function init(apiUrl){
         const messageInput = $('#message-input');
 
         // Cargamos las fotos 
-        let photosUrl = apiUrl +'photos/';
-        console.log("url:", photosUrl)
+        let photosUrl = apiUrl + 'photos/';
+        console.log("url:", photosUrl);
         getPhotos(photosUrl);
 
         // Mostrar el cuadro de diálogo emergente al hacer clic en el botón de apertura
@@ -33,10 +33,9 @@ function init(apiUrl){
             if (!chatPopupVisible) {
                 chatPopup.css("bottom", chatOpenBtn.outerHeight() + parseInt(chatOpenBtn.css("bottom")) + "px");
             }
-                chatPopup.toggle();
-                scrollToBottom();
+            chatPopup.toggle();
+            scrollToBottom();
         });
- 
 
         // Función para desplazarse hacia abajo en el contenedor de mensajes
         function scrollToBottom() {
@@ -47,11 +46,8 @@ function init(apiUrl){
             const sender = isUser ? 'Tú' : 'Chatbot';
             const cssClass = isUser ? 'message-user' : 'message-bot';
 
-            // Eliminar el mensaje anterior del usuario si existe
-            chatMessages.find(`.${cssClass}-user-message`).remove();
-
             const messageDiv = `
-                <div class="${cssClass} ${cssClass}-user-message">
+                <div class="${cssClass}">
                 <img src="data:image/png;base64,${image}" class="img_profile" />
                 <p>${message}</p>
                 <span class="message-time">${time}</span>
@@ -107,6 +103,7 @@ function init(apiUrl){
                         <p>${userMessage}</p>
                         <span class="message-time">${currentTime}</span>
                     `);
+                    showMessage(userMessage, true, globalPhotos.photo_user, currentTime);
                     scrollToBottom();
                 })
                 .catch(error => {
