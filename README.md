@@ -21,14 +21,16 @@ Para usar el bot tienes que realizar los siguientes pasos:
 
 Estas son las variables importantes:
 ``` bash
-GPT=Tu token para GPT
-API_ROUTE=ruta_api_para_consultar_precios
-DEBUG=false
-FLASK_KEY=clave para flask
+GPT=Tu token
+API_ROUTE=Api a consultar
+FLASK_KEY=@admin
+ADMIN_KEY=admin
+API_KEY=admin
 
-ADMIN_KEY=esta frase es la que se necesita para eliminar usuarios
-DB= Base de datos principal de donde se encuentra la información
-NOMBRE= Con esto busca dentro de la base de datos
-JSON_CGS= Ruta donde esta el json para firebase
+NOMBRE=Edumax (Nombre con el que se guardara en la base de datos)
+DB=contextos (Colección que usaremos)
+DEBUG=True
+
+JSON_GCS=tokens/my-token.json
 
 ```
