@@ -43,16 +43,15 @@ function init(apiUrl){
             chatMessages.animate({ scrollTop: chatMessages.prop('scrollHeight') }, 300);
         }
 
-        // Función para mostrar un mensaje en el chat
         function showMessage(message, isUser, image, time) {
             const sender = isUser ? 'Tú' : 'Chatbot';
             const cssClass = isUser ? 'message-user' : 'message-bot';
 
             // Eliminar el mensaje anterior del usuario si existe
-            chatMessages.find('.message-user:contains("' + message + '")').remove();
+            chatMessages.find(`.${cssClass}-user-message`).remove();
 
             const messageDiv = `
-                <div class="${cssClass}">
+                <div class="${cssClass} ${cssClass}-user-message">
                 <img src="data:image/png;base64,${image}" class="img_profile" />
                 <p>${message}</p>
                 <span class="message-time">${time}</span>
@@ -97,15 +96,17 @@ function init(apiUrl){
                     chatMessages.find('.message-bot:contains("Escribiendo...")').remove();
 
                     // Mostrar mensaje de respuesta de la API con la foto y la pregunta
-                    showMessage(data.response.toString(), false, globalPhotos.photo_role, currentTime);
+                    let response = data.response;
+                    response = response.toString();
+                    console.log(response);
+                    showMessage(response, false, globalPhotos.photo_role, currentTime);
 
                     // Actualizar el mensaje del usuario con la información de la API
-                    chatMessages.find('.message-user:contains("' + userMessage + '")').html(`
+                    chatMessages.find(`.${cssClass}-user-message`).html(`
                         <img src="data:image/png;base64,${globalPhotos.photo_user}" class="img_profile" />
                         <p>${userMessage}</p>
                         <span class="message-time">${currentTime}</span>
                     `);
-
                     scrollToBottom();
                 })
                 .catch(error => {
