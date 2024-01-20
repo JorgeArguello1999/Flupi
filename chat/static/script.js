@@ -42,20 +42,11 @@ $(document).ready(function() {
     // Cargamos las fotos
     getPhotos(photosUrl);
 
-    // Lista de preguntas realizadas por el usuario
-    let list = [];
-
     // Intercepta el envío del formulario
     $("#chat-form").submit(function(event) {
         event.preventDefault();
         const userMessage = $("#message-input").val();
         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); 
-
-        // Limitar la longitud del contexto y crear un resumen
-        const contexto = `<<Anteriores>>: ${list.slice(-2).join(';')} <<Actual>>: ${userMessage}`;
-
-        // Guardamos las preguntas en la lista para generar un contexto
-        list.push(userMessage);
 
         // Mostrar mensaje del usuario originalmente enviado
         showMessage(userMessage, true, globalPhotos.photo_user, currentTime);
@@ -69,7 +60,7 @@ $(document).ready(function() {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                "ask": contexto 
+                "ask": userMessage 
             })
         })
         .then(response => response.json())

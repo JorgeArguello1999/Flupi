@@ -56,20 +56,11 @@ function init(apiUrl){
             scrollToBottom();
         }
 
-        // Lista de preguntas realizadas por el usuario
-        let list = [];
-
         // Intercepta el envío del formulario
         chatForm.submit(function (event) {
             event.preventDefault();
             const userMessage = messageInput.val();
             const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-            // Limitar la longitud del contexto y crear un resumen
-            const contexto = `<<Anteriores>>: ${list.slice(-2).join(';')} <<Actual>>: ${userMessage}`;
-
-            // Guardamos las preguntas en la lista para generar un contexto
-            list.push(userMessage);
 
             // Mostrar mensaje del usuario originalmente enviado con la imagen
             showMessage(userMessage, true, globalPhotos.photo_user, currentTime);
@@ -83,7 +74,7 @@ function init(apiUrl){
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    "ask": contexto
+                    "ask": userMessage 
                 })
             })
                 .then(response => response.json())
