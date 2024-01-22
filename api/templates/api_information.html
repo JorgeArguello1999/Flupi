@@ -89,28 +89,4 @@
     document.getElementById('dynamic-code').innerHTML = dynamicCode;
     </script>
 
-    <!-- Ejemplo de integración del Widget-->
-    <link rel="stylesheet" href="{{ url_for('widget.static', filename='style_chat_pop.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url_for('widget.static', filename='script_widget.js') }}"></script>
-    <!-- URL a la que va apuntar el Widget -->
-    <script> init("{{ url_for('widget.widget_post') }}"); </script>
-
-    <!-- Botón de apertura del chat -->
-    <div id="chat-open-btn">Abrir Chat</div>
-
-    <!-- Cuadro de diálogo emergente -->
-    <div id="chat-popup">
-        <div id="chat-container" class="container_chat">
-            <div id="title">Bienvenid@</div>
-            <div id="chat-messages" class="chat-box">
-                <!-- Aquí se mostrarán los mensajes de la conversación -->
-            </div>
-            <form id="chat-form" class="chat-input">
-                <input type="text" id="message-input" class="form-control" placeholder="Escribe un mensaje...">
-                <button type="submit" class="btn btn-outline-primary">Enviar</button>
-            </form>
-        </div>
-    </div>
-
 {% endblock %}
