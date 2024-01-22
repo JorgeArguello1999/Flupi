@@ -1,6 +1,7 @@
 from configs import chatgpt
 from databases import contextos
 from configs import api_compumax
+from configs import telegram
 
 import datetime, requests
 
@@ -30,8 +31,7 @@ def get_date(trash):
 
 # Producto - Descripción 
 def get_product_description(text:str):
-    func_words = "func database"
-    texto = text.replace(func_words, "").strip()
+    texto = text.replace("func database", "").strip()
     response = api_compumax.search_product(texto)
     
     contexto = contextos.get_context('general')
@@ -64,6 +64,19 @@ def call_technician(trash, server_host="0.0.0.0", server_port=5000):
         "response": mensaje
     }
 
+# Enviar mensaje a Telegram
+def send_message(message):
+    texto = message.replace("func message", "").strip()
+
+    mensaje = "No ha funcionado, lamentamos los inconvenientes, estamos trabajando para resolverlo"
+
+    if telegram.send_message(texto):
+        mensaje = "Su mensaje a sido enviado, te responderemos lo antes posible."
+    
+    return {
+        "response": mensaje
+    }
+
 # Diferentes palabras que activan diferentes funciones
 # Estas palabras estan configuradas en el context
 # Revisar el context.py para más información
@@ -72,7 +85,8 @@ actions = {
     "func time": get_time,
     "func date": get_date,
     "func database": get_product_description,
-    "func tecnico": call_technician
+    "func tecnico": call_technician,
+    "func message": send_message
 }
 
 def chatbot(text:str)->str:
