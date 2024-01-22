@@ -33,4 +33,7 @@ DEBUG=True
 
 JSON_GCS=tokens/my-token.json
 
+TELEGRAM_TOKEN=Token del bot de telegram
+CHAT_ID=ID del chat de telegram
+
 ```
