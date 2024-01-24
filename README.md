@@ -2,9 +2,9 @@
 
 ![Flupi icon](home/static/logo.jpeg)
 
-## Holaaaa
+## Bienvenidos
 
-Este es Flupi es un asistente virtual para la Empresa CompuMax, este es el código fuente para poder implementarlo
+Este es Flupi es un asistente virtual para la Empresa CompuMax, este es el código fuente.
 
 ## Requisitos
 Instala las dependencias de Python para poder desplegarlo.
