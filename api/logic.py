@@ -48,6 +48,21 @@ def computer(data_user:dict, only_response=False) -> dict:
 # Respuesta Voz
 def bot(data_user:dict):
     response = computer(data_user=data_user, only_response=True)
+    
+    # Enviamos a chatgpt para que cree un díalogo
+    pregunta = f'Pregunta del usuario: {data_user["ask"]}' 
+    contexto = f'''
+    - Si en le fragmento esta codigo HTML, lo vas a cambiar y vas a crear un parrafo, el mismo debe ser preparado correctamente porque va a ser leido, vas a brindar toda la información que esta en ese codigo HTML, relaciona los terminos con terminos tecnologicos, no te inventes información, solo lo que tienes.
+    - Si el fragmento no tiene codigo, simplemente vas a crear un parrafo que resuma todo el contenido y que este listo para ser leido
+
+    Fragmento: {response}
+    '''
+    response = chatgpt.answer(
+        user='bot',
+        context=contexto,
+        ask=pregunta
+    )['response']
+
     response = voice.speaker(response)
     return send_from_directory('./audios', response)
 
