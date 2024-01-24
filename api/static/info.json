@@ -1,0 +1,40 @@
+{
+    "formato": "JSON",
+    "method": {
+        "GET": "Esta página",
+        "POST": "Interacción con la API"
+    },
+    "body_form": {
+        "user": "Nombre del Usuario",
+        "ask": "Pregunta del usuario",
+        "device": "Computer o Bot"
+    },
+    "ejemplo": {
+        "request_json": {
+            "user": "Jorge",
+            "ask": "Tienes teclados?",
+            "device": "Computer",
+            "token": "Tu token"
+        },
+        "response_json": {
+            "user": "Jorge",
+            "ask": "Tienes teclados?",
+            "role": "assistant",
+            "response": "Datos",
+            "time_answer": "00:01",
+            "time_request": "00:01"
+        },
+        "photos": {
+            "adicional": {
+                "Fotos de usuario": "Las fotos de usuario se han movido a la ruta",
+                "ruta": "widget/photos/"
+            },
+            "Fotos Estructura": {
+                "GET": {
+                    "photo_user": "foto_base64",
+                    "photo_role": "foto_base64"
+                }
+            }
+        }
+    }
+}
