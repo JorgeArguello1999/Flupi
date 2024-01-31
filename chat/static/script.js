@@ -69,7 +69,9 @@ $(document).ready(function() {
             $('#chat-messages').find('.message-bot:contains("Escribiendo...")').remove();
 
             // Mostrar mensaje de respuesta de la API con la foto y la pregunta
-            showMessage(data.response, false, globalPhotos.photo_role, currentTime);
+            let response = data.response;
+            response = response.replace(/\n/g, "</br>");
+            showMessage(response, false, globalPhotos.photo_role, currentTime);
 
             // Actualizar el mensaje del usuario con la información de la API
             $('#chat-messages').find('.message-user:contains("' + userMessage + '")').html(`
