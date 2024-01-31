@@ -84,7 +84,7 @@ function init(apiUrl){
 
                     // Mostrar mensaje de respuesta de la API con la foto y la pregunta
                     let response = data.response;
-                    response = response.toString();
+                    response = response.replace(/\n/g, "</br>");
                     console.log(response);
                     showMessage(response, false, globalPhotos.photo_role, currentTime);
 
